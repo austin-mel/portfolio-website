@@ -1,6 +1,9 @@
+<script setup>
+</script>
+
 <template>
-    <div>
-      <h1>Home</h1>
-    </div>
+  <div>
+    <h2>test</h2>
+  </div>
 </template>
   
