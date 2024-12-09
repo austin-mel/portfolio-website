@@ -12,7 +12,7 @@ const ProjectVisible = ref('Weather');
 </script>
 
 <template>
-  <div class="flex justify-center w-full h-16">
+  <div class="flex justify-center w-full h-full">
     <button v-if="ProjectSection !== 'DA'" @click="ProjectSection = 'DA',ProjectVisible = 'Weather'" class="bg-dark-beige hover:bg-light-beige text-black font-bold py-2 px-4 border-b-4 border-theme-blue w-3/12 h-full">
     Data Analysis
   </button>
@@ -33,96 +33,96 @@ const ProjectVisible = ref('Weather');
   </button>
   </div>
 
-  <div class="inline-block h-96 my-10 justify-center">
-      <div v-if="ProjectSection === 'DA'">
-        <div class="inline-block mx-10 px-5 py-5 max-w-sm rounded overflow-hidden shadow-lg bg-theme-blue">
-          <div class="px-6 py-4 justify-center">
+  <div class="inline-block justify-center h-full my-10">
+      <div v-if="ProjectSection === 'DA'" class="justify-items-center">
+        <div class="inline-block mx-10 px-5 py-5 w-60 rounded overflow-hidden shadow-lg bg-theme-blue">
+          <div class="px-6 py-4 text-center">
             <h1 class="text-xl mb-36 text-white">Weather Data Analysis</h1>
             <button @click="ProjectVisible = 'Weather'" class="w-full bg-light-beige font-bold text-black py-2 px-10 border-b-4 rounded-full">View Project</button>
           </div>
         </div>
-        <div class="inline-block mx-10 px-5 py-5 max-w-sm rounded overflow-hidden shadow-lg bg-theme-blue">
-          <div class="px-6 py-4">
+        <div class="inline-block mx-10 px-5 py-5 w-60 rounded overflow-hidden shadow-lg bg-theme-blue">
+          <div class="px-6 py-4 text-center">
             <h1 class="text-xl mb-36 text-white">SIR Model Simulation</h1>
             <button @click="ProjectVisible = 'SIR'" class="w-full bg-light-beige font-bold text-black py-2 px-10 border-b-4 rounded-full">View Project</button>
           </div>
         </div>
-        <div class="inline-block mx-10 px-5 py-5 max-w-sm rounded overflow-hidden shadow-lg bg-theme-blue">
-          <div class="px-6 py-4">
+        <div class="inline-block mx-10 px-5 py-5 w-60 rounded overflow-hidden shadow-lg bg-theme-blue">
+          <div class="px-6 py-4 text-center">
             <h1 class="text-xl mb-36 text-white">Gene Expression Analysis</h1>
             <button @click="ProjectVisible = 'Genes'" class="w-full bg-light-beige font-bold text-black py-2 px-10 border-b-4 rounded-full">View Project</button>
           </div>
         </div>
 
         <div class="flex w-full justify-center mt-20">
-          <div v-if="ProjectVisible === 'Weather'">
+          <div v-if="ProjectVisible === 'Weather'" class="justify-items-center">
             <Weather/>
           </div>
-          <div v-else-if="ProjectVisible === 'SIR'">
+          <div v-else-if="ProjectVisible === 'SIR'" class="justify-items-center">
             <SIRModel/>
           </div>
-          <div v-else-if="ProjectVisible === 'Genes'">
+          <div v-else-if="ProjectVisible === 'Genes'" class="justify-items-center">
             <Genes/>
           </div>
         </div>
       </div>
 
-      <div v-else-if="ProjectSection === 'ML'">
-        <div class="inline-block mx-10 px-5 py-5 max-w-sm rounded overflow-hidden shadow-lg bg-theme-blue">
-          <div class="px-6 py-4">
+      <div v-else-if="ProjectSection === 'ML'" class="justify-items-center">
+        <div class="inline-block mx-10 px-5 py-5 w-60 rounded overflow-hidden shadow-lg bg-theme-blue">
+          <div class="px-6 py-4 text-center">
             <h1 class="text-xl mb-36 text-white">House Price Prediction</h1>
             <button @click="ProjectVisible = 'Houses'" class="w-full bg-light-beige font-bold text-black py-2 px-10 border-b-4 rounded-full">View Project</button>
           </div>
         </div>
-        <div class="inline-block mx-10 px-5 py-5 max-w-sm rounded overflow-hidden shadow-lg bg-theme-blue">
-          <div class="px-6 py-4">
+        <div class="inline-block mx-10 px-5 py-5 w-60 rounded overflow-hidden shadow-lg bg-theme-blue">
+          <div class="px-6 py-4 text-center">
             <h1 class="text-xl mb-36 text-white">Mars Landmark Classification</h1>
             <button @click="ProjectVisible = 'Mars'" class="w-full bg-light-beige font-bold text-black py-2 px-10 border-b-4 rounded-full">View Project</button>
           </div>
         </div>
-        <div class="inline-block mx-10 px-5 py-5 max-w-sm rounded overflow-hidden shadow-lg bg-theme-blue">
-          <div class="px-6 py-4">
-            <h1 class="text-xl mb-36 text-white">Tweet Sentiment Classification</h1>
+        <div class="inline-block mx-10 px-5 py-5 w-56 rounded overflow-hidden shadow-lg bg-theme-blue">
+          <div class="px-6 py-4 text-center">
+            <h1 class="text-xl mb-36 text-white">Tweet NLP Analysis</h1>
             <button @click="ProjectVisible = 'Tweets'" class="w-full bg-light-beige font-bold text-black py-2 px-10 border-b-4 rounded-full">View Project</button>
           </div>
         </div>
 
         <div class="flex w-full justify-center mt-20">
-          <div v-if="ProjectVisible === 'Houses'">
+          <div v-if="ProjectVisible === 'Houses'" class="justify-items-center">
             <Houses/>
           </div>
-          <div v-else-if="ProjectVisible === 'Mars'">
+          <div v-else-if="ProjectVisible === 'Mars'" class="justify-items-center">
             <Mars/>
           </div>
-          <div v-else-if="ProjectVisible === 'Tweets'">
+          <div v-else-if="ProjectVisible === 'Tweets'" class="justify-items-center">
             test2
           </div>
         </div>
       </div>
 
-      <div v-else-if="ProjectSection === 'SE'">
-        <div class="inline-block mx-10 px-5 py-5 max-w-sm rounded overflow-hidden shadow-lg bg-theme-blue">
-          <div class="px-6 py-4">
-            <h1 class="text-xl mb-36 text-white justify-center">Pharmaceutical Trial Portal</h1>
+      <div v-else-if="ProjectSection === 'SE'" class="justify-items-center">
+        <div class="inline-block mx-10 px-5 py-5 w-60 rounded overflow-hidden shadow-lg bg-theme-blue">
+          <div class="px-6 py-4 text-center">
+            <h1 class="text-xl mb-36 text-white">Pharmaceutical Trial Portal</h1>
             <button @click="ProjectVisible = 'Pharma'" class="w-full bg-light-beige font-bold text-black py-2 px-10 border-b-4 rounded-full">View Project</button>
           </div>
         </div>
-        <div class="inline-block mx-10 px-5 py-5 max-w-sm rounded overflow-hidden shadow-lg bg-theme-blue">
-          <div class="px-6 py-4">
-            <h1 class="text-xl mb-36 text-white justify-center">Portfolio Website</h1>
+        <div class="inline-block mx-10 px-5 py-5 w-60 rounded overflow-hidden shadow-lg bg-theme-blue">
+          <div class="px-6 py-4 text-center">
+            <h1 class="text-xl mb-36 text-white">Custom Portfolio Website</h1>
             <button @click="ProjectVisible = 'Portfolio'" class="w-full bg-light-beige font-bold text-black py-2 px-10 border-b-4 rounded-full">View Project</button>
           </div>
         </div>
-      </div>
 
-      <div class="flex w-full justify-center mt-20">
-          <div v-if="ProjectVisible === 'Pharma'">
+        <div class="flex w-full justify-center mt-20">
+          <div v-if="ProjectVisible === 'Pharma'" class="justify-items-center">
             <Pharma/>
           </div>
-          <div v-else-if="ProjectVisible === 'Portfolio'">
+          <div v-else-if="ProjectVisible === 'Portfolio'" class="justify-items-center">
             test3
           </div>
         </div>
+      </div>
     </div>
 </template>
   
