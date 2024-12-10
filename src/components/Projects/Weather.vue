@@ -1,5 +1,4 @@
 <script setup>
-import { WeatherReport } from '@/assets/DA';
 </script>
 
 <template>
@@ -16,7 +15,6 @@ import { WeatherReport } from '@/assets/DA';
 
     <h1 class="absolute left-0 ml-10 bg-theme-blue text-dark-beige px-10 py-2 rounded-full text-xl">Project Report</h1>
     <div class="justify-end mt-10 h-screen w-8/12 bg-theme-blue mx-2 my-2">
-      <!--<embed :src="WeatherReport" class="h-full w-full" alt="Report" />-->
       <iframe src="https://drive.google.com/file/d/1_zoizWN73w2zIMHA_bSBvlmk536ZsXyX/preview" class="h-full w-full px-2 py-2"></iframe>
     </div>
 </template>
