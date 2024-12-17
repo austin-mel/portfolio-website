@@ -6,9 +6,6 @@
     <h1 class="font-bold text-xl text-center">SIR Model Simulation</h1>
 
 <div class="inline-flex mb-10">
-  <a target="_blank" href="https://www.google.com">
-    <button class="bg-transparent font-bold h-32 text-theme-blue py-2 px-20 mx-10 my-5 border-2 border-theme-blue rounded-full w-96 hover:bg-dark-beige">Live Demo</button>
-  </a>
   <a target="_blank" href="https://github.com/austin-mel/sirmodelsimulation">
     <button class="bg-transparent font-bold h-32 text-theme-blue py-2 px-20 mx-10 my-5 border-2 border-theme-blue rounded-full w-96 hover:bg-dark-beige ">View Repo</button>
   </a>
