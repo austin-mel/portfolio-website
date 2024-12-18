@@ -34,7 +34,7 @@ const ProjectVisible = ref('Weather');
     </button>
   </div>
 
-  <div class="justify-center h-full my-10">
+  <div class="justify-center h-full w-full my-10">
     <div v-if="ProjectSection === 'DA'" class="justify-items-center">
       <div class="hidden md:flex">
       <div v-if="ProjectVisible !== 'Weather'" class="inline-block mx-5 px-5 py-5 w-48 h-64 lg:w-60 lg:h-80 rounded bg-dark-beige border-theme-blue border-4">
@@ -69,11 +69,11 @@ const ProjectVisible = ref('Weather');
     </div>
 
       <div class="flex w-full justify-center mt-20">
-        <div v-if="ProjectVisible === 'Weather'" class="justify-items-center">
-          <Mobile />
+        <div v-if="ProjectVisible === 'Weather'" class="justify-items-center w-full">
+          <Weather />
         </div>
         <div v-else-if="ProjectVisible === 'SIR'" class="justify-items-center">
-          <SIRModel/>
+          <Mobile/>
         </div>
         <div v-else-if="ProjectVisible === 'Genes'" class="justify-items-center">
           <Genes/>
