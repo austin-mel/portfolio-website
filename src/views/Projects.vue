@@ -4,6 +4,6 @@ import Mobile from '@/components/Mobile.vue';
 </script>
 
 <template>
-    <Mobile />
+    <ProjectTabs />
 </template>
   
