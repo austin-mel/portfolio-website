@@ -73,7 +73,7 @@ const ProjectVisible = ref('Weather');
           <Weather />
         </div>
         <div v-else-if="ProjectVisible === 'SIR'" class="justify-items-center">
-          <Mobile/>
+          <SIRModel/>
         </div>
         <div v-else-if="ProjectVisible === 'Genes'" class="justify-items-center">
           <Genes/>
