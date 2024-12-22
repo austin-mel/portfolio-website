@@ -3,11 +3,11 @@
 </script>
 
 <template>
-    <h1 class="font-bold text-xl text-center">SIR Model Simulations</h1>
+    <h1 class="font-bold text-xl text-center">Netflix Subscription Data Analysis</h1>
 
     <div class="flex mb-10">
       <a target="_blank" href="https://google.com">
-        <button class="bg-transparent font-bold h-32 text-theme-blue py-2 px-20 mx-10 my-5 border-2 border-theme-blue rounded-full w-auto xxs:w-72 xs:w-96 hover:bg-dark-beige ">Live Demo</button>
+        <button class="bg-transparent font-bold h-32 text-theme-blue py-2 px-20 mx-10 my-5 border-2 border-theme-blue rounded-full w-auto xxs:w-72 xs:w-96 hover:bg-dark-beige ">Tableau Dashboard</button>
       </a>
       <a target="_blank" href="https://github.com/austin-mel/sirmodelsimulation">
         <button class="bg-transparent font-bold h-32 text-theme-blue py-2 px-20 mx-10 my-5 border-2 border-theme-blue rounded-full w-auto xxs:w-72 xs:w-96 hover:bg-dark-beige ">View Repo</button>
