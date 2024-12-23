@@ -44,7 +44,7 @@
         missing or faulty data. This can be confirmed by checking the dataset for the value under the "quality" flag for those years.</p>
       </div>
       <div class="mt-10 h-screen w-full bg-theme-blue mx-2 my-2">
-        <iframe src="https://drive.google.com/file/d/1_zoizWN73w2zIMHA_bSBvlmk536ZsXyX/preview" class="h-full w-full px-2 py-2"></iframe>
+        <iframe src="https://drive.google.com/file/d/10_-LYpByoeLmu_9RQfUqIQdLxBPMe9ph/preview" class="h-full w-full px-2 py-2"></iframe>
       </div>
     </div>
 </template>
