@@ -12,11 +12,11 @@
     </div>
 
     <div class="hidden xxs:flex w-full text-center justify-center">
-      <h1 class="hidden lg:flex bg-theme-blue text-dark-beige px-10 py-2 rounded-full text-xl mx-8 lg:mx-28 xl:mx-80">Project Information</h1>
-      <h1 class="relative bg-theme-blue text-dark-beige px-10 py-2 rounded-full text-xl mx-8 lg:mx-28 xl:mx-80">Project Report</h1>
+      <h1 class="hidden lg:flex bg-theme-blue text-dark-beige px-10 py-2 rounded-full text-xl mx-8 lg:mx-28 2xl:mx-80">Project Information</h1>
+      <h1 class="relative bg-theme-blue text-dark-beige px-10 py-2 rounded-full text-xl mx-8 lg:mx-28 2xl:mx-80">Project Report</h1>
     </div>
     <div class="hidden xxs:flex w-full">
-      <div class="hidden lg:block mt-10 h-screen w-full bg-theme-blue mx-2 my-2 px-5 py-6 text-white content-center">
+      <div class="hidden lg:block mt-10 h-screen w-full bg-theme-blue mx-2 my-2 px-5 py-6 text-white text-xs 2xl:text-sm content-center">
         <p class="font-bold underline underline-offset-4">Dataset:</p>
         <p class="pt-2 pb-10">The Mars orbital image (HiRISE) labeled dataset that was used for this project contains a total of 73,031 landmark images that were detected and extracted from HiRISE browse images. 
         A total of 10,433 landmarks that were detected and extracted from 180 HiRISE browse images. These landmark images were cropped with a 30-pixel margin added to all four sides. Each cropped image was resized to 227x227 pixels, 

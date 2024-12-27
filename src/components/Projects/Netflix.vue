@@ -12,11 +12,11 @@
     </div>
 
     <div class="hidden xxs:flex w-full text-center justify-center">
-      <h1 class="hidden lg:flex bg-theme-blue text-dark-beige px-10 py-2 rounded-full text-xl mx-8 lg:mx-28 xl:mx-80">Project Information</h1>
-      <h1 class="relative bg-theme-blue text-dark-beige px-10 py-2 rounded-full text-xl mx-8 lg:mx-28 xl:mx-80">Project Report</h1>
+      <h1 class="hidden lg:flex bg-theme-blue text-dark-beige px-10 py-2 rounded-full text-xl mx-8 lg:mx-28 2xl:mx-80">Project Information</h1>
+      <h1 class="relative bg-theme-blue text-dark-beige px-10 py-2 rounded-full text-xl mx-8 lg:mx-28 2xl:mx-80">Project Report</h1>
     </div>
     <div class="hidden xxs:flex w-full">
-      <div class="hidden lg:block mt-10 h-screen w-full bg-theme-blue mx-2 my-2 px-5 py-6 text-white content-center">
+      <div class="hidden lg:block mt-10 h-screen w-full bg-theme-blue mx-2 my-2 px-5 py-6 text-white text-xs 2xl:text-sm content-center">
         <p class="font-bold underline underline-offset-4">Dataset:</p>
         <p class="pt-2 pb-10">The first dataset provides statistics related to every country Netflix is offered in. This includes the total library size, number of TV shows, number of movies, and cost of each plan tier 
         (Basic, Standard, or Premium). 
@@ -38,13 +38,7 @@
         <p class="font-bold underline underline-offset-4">Approach:</p>
         <p class="pt-2 pb-10">Create an interactive data dashboard using Tableau for users explore different metrics and filter by countries and demographics:
           <br>
-          • Map: Show shaded country map based on metric currently selected.
-          <br>
-          • Statistics: Show every metric based on country selected.
-          <br>
-          • Bar Graphs: Show metric for every country in descending order to easily identify highest and lowest country per metric. Show counts of users based on demographic filter selected.
-          <br>
-          • Interactive Dashboard: Create an interactive dashboard that allows filtering of every metric, demographic filter and by country by clicking on the charts.
+          • Interactive Dashboard: Create an interactive dashboard that allows filtering of every metric, demographic filter and by country by clicking on the map or different charts.
           <br>
           • Filters: Allow filtering for any specific market or demographic data based on user preference. Enable filtering by clicking on the charts to allow users to obtains specific data.
         </p>

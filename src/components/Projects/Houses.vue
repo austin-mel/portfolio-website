@@ -12,11 +12,11 @@
     </div>
 
     <div class="hidden xxs:flex w-full text-center justify-center">
-      <h1 class="hidden lg:flex bg-theme-blue text-dark-beige px-10 py-2 rounded-full text-xl mx-8 lg:mx-28 xl:mx-80">Project Information</h1>
-      <h1 class="relative bg-theme-blue text-dark-beige px-10 py-2 rounded-full text-xl mx-8 lg:mx-28 xl:mx-80">Project Report</h1>
+      <h1 class="hidden lg:flex bg-theme-blue text-dark-beige px-10 py-2 rounded-full text-xl mx-8 lg:mx-28 2xl:mx-80">Project Information</h1>
+      <h1 class="relative bg-theme-blue text-dark-beige px-10 py-2 rounded-full text-xl mx-8 lg:mx-28 2xl:mx-80">Project Report</h1>
     </div>
     <div class="hidden xxs:flex w-full">
-      <div class="hidden lg:block mt-10 h-screen w-full bg-theme-blue mx-2 my-2 px-5 py-6 text-white content-center">
+      <div class="hidden lg:block mt-10 h-screen w-full bg-theme-blue mx-2 my-2 px-5 py-6 text-white text-xs 2xl:text-sm content-center">
         <p class="font-bold underline underline-offset-4">Dataset:</p>
         <p class="pt-2 pb-10">The data used for this project was a publicly available dataset containing 2140 images. Each house is represented by four images for bedroom, bathroom, kitchen and a frontal image of the exterior. 
         The textual data consists of the number of bedrooms, number of bathrooms, area code, zip code, and price of the house. Each row in the textual data represents the number of the house in order.</p>

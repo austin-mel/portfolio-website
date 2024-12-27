@@ -15,11 +15,11 @@
     </div>
 
     <div class="hidden xxs:flex w-full text-center justify-center">
-      <h1 class="hidden lg:flex bg-theme-blue text-dark-beige px-10 py-2 rounded-full text-xl mx-8 lg:mx-28 xl:mx-80">Project Information</h1>
-      <h1 class="relative bg-theme-blue text-dark-beige px-10 py-2 rounded-full text-xl mx-8 lg:mx-28 xl:mx-80">Project Report</h1>
+      <h1 class="hidden lg:flex bg-theme-blue text-dark-beige px-10 py-2 rounded-full text-xl mx-8 lg:mx-28 2xl:mx-80">Project Information</h1>
+      <h1 class="relative bg-theme-blue text-dark-beige px-10 py-2 rounded-full text-xl mx-8 lg:mx-28 2xl:mx-80">Project Report</h1>
     </div>
     <div class="hidden xxs:flex w-full">
-      <div class="hidden lg:block mt-10 h-screen w-full bg-theme-blue mx-2 my-2 px-5 py-6 text-white">
+      <div class="hidden lg:block mt-10 h-screen w-full bg-theme-blue mx-2 my-2 px-5 py-6 text-white text-xs content-center">
         <p class="font-bold underline underline-offset-4">Dataset:</p>
         <p class="pt-2 pb-10">The NOAA Global Historical Climatology Network Daily (GHCN-Daily) dataset contains daily observations over global land areas. It contains station-based measurements from land-based stations worldwide.
         GHCN-Daily is a composite of climate records from numerous sources that were merged together and subjected to a common suite of quality assurance reviews. The directory is structured by year from 1750 to present, with each

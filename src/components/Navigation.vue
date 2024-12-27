@@ -17,11 +17,13 @@ const current_page = ref('Home');
       <!-- This is added to create a space between the logo and the nav buttons -->
       <div class="hidden xxs:flex xxs:flex-1"></div>
       <div class="hidden justify-end xxs:inline-flex xxs:mx-5">
+        <!--
         <RouterLink @click="current_page = 'Home'" to="/" class="flex-none overflow-hidden">
             <h1 v-if="current_page === 'Home'" class="mx-1 xs:mx-5 text-theme-blue font-bold text-sm xs:text-base sm:text-3xl hover:text-dark-beige hover:animate-pulse">Home</h1>
             <h1 v-else-if="current_page !== 'Home'" class="mx-1 xs:mx-5 text-theme-blue text-sm xs:text-base sm:text-3xl hover:text-dark-beige hover:animate-pulse">Home</h1>
         </RouterLink>
-        <RouterLink @click="current_page = 'Projects'" to="/projects" class="flex-none overflow-hidden">
+        -->
+        <RouterLink @click="current_page = 'Projects'" to="/" class="flex-none overflow-hidden">
             <h1 v-if="current_page === 'Projects'" class="mx-1 xs:mx-5 text-theme-blue font-bold text-sm xs:text-base sm:text-3xl hover:text-dark-beige hover:animate-pulse">Projects</h1>
             <h1 v-else-if="current_page !== 'Projects'" class="mx-1 xs:mx-5 text-theme-blue text-sm xs:text-base sm:text-3xl hover:text-dark-beige hover:animate-pulse">Projects</h1>
         </RouterLink>
@@ -45,11 +47,13 @@ const current_page = ref('Home');
                 <img :src="AMSignature" class="hidden xxs:flex h-auto max-w-40" alt="AM Signature Logo" />
             </a>
             <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-light-beige sm:mb-0">
+                <!--
                 <li>
                     <a href="/" class="hover:underline me-4 md:me-6">Home</a>
                 </li>
+                -->
                 <li>
-                    <a href="/projects" class="hover:underline me-4 md:me-6">Projects</a>
+                    <a href="/" class="hover:underline me-4 md:me-6">Projects</a>
                 </li>
                 <li>
                     <a href="/resume" class="hover:underline me-4 md:me-6">Resume</a>

@@ -12,11 +12,11 @@
     </div>
 
     <div class="hidden xxs:flex w-full text-center justify-center">
-      <h1 class="hidden lg:flex bg-theme-blue text-dark-beige px-10 py-2 rounded-full text-xl mx-8 lg:mx-28 xl:mx-80">Project Information</h1>
-      <h1 class="hidden lg:flex bg-theme-blue text-dark-beige px-10 py-2 rounded-full text-xl mx-8 lg:mx-28 xl:mx-80">Project Documents</h1>
+      <h1 class="hidden lg:flex bg-theme-blue text-dark-beige px-10 py-2 rounded-full text-xl mx-8 lg:mx-28 2xl:mx-80">Project Information</h1>
+      <h1 class="hidden lg:flex bg-theme-blue text-dark-beige px-10 py-2 rounded-full text-xl mx-8 lg:mx-28 2xl:mx-80">Project Documents</h1>
     </div>
     <div class="hidden xxs:flex w-full">
-      <div class="hidden lg:block mt-10 h-screen w-full bg-theme-blue mx-2 my-2 px-5 py-6 text-white">
+      <div class="hidden lg:block mt-10 h-screen w-full bg-theme-blue mx-2 my-2 px-5 py-6 text-white text-sm 2xl:text-xs center-content">
         <p class="font-bold underline underline-offset-4">Description:</p>
         <p class="pt-2 pb-10">Semester-long class project for a Software Engineering course at Sacramento State. Students worked in large teams of six members to build communication, collaboration, and teamwork skills. Each team
           designated one member as the "Team Lead", who was in-charge of team coordination and ensuring overall progress for each bi-weekly sprint. Our class was assigned the real-world external client Vendia, a cloud-hosted and
@@ -33,8 +33,8 @@
         We used React.js as our front-end interface as well as Bootstrap for our front-end styling framework. As mandated by our project requirements, we used Vendia as our back-end data storage solution and managed data flow using data ACLS and smart contracts. 
         </p>
 
-        <p class="font-bold underline underline-offset-4">Use Case:</p>
-        <p class="pt-2 pb-10">Pharma company “Bavaria'' is working with “Jane Hopkins Hospital”, on a phase 3 medical trial for a new antiviral medication involving ~100 patients. The trial is monitored by the FDA and
+        <p class="hidden 2xl:flex font-bold underline underline-offset-4">Use Case:</p>
+        <p class="hidden 2xl:flex pt-2 pb-10">Pharma company “Bavaria'' is working with “Jane Hopkins Hospital”, on a phase 3 medical trial for a new antiviral medication involving ~100 patients. The trial is monitored by the FDA and
         focused on effectiveness. Researchers at Jane Hopkins have reviewed a set of patients that they intend to include in the study. They want to use a smart contract that the other parties can read to verify the
         eligibility criteria. Once a patient is “accepted” per smart contract, Jane Hopkins will share their record with Bavaria and the FDA. However, they will not share any personal information on file. Personal details
         would only be shared with the FDA, if an investigation was necessary, for example due to unexpected side effects.
