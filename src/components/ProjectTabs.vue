@@ -1,12 +1,13 @@
 <script setup>
 import Weather from "./Projects/Weather.vue";
 import SIRModel from "./Projects/SIRModel.vue";
-import Genes from "./Projects/Genes.vue";
+import Netflix from "./Projects/Netflix.vue";
 import { ref } from "vue";
 import Mars from "./Projects/Mars.vue";
 import Pharma from "./Projects/Pharma.vue";
 import Houses from "./Projects/Houses.vue";
 import Mobile from "./Mobile.vue";
+import Portfolio from "./Projects/Portfolio.vue";
 
 const ProjectSection = ref('DA');
 const ProjectVisible = ref('Weather');
@@ -38,11 +39,11 @@ const ProjectVisible = ref('Weather');
     <div v-if="ProjectSection === 'DA'" class="justify-items-center">
       <div class="hidden md:flex">
       <div v-if="ProjectVisible !== 'Weather'" class="inline-block mx-5 px-5 py-5 w-48 h-64 lg:w-60 lg:h-80 rounded bg-dark-beige border-theme-blue border-4">
-          <h1 class="whitespace-normal text-center text-lg mb-16 lg:text-2xl lg:mb-36 text-white">Weather Data Analysis</h1>
+          <h1 class="whitespace-normal text-center text-lg mb-16 lg:text-2xl lg:mb-36 text-white">Global Weather Temperature Data</h1>
           <button @click="ProjectVisible = 'Weather'" class="w-full bg-light-beige font-bold text-black py-2 px-10 rounded-full">View Project</button>
       </div>
       <div v-if="ProjectVisible === 'Weather'" class="inline-block mx-5 px-5 py-5 w-48 h-64 lg:w-60 lg:h-80 rounded bg-theme-blue border-theme-blue border-4">
-          <h1 class="text-center text-lg mb-16 lg:text-2xl lg:mb-36 text-white">Weather Data Analysis</h1>
+          <h1 class="text-center text-lg mb-16 lg:text-2xl lg:mb-36 text-white">Global Weather Temperature Data</h1>
           <button @click="ProjectVisible = 'Weather'" class="w-full bg-light-beige font-bold text-black py-2 px-10 rounded-full">View Project</button>
       </div>
       <div v-if="ProjectVisible !== 'SIR'" class="inline-block mx-5 px-5 py-5 w-48 h-64 lg:w-60 lg:h-80 rounded bg-dark-beige border-theme-blue border-4">
@@ -53,19 +54,19 @@ const ProjectVisible = ref('Weather');
           <h1 class="text-center text-lg mb-16 lg:text-2xl lg:mb-36 text-white">SIR Model Simulation</h1>
           <button @click="ProjectVisible = 'SIR'" class="w-full bg-light-beige font-bold text-black py-2 px-10 rounded-full">View Project</button>
       </div>
-      <div v-if="ProjectVisible !== 'Genes'" class="inline-block mx-5 px-5 py-5 w-48 h-64 lg:w-60 lg:h-80 rounded bg-dark-beige border-theme-blue border-4">
-          <h1 class="text-center text-lg mb-16 lg:text-2xl lg:mb-36 text-white">Gene Expression Analysis</h1>
-          <button @click="ProjectVisible = 'Genes'" class="w-full bg-light-beige font-bold text-black py-2 px-10 rounded-full">View Project</button>
+      <div v-if="ProjectVisible !== 'Netflix'" class="inline-block mx-5 px-5 py-5 w-48 h-64 lg:w-60 lg:h-80 rounded bg-dark-beige border-theme-blue border-4">
+          <h1 class="text-center text-lg mb-16 lg:text-2xl lg:mb-36 text-white">Netflix Subscription Data</h1>
+          <button @click="ProjectVisible = 'Netflix'" class="w-full bg-light-beige font-bold text-black py-2 px-10 rounded-full">View Project</button>
       </div>
-      <div v-if="ProjectVisible === 'Genes'" class="inline-block mx-5 px-5 py-5 w-48 h-64 lg:w-60 lg:h-80 rounded bg-theme-blue border-theme-blue border-4">
-          <h1 class="text-center text-lg mb-16 lg:text-2xl lg:mb-36 text-white">Gene Expression Analysis</h1>
-          <button @click="ProjectVisible = 'Genes'" class="w-full bg-light-beige font-bold text-black py-2 px-10 rounded-full">View Project</button>
+      <div v-if="ProjectVisible === 'Netflix'" class="inline-block mx-5 px-5 py-5 w-48 h-64 lg:w-60 lg:h-80 rounded bg-theme-blue border-theme-blue border-4">
+          <h1 class="text-center text-lg mb-16 lg:text-2xl lg:mb-36 text-white">Netflix Subscription Data</h1>
+          <button @click="ProjectVisible = 'Netflix'" class="w-full bg-light-beige font-bold text-black py-2 px-10 rounded-full">View Project</button>
       </div>
     </div>
     <div class="relative md:hidden">
       <button @click="ProjectVisible = 'Weather'" class="w-full bg-theme-blue font-bold text-white my-2 py-2 px-10 rounded-full">Weather Data</button>
       <button @click="ProjectVisible = 'SIR'" class="w-full bg-theme-blue font-bold text-white my-2 py-2 px-10 rounded-full">SIR Model</button>
-      <button @click="ProjectVisible = 'Genes'" class="w-full bg-theme-blue font-bold text-white my-2 py-2 px-10 rounded-full">Gene Analysis</button>
+      <button @click="ProjectVisible = 'Netflix'" class="w-full bg-theme-blue font-bold text-white my-2 py-2 px-10 rounded-full">Netflix Data</button>
     </div>
 
       <div class="flex w-full justify-center mt-20">
@@ -75,8 +76,8 @@ const ProjectVisible = ref('Weather');
         <div v-else-if="ProjectVisible === 'SIR'" class="justify-items-center">
           <SIRModel/>
         </div>
-        <div v-else-if="ProjectVisible === 'Genes'" class="justify-items-center">
-          <Genes/>
+        <div v-else-if="ProjectVisible === 'Netflix'" class="justify-items-center">
+          <Netflix/>
         </div>
       </div>
     </div>
@@ -124,11 +125,11 @@ const ProjectVisible = ref('Weather');
           <button @click="ProjectVisible = 'Pharma'" class="w-full bg-light-beige font-bold text-black py-2 px-10 rounded-full">View Project</button>
       </div>
       <div v-if="ProjectVisible !== 'Portfolio'" class="inline-block mx-5 px-5 py-5 w-48 h-64 lg:w-60 lg:h-80 rounded bg-dark-beige border-theme-blue border-4">
-          <h1 class="text-center text-lg mb-16 lg:text-2xl lg:mb-36 text-white">VueJS Portfolio Website</h1>
+          <h1 class="text-center text-lg mb-16 lg:text-2xl lg:mb-36 text-white">Vue.js Portfolio Website</h1>
           <button @click="ProjectVisible = 'Portfolio'" class="w-full bg-light-beige font-bold text-black py-2 px-10 rounded-full">View Project</button>
       </div>
       <div v-if="ProjectVisible === 'Portfolio'" class="inline-block mx-5 px-5 py-5 w-48 h-64 lg:w-60 lg:h-80 rounded bg-theme-blue border-theme-blue border-4">
-          <h1 class="text-center text-lg mb-16 lg:text-2xl lg:mb-36 text-white">VueJS Portfolio Website</h1>
+          <h1 class="text-center text-lg mb-16 lg:text-2xl lg:mb-36 text-white">Vue.js Portfolio Website</h1>
           <button @click="ProjectVisible = 'Portfolio'" class="w-full bg-light-beige font-bold text-black py-2 px-10 rounded-full">View Project</button>
       </div>
     </div>
@@ -142,7 +143,7 @@ const ProjectVisible = ref('Weather');
           <Pharma/>
         </div>
         <div v-else-if="ProjectVisible === 'Portfolio'" class="justify-items-center">
-          test
+          <Portfolio/>
         </div>
       </div>
     </div>
