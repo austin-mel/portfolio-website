@@ -5,7 +5,7 @@
 <template>
     <h1 class="font-bold text-xl text-center">Global Weather Temperature Data Analysis</h1>
 
-    <div class="flex mb-10">
+    <div class="block xxs:grid lg:flex mb-10">
       <a target="_blank" href="https://public.tableau.com/views/WeatherData_17348473855980/Dashboard3?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link">
         <button class="bg-transparent font-bold h-32 text-theme-blue py-2 px-20 mx-10 my-5 border-2 border-theme-blue rounded-full w-auto xxs:w-72 xs:w-96 hover:bg-dark-beige ">Tableau Dashboard</button>
       </a>
