@@ -27,7 +27,7 @@
 
         <p class="font-bold underline underline-offset-4">Approach:</p>
         <p class="pt-2 pb-10">Use matrices to represent a population where each point represents an individual person. Allow users to create a matrix to use via built-in functions, or accept any input given its a valid matrix.
-        Allow infection to spread to neighboring cells from already infected cells based on specified infection spread probabilty. Additionally, allow the option to enable fatalities.</p>
+        Allow infection to spread to neighboring cells from already infected cells based on specified infection spread probability. Additionally, allow the option to enable fatalities.</p>
 
         <p class="font-bold underline underline-offset-4">Conclusions:</p>
         <p class="pt-2 pb-10">The package can be used for basic and advanced analysis into patterns and probabilities of infection spread, gaining immunity, fatality, as well as total proportion of healthy, immune, and deceased cells. As shown at the very bottom of the vignette example, the center cells are generally more likely to become infected.

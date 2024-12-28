@@ -29,7 +29,7 @@
         <p class="font-bold underline underline-offset-4">Description:</p>
         <p class="pt-2 pb-10">Create an interactive visualization in order to gain insights on the differences in plan costs and library sizes of Netflix catalogs in different countries. Additionally, using a sample Netflix user base dataset
         gain an insight on user demographics such as age, gender, device type, subscription type, as well as number of users gained and lost per month in selected countries. It can be used for analysis and modeling to understand user trends,
-        preferences, and revenue genration within a hypothetical Netflix userbase.</p>
+        preferences, and revenue generation within a hypothetical Netflix userbase.</p>
 
         <p class="font-bold underline underline-offset-4">Objective:</p>
         <p class="pt-2 pb-10">Identify user trends, preferences, and demographics for the different markets in which Netflix operates. Conduct a cost assessment to identify the underpriced or overpriced markets based on library
