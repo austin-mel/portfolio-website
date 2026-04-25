@@ -1,18 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Projects from '@/views/Projects.vue'
 import Resume from '@/views/Resume.vue'
-import Home from '@/views/Home.vue'
+import HomeView from '@/views/HomeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/home',
+      path: '/',
       name: 'home',
-      component: Home,
+      component: HomeView,
     },
     {
-      path: '/',
+      path: '/projects',
       name: 'Projects',
       component: Projects,
     },
@@ -22,6 +22,9 @@ const router = createRouter({
       component: Resume,
     },
   ],
-})
-
-export default router
+  scrollBehavior() {
+    return { top: 0 };
+  },
+});
+ 
+export default router;
