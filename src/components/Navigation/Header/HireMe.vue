@@ -7,7 +7,7 @@ const goToContact = () => router.push('/contact');
 </script>
  
 <template>
-    <button class="nav-cta" @click="goToContact">Hire me</button>
+    <button class="nav-cta" @click="goToContact">Hire me!</button>
 </template>
  
 <style scoped>

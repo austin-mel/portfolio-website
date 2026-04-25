@@ -8,8 +8,8 @@ export default {
     extend: {
       colors: {
         'theme-blue': '#102C57',
-        'dark-beige': '#DAC0A3',
-        'light-beige': '#EADBC8',
+        'dark-beige': '#d6c6a8',
+        'light-beige': '#f5f0e6',
       },
     },
     screens: {

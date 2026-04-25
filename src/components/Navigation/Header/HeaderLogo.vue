@@ -23,7 +23,7 @@ import { AMLogo, AMSignature, AMInitials } from "@/assets/index"
   font-family: var(--font-d); font-size: 17px; font-weight: 700; color: var(--ink);
   letter-spacing: -0.3px; display: flex; align-items: center; gap: 10px;
 }
-.logo-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent2); }
+.logo-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
 .logo-img { width: 75px; height: 75px; }
 .nav-links { display: flex; gap: 2px; }
 .nav-btn {
