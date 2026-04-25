@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import NavBar from '@/components/Navigation/Header/NavBar.vue';
+import { NavBar, Footer } from '@/components';
 </script>
 
 <template>
   <NavBar />
   <router-view />
   <!-- <ProjectModal /> -->
+  <Footer />
 </template>
