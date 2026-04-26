@@ -7,9 +7,61 @@ export default {
   theme: {
     extend: {
       colors: {
-        'theme-blue': '#102C57',
-        'dark-beige': '#d6c6a8',
-        'light-beige': '#f5f0e6',
+        cream: '#faf8f4',
+        cream2: '#f3efe8',
+        cream3: '#ede8de',
+
+        ink: '#0d1117',
+        ink2: '#2c3340',
+        ink3: '#5a6272',
+        ink4: '#9aa0ad',
+
+        accent: '#102C57',
+        accent2: '#1d4ed8',
+        'accent-light': '#dbeafe',
+        'accent-pale': '#eff6ff',
+
+        gold: '#c8960c',
+
+        border: '#e4ddd0',
+        border2: '#cfc8b8',
+      },
+
+      fontFamily: {
+        sans: ['DM Sans', 'sans-serif'],
+        display: ['Playfair Display', 'serif'],
+        mono: ['DM Mono', 'monospace'],
+      },
+
+      boxShadow: {
+        soft: '0 8px 24px rgba(29, 78, 216, 0.25)',
+        subtle: '0 4px 12px rgba(13, 17, 23, 0.08)',
+      },
+
+      borderRadius: {
+        md: '10px', // matches your buttons/cards
+      },
+
+      spacing: {
+        // only adding what appears in your CSS
+        13: '3.25rem', // for padding like 13px equivalent if needed
+      },
+
+      keyframes: {
+        fadeUp: {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(22px)',
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+        },
+      },
+
+      animation: {
+        'fade-up': 'fadeUp 0.6s ease forwards',
       },
     },
     screens: {

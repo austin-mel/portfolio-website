@@ -1,69 +1,43 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
-import type { NavItem } from '@/types';
+import { NavItem } from '@/types/types';
 import { HeaderLogo, HireMe } from '@/components';
- 
+
 const route = useRoute();
 const router = useRouter();
- 
+
 const items: NavItem[] = [
   { id: 'home', label: 'Home', path: '/' },
   { id: 'projects', label: 'Projects', path: '/projects' },
   { id: 'resume', label: 'Resume', path: '/resume' },
   { id: 'contact', label: 'Contact', path: '/contact' },
 ];
- 
+
 const isActive = (path: string) => route.path === path;
- </script>
- 
+</script>
+
 <template>
-  <header class="header">
+<header
+  class="fixed top-0 left-0 right-0 z-[100] grid grid-cols-3 items-center h-[75px] px-4 sm:px-8 lg:px-12 bg-[rgba(250,248,244,0.88)] backdrop-blur-[20px] border-b border-border"
+>
+  <HeaderLogo class="hidden sm:flex justify-self-start" />
 
-    <HeaderLogo />
+  <nav class="col-span-3 sm:col-span-1 justify-self-center flex gap-[2px] overflow-x-auto no-scrollbar">
+    <button
+      v-for="item in items"
+      :key="item.id"
+      @click="router.push(item.path)"
+      class="whitespace-nowrap px-3 sm:px-4 py-[7px] rounded-[8px] text-[13px] font-normal font-sans transition-colors duration-150"
+      :class="[
+        isActive(item.path)
+          ? 'bg-accent-pale text-accent font-medium'
+          : 'hover:bg-cream2 hover:text-ink text-ink3'
+      ]"
+    >
+      {{ item.label }}
+    </button>
+  </nav>
 
-    <nav class="nav-links">
-      <button
-        v-for="item in items"
-        :key="item.id"
-        class="nav-btn"
-        :class="{ active: isActive(item.path) }"
-        @click="router.push(item.path)"
-      >
-        {{ item.label }}
-      </button>
-    </nav>
-
-    <HireMe />
-
-  </header>
+  <HireMe class="hidden lg:flex justify-self-end" />
+</header>
 </template>
- 
-<style scoped>
-.header {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 3rem; height: 62px;
-  background: rgba(250, 248, 244, 0.88);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-}
-.logo {
-  font-family: var(--font-d); font-size: 17px; font-weight: 700; color: var(--ink);
-  letter-spacing: -0.3px; display: flex; align-items: center; gap: 10px;
-}
-.logo-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent2); }
-.nav-links { display: flex; gap: 2px; }
-.nav-btn {
-  background: none; border: none; cursor: pointer; padding: 7px 16px; border-radius: 8px;
-  font-size: 13px; font-weight: 400; color: var(--ink3); font-family: var(--font-b);
-  transition: background .15s, color .15s;
-}
-.nav-btn:hover { background: var(--cream2); color: var(--ink); }
-.nav-btn.active { background: var(--accent-pale); color: var(--accent); font-weight: 500; }
-.nav-cta {
-  background: var(--ink); color: #fff; border: none; cursor: pointer;
-  margin-left: 125px; padding: 12px 30px; border-radius: 9px; font-size: 14px; font-weight: 500;
-  font-family: var(--font-b); transition: background .15s, transform .1s; letter-spacing: 0.2px;
-}
-.nav-cta:hover { background: var(--accent); transform: translateY(-1px); }
-</style>
