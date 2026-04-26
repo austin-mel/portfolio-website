@@ -62,7 +62,7 @@ const isActive = (path: string) => route.path === path;
 .nav-btn.active { background: var(--accent-pale); color: var(--accent); font-weight: 500; }
 .nav-cta {
   background: var(--ink); color: #fff; border: none; cursor: pointer;
-  padding: 8px 20px; border-radius: 9px; font-size: 13px; font-weight: 500;
+  margin-left: 125px; padding: 12px 30px; border-radius: 9px; font-size: 14px; font-weight: 500;
   font-family: var(--font-b); transition: background .15s, transform .1s; letter-spacing: 0.2px;
 }
 .nav-cta:hover { background: var(--accent); transform: translateY(-1px); }

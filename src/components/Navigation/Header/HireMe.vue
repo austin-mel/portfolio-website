@@ -35,7 +35,7 @@ const goToContact = () => router.push('/contact');
 .nav-cta {
   background: var(--ink); color: #fff; border: none; cursor: pointer;
   padding: 8px 20px; border-radius: 9px; font-size: 13px; font-weight: 500;
-  font-family: var(--font-b); transition: background .15s, transform .1s; letter-spacing: 0.2px;
+  font-family: var(--font-b); transition: background .15s, transform .1s; letter-spacing: 0.5px;
 }
 .nav-cta:hover { background: var(--accent); transform: translateY(-1px); }
 </style>
