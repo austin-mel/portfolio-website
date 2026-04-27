@@ -48,21 +48,16 @@ export default {
       },
 
       keyframes: {
-        fadeUp: {
-          '0%': {
-            opacity: '0',
-            transform: 'translateY(22px)',
-          },
-          '100%': {
-            opacity: '1',
-            transform: 'translateY(0)',
-          },
-        },
-      },
-
-      animation: {
-        'fade-up': 'fadeUp 0.6s ease forwards',
-      },
+  fadeUp: { /* ...existing... */ },
+  marquee: {
+    '0%':   { transform: 'translateX(0)' },
+    '100%': { transform: 'translateX(-50%)' },
+  },
+},
+animation: {
+  'fade-up': 'fadeUp 0.6s ease forwards',
+  marquee: 'marquee 28s linear infinite',
+},
     },
     screens: {
       'xxs': '350px',
