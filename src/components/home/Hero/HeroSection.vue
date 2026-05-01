@@ -50,7 +50,7 @@ const heroShapes = [
       <p
         class="mt-6 sm:mt-8 max-w-[520px] w-full text-[16px] sm:text-[18px] leading-[1.7] text-ink3"
       >
-        Student double majoring in Computer Science and Statistics with emphasis in Data Science and applications of Machine Learning.
+        Recent graduate that double majored in Computer Science and Statistics with emphasis in Applied Statistics and intrest in applications of Machine Learning.
         <br /><br />
         Comfortable transforming complex datasets into strategies that drive real business decisions, eager to gain hands-on experience through internships and other work opportunities.
       </p>

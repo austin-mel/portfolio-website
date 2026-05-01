@@ -62,6 +62,7 @@ export interface JobEntry {
 export interface TimelineItem {
   date: string;
   title: string;
+  subtitle: string;
   company: string;
   description: string;
   delay?: number;

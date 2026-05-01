@@ -13,12 +13,14 @@ const categories: SkillCategory[] = [
     {
     icon: 'A', title: 'Programming Langauges', delay: .08,
     pills: [
-      { name: 'Python', highlight: true },
       { name: 'R', highlight: true },
+      { name: 'Python', highlight: true },
       { name: 'SQL', highlight: true },
       { name: 'C', highlight: false },
-      { name: 'Java', highlight: false },
+      { name: 'Typescript', highlight: false },
       { name: 'Bash', highlight: false },
+      { name: 'Java', highlight: false },
+      { name: 'Javascript', highlight: false },
     ],
   },
   {
@@ -36,8 +38,10 @@ const categories: SkillCategory[] = [
     icon: 'C', title: 'ML & Modeling', delay: .16,
     pills: [
       { name: 'TensorFlow', highlight: true },
-      { name: 'scikit-learn', highlight: false }, 
-      { name: 'statsmodels', highlight: false },
+      { name: 'scikit-learn', highlight: true }, 
+      { name: 'statsmodels', highlight: true },
+      { name: 'RStudio', highlight: false },
+      { name: 'Jupyter', highlight: false },
       { name: 'PyTorch', highlight: false },
       { name: 'NLTK', highlight: false }, 
       { name: 'Keras', highlight: false }, 
@@ -49,9 +53,9 @@ const categories: SkillCategory[] = [
       { name: 'Git', highlight: true }, 
       { name: 'AWS', highlight: true },
       { name: 'Docker', highlight: false },
-      { name: 'Neon.db', highlight: false },
       { name: 'Render', highlight: false },
       { name: 'Vercel', highlight: false }, 
+      { name: 'Vendia', highlight: false },
     ],
   },
     {
@@ -84,8 +88,8 @@ useScrollObserver('.anim-up,.skill-cat');
           </h2>
         </div>
         <p class="anim-up translate-y-[18px] text-[15px] font-light leading-[1.75] text-ink3 opacity-0 transition-all duration-[600ms] ease-out [&.vis]:translate-y-0 [&.vis]:opacity-100">
-          I choose technologies that fit the problem, not the other way around. Here's what I work with
-          every day and other tools I have reached for when project complexity demands it.
+          I choose technologies that fit the problem, not the other way around. These are the tools that I work with
+          every day and constantly reach for when project complexity demands it.
         </p>
       </div>
 
