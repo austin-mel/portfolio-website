@@ -1,3 +1,4 @@
 export * from "./Background";
-export * from "./MarqueeStrip";
-export * from "./Projects";
+export * from "./ProjectCanvas";
+export * from "../ui/Header";
+export * from "../ui/Footer";
