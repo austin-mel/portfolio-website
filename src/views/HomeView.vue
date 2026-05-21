@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AboutSection, CtaSection, HeroSection, MarqueeStrip, NumbersSection, SkillsSection, TimelineSection } from '@/components';
+import { AboutSection, CtaSection, FeaturedProjects, HeroSection, MarqueeStrip, NumbersSection, SkillsSection, TimelineSection } from '@/components';
 import { useScrollObserver } from '@/composables/useScrollObserver';
  
 useScrollObserver();
@@ -12,6 +12,7 @@ useScrollObserver();
     <AboutSection />
     <NumbersSection />
     <SkillsSection />
+    <FeaturedProjects />
     <TimelineSection />
     <CtaSection />
   </div>

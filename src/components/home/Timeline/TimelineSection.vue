@@ -10,13 +10,6 @@ const timelineShapes = [
 
 const items: TimelineItem[] = [
 {
-  date: '2022 — 2023',
-  title: 'Web Development Contractor',
-  subtitle: 'Computer Science Semester Project',
-  company: 'Vendia Cloud · Sacramento, CA',
-  description: 'Designed a pharmaceutical trial tracking portal prototype using Vendia Cloud, ensuring secure handling of sensitive patient data through robust access control mechanisms and privacy-focused architecture. Acted as Team Lead in a group of six using the AGILE framework, with bi-weekly sprints, client and advisor meetings.',
-},
-{
   date: '2024 — 2025',
   title: 'Software Engineering Contractor',
   subtitle: 'Computer Science Senior Project',
@@ -36,7 +29,7 @@ const items: TimelineItem[] = [
   date: '2025 — 2026',
   title: 'Statistical Research Consultant',
   subtitle: 'Statistics Senior Project',
-  company: 'Thermoschron Systems LLC · Sacramento, CA',
+  company: 'Thermochron Systems LLC · Sacramento, CA',
   description: 'Developed a comprehensize report analyzing and attempting to model baseline noise in sensor data to improve signal reliability and measurement accuracy. Applied statistical techniques to identify noise patterns, reduce variability, and support data-driven calibration decisions.',
   delay: .36,
 },

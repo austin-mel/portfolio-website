@@ -1,10 +1,4 @@
 <script setup lang="ts">
-/**
- * GeoLayer renders scattered geometric background shapes.
- * Pass shape definitions through the `shapes` prop, or use named slots for
- * fully custom layouts.
- */
-
 interface Shape {
   type: 'ring' | 'circle' | 'square' | 'dotGrid' | 'blob' | 'line';
   style: Record<string, string>;
