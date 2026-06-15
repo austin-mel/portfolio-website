@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { GeoLayer } from '@/components';
 import type { FactRow, Pillar } from '@/types/types';
+import SVGIcons from '@/assets/SVGIcons.vue';
 
 import { AMInitials } from "@/assets/index"
 
@@ -20,10 +21,10 @@ const facts: FactRow[] = [
 ];
 
 const pillars: Pillar[] = [
-  { icon: 'A',  title: 'Analytical rigor',        desc: 'Every insight is verified, reproducible, and backed by clean data.' },
-  { icon: 'B', title: 'Infrastructure thinking', desc: 'I build systems that scale, not one-off queries that break in a month.' },
-  { icon: 'C',  title: 'Clear communication',     desc: 'I translate data into decisions for technical and non-technical audiences alike.' },
-  { icon: 'D',  title: 'Speed to impact',         desc: 'Fast iteration, tight feedback loops, and a bias toward shipping value.' },
+  { icon: 'chart',  title: 'Analytical rigor',        desc: 'Every insight is verified, reproducible, and backed by clean data.' },
+  { icon: 'database', title: 'Infrastructure thinking', desc: 'I build systems that scale, not one-off queries that break in a month.' },
+  { icon: 'communication',  title: 'Clear communication',     desc: 'I translate data into decisions for technical and non-technical audiences alike.' },
+  { icon: 'lightning',  title: 'Speed to impact',         desc: 'Fast iteration, tight feedback loops, and a bias toward shipping value.' },
 ];
 </script>
 
@@ -85,7 +86,9 @@ const pillars: Pillar[] = [
             :key="p.title"
             class="rounded-xl border border-border bg-white p-5 transition-all hover:-translate-y-0.5 hover:border-accent2 hover:shadow-[0_6px_20px_rgba(13,17,23,0.08)]"
           >
-            <div class="mb-2.5 text-[22px]">{{ p.icon }}</div>
+            <div class="mb-2.5 flex h-10 w-10 items-center justify-center rounded-[10px] bg-accent-pale text-accent">
+              <SVGIcons :name="p.icon" class="h-5 w-5" />
+            </div>
             <div class="mb-1 text-xs font-semibold text-ink">{{ p.title }}</div>
             <div class="text-[11px] leading-normal text-ink4">{{ p.desc }}</div>
           </div>

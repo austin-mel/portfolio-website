@@ -2,6 +2,7 @@
 import { useRouter } from 'vue-router';
 import { GeoLayer, ProjectCanvas } from '@/components/ui';
 import { useScrollObserver } from '@/composables/useScrollObserver';
+import SVGIcons from '@/assets/SVGIcons.vue';
 import type { Project } from '@/types/types';
 
 const router = useRouter();
@@ -98,7 +99,8 @@ useScrollObserver('.anim-up,.feat-card');
           type="button"
           @click="router.push('/projects')"
         >
-          See all projects ->
+          See all projects
+          <SVGIcons name="arrowForward" class="h-3.5 w-3.5" />
         </button>
       </div>
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { GeoLayer } from '@/components';
 import { useScrollObserver } from '@/composables/useScrollObserver';
+import SVGIcons from '@/assets/SVGIcons.vue';
 import type { SkillCategory } from '@/types/types';
 
 const skillsShapes = [
@@ -11,7 +12,7 @@ const skillsShapes = [
 
 const categories: SkillCategory[] = [
     {
-    icon: 'A', title: 'Programming Langauges', delay: .08,
+    icon: 'code', title: 'Programming Langauges', delay: .08,
     pills: [
       { name: 'R', highlight: true },
       { name: 'Python', highlight: true },
@@ -24,7 +25,7 @@ const categories: SkillCategory[] = [
     ],
   },
   {
-    icon: 'B', title: 'Data Analysis & Visualization', delay: 0,
+    icon: 'chart', title: 'Data Analysis & Visualization', delay: 0,
     pills: [
       { name: 'Airflow', highlight: true },
       { name: 'Tableau',  highlight: true },
@@ -35,7 +36,7 @@ const categories: SkillCategory[] = [
     ],
   },
   {
-    icon: 'C', title: 'ML & Modeling', delay: .16,
+    icon: 'model', title: 'ML & Modeling', delay: .16,
     pills: [
       { name: 'TensorFlow', highlight: true },
       { name: 'scikit-learn', highlight: true }, 
@@ -48,7 +49,7 @@ const categories: SkillCategory[] = [
     ],
   },
   {
-    icon: 'D', title: 'Cloud & Infrastructure', delay: .24,
+    icon: 'cloud', title: 'Cloud & Infrastructure', delay: .24,
     pills: [ 
       { name: 'Git', highlight: true }, 
       { name: 'AWS', highlight: true },
@@ -59,7 +60,7 @@ const categories: SkillCategory[] = [
     ],
   },
     {
-    icon: 'E', title: 'Other Technologies', delay: .16,
+    icon: 'database', title: 'Other Technologies', delay: .16,
     pills: [
       { name: 'Vue.js', highlight: true },
       { name: 'Figma', highlight: true }, 
@@ -101,7 +102,9 @@ useScrollObserver('.anim-up,.skill-cat');
           class="skill-cat translate-y-4 rounded-[14px] border border-border bg-white p-7 opacity-0 transition-all duration-500 ease-out hover:-translate-y-[3px] hover:border-accent2 hover:shadow-[0_8px_32px_rgba(13,17,23,0.08)] [&.vis]:translate-y-0 [&.vis]:opacity-100"
           :style="cat.delay ? { transitionDelay: cat.delay + 's' } : {}"
         >
-          <div class="mb-3.5 text-2xl">{{ cat.icon }}</div>
+          <div class="mb-3.5 flex h-10 w-10 items-center justify-center rounded-[10px] bg-accent-pale text-accent">
+            <SVGIcons :name="cat.icon" class="h-5 w-5" />
+          </div>
           <div class="mb-3 text-[13px] font-semibold tracking-[-0.2px] text-ink">{{ cat.title }}</div>
           <div class="flex flex-wrap gap-1.5">
             <span

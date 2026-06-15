@@ -1,0 +1,1 @@
+export { default as PharmatrialProjectPage } from './PharmatrialProjectPage.vue';

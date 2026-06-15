@@ -2,6 +2,7 @@
 import { useRouter } from 'vue-router';
 import { GeoLayer } from '@/components';
 import { useScrollObserver } from '@/composables/useScrollObserver';
+import SVGIcons from '@/assets/SVGIcons.vue';
 
 const router = useRouter();
 
@@ -30,9 +31,12 @@ useScrollObserver('.anim-up');
 
       <div class="anim-up flex translate-y-[18px] flex-wrap justify-center gap-3.5 opacity-0 transition-all duration-[600ms] ease-out [&.vis]:translate-y-0 [&.vis]:opacity-100">
         <button
-          class="cursor-pointer rounded-[10px] bg-ink px-[30px] py-[13px] text-sm font-medium tracking-[0.2px] text-white transition-all hover:-translate-y-0.5 hover:bg-accent hover:shadow-soft"
+          class="inline-flex cursor-pointer items-center gap-2 rounded-[10px] bg-ink px-[30px] py-[13px] text-sm font-medium tracking-[0.2px] text-white transition-all hover:-translate-y-0.5 hover:bg-accent hover:shadow-soft"
           @click="router.push('/contact')"
-        >Get in touch →</button>
+        >
+          Get in touch
+          <SVGIcons name="arrowForward" class="h-4 w-4" />
+        </button>
         <button
           class="cursor-pointer rounded-[10px] border-[1.5px] border-border2 bg-transparent px-[30px] py-[13px] text-sm text-ink transition-all hover:-translate-y-0.5 hover:border-ink hover:bg-cream2"
           @click="router.push('/projects')"

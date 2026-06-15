@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import { GeoLayer } from '@/components';
+import SVGIcons from '@/assets/SVGIcons.vue';
 
 const router = useRouter();
 
@@ -58,10 +59,11 @@ const heroShapes = [
       <!-- Action Buttons -->
       <div class="py-12 flex flex-col sm:flex-row gap-3 sm:gap-4 items-center sm:items-start">
         <button
-          class="bg-ink text-white px-[30px] py-[13px] rounded-[10px] text-[14px] font-medium transition-all hover:bg-accent hover:-translate-y-[2px]"
+          class="inline-flex items-center gap-2 bg-ink text-white px-[30px] py-[13px] rounded-[10px] text-[14px] font-medium transition-all hover:bg-accent hover:-translate-y-[2px]"
           @click="router.push('/projects')"
         >
-          View my work →
+          View my work
+          <SVGIcons name="arrowForward" class="h-4 w-4" />
         </button>
 
         <button
@@ -94,7 +96,7 @@ const heroShapes = [
           <div class="text-[10px] text-ink4">College Graduate</div>
         </div>
         <div>
-          <div class="font-display text-[26px] font-bold text-ink tracking-[-1px]">10+</div>
+          <div class="font-display text-[26px] font-bold text-accent2 tracking-[-1px]">10+</div>
           <div class="text-[10px] text-ink4">Years Coding</div>
         </div>
         <div>

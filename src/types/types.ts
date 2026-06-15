@@ -39,6 +39,25 @@ export interface Project {
 
 export type FilterValue = ProjectCategory | 'all';
 
+export type AppIconName =
+  | 'add'
+  | 'arrowBack'
+  | 'arrowForward'
+  | 'chart'
+  | 'check'
+  | 'close'
+  | 'cloud'
+  | 'code'
+  | 'communication'
+  | 'database'
+  | 'error'
+  | 'lightning'
+  | 'menu'
+  | 'model'
+  | 'science'
+  | 'trash'
+  | 'uploadFile';
+
 export interface NavItem {
   id: 'home' | 'projects' | 'resume' | 'contact';
   label: string;
@@ -46,7 +65,7 @@ export interface NavItem {
 }
 
 export interface SkillCategory {
-  icon: string;
+  icon: AppIconName;
   title: string;
   pills: { name: string; highlight: boolean }[];
   delay?: number;
@@ -69,7 +88,7 @@ export interface TimelineItem {
 }
 
 export interface ContactLink {
-  icon: string;
+  icon: AppIconName;
   label: string;
   value: string;
 }
@@ -81,7 +100,7 @@ export interface FactRow {
 }
 
 export interface Pillar {
-  icon: string;
+  icon: AppIconName;
   title: string;
   desc: string;
 }
