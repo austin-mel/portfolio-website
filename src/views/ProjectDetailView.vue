@@ -1,21 +1,14 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent } from 'vue';
+import { computed } from 'vue';
 import { useRoute, RouterLink } from 'vue-router';
+import { getProjectComponent } from '@/components/projects/projectRegistry';
 
 const route = useRoute();
-
-const projectViews = {
-  pharmatrial: defineAsyncComponent(() => import('@/components/projects/ProjectPage/PharmatrialProjectPage.vue')),
-
-  // Future project pages go here:
-  // 'baseline-noise': defineAsyncComponent(() => import('@/views/projects/BaselineNoiseProjectView.vue')),
-  // 'scicomm-survey': defineAsyncComponent(() => import('@/views/projects/SciCommSurveyProjectView.vue')),
-};
 
 const slug = computed(() => String(route.params.slug ?? ''));
 
 const ProjectComponent = computed(() => {
-  return projectViews[slug.value as keyof typeof projectViews] ?? null;
+  return getProjectComponent(slug.value);
 });
 </script>
 

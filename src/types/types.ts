@@ -55,8 +55,10 @@ export type AppIconName =
   | 'menu'
   | 'model'
   | 'science'
+  | 'shield'
   | 'trash'
-  | 'uploadFile';
+  | 'uploadFile'
+  | 'visibilityOff';
 
 export interface NavItem {
   id: 'home' | 'projects' | 'resume' | 'contact';

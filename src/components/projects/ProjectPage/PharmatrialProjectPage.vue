@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import SVGIcons from '@/assets/SVGIcons.vue';
+import ProjectScreenshotLightbox from '@/components/projects/ProjectPage/ProjectScreenshotLightbox.vue';
+import type { AppIconName } from '@/types/types';
 
 import jhLogo from '@/assets/projects/pharmatrial/mini_jh_logo.svg';
 import bavariaLogo from '@/assets/projects/pharmatrial/mini_bavaria_logo.svg';
 import fdaLogo from '@/assets/projects/pharmatrial/fda_logo.svg';
 
+import bavariaDashboardScreenshot from '@/assets/projects/pharmatrial/bavaria-dash.png';
 import loginFormScreenshot from '@/assets/projects/pharmatrial/login-form.png';
 import jhApprovalScreenshot from '@/assets/projects/pharmatrial/jh-approval.png';
 import fdaAssignmentsScreenshot from '@/assets/projects/pharmatrial/fda-assignments.png';
@@ -140,52 +143,49 @@ const techStack = [
   'Vite',
 ];
 
-const narrativeTitle = 'A front-end simulation of a blinded clinical trial lifecycle.';
-
-const stateKicker = 'Implementation Story';
-
-const stateTitle = 'The source code models product rules as state, tabs, and guarded actions.';
-
-const apiKicker = 'Source Findings';
-
-const apiTitle = 'The strongest product signal is the role-and-state guardrail system.';
-
-const apiCards = [
+const apiCards: {
+  icon: AppIconName;
+  type: string;
+  title: string;
+  body: string;
+}[] = [
   {
+    icon: 'check',
     type: 'Functional requirements',
     title: '8 functional requirements',
     body: 'Portal login, patient management, review, sponsor workflow, FDA approval, assignment, disclosure, and reports.',
   },
   {
+    icon: 'shield',
     type: 'Security requirements',
     title: '4 security requirements',
     body: 'PII confidentiality, blinded assignment, role-based access, and workflow-state guardrails.',
   },
   {
+    icon: 'database',
     type: 'Data dictionary',
     title: 'Data dictionary coverage',
     body: 'Patient, trial, eligibility, enrollment, appointment, assignment, report, auth, and audit event models are defined.',
   },
   {
+    icon: 'communication',
     type: 'PII',
     title: 'Privacy boundary is product logic.',
     body: 'Jane Hopkins can see clinical PII; FDA and Bavaria see anonymized patient displays before disclosure.',
   },
   {
+    icon: 'visibilityOff',
     type: 'Blinding',
     title: 'Blinding is preserved until disclosure.',
     body: 'Hospital and sponsor users cannot inspect Bavaria/placebo assignment before final FDA publication.',
   },
   {
+    icon: 'chart',
     type: 'Lifecycle',
     title: 'Lifecycle is sequenced.',
     body: 'Creation, approvals, enrollment, batch submission, assignment, dosing, notification, disclosure, reports, and archive actions are represented.',
   },
 ];
-
-const outputKicker = 'Implementation Output';
-
-const outputTitle = 'The codebase has enough structure to read as a real product system.';
 
 const outputCards = [
   {
@@ -210,10 +210,6 @@ const outputCards = [
   },
 ];
 
-const validationKicker = 'Project Artifacts';
-
-const validationTitle = 'Reviewers can trace the product from docs to implementation.';
-
 const validationCards = [
   {
     type: 'Documentation',
@@ -231,39 +227,6 @@ const validationCards = [
     body: 'The Vite app uses typed domain models and reusable front-end workflow components.',
   },
 ];
-
-const conclusionTitle =
-  'Pharmatrial succeeds as a front-end systems prototype for regulated collaboration.';
-
-const activeScreenshotIndex = ref<number | null>(null);
-
-const activeScreenshot = computed(() => {
-  const index = activeScreenshotIndex.value;
-
-  return index === null ? null : programScreenshots[index] ?? null;
-});
-
-const openScreenshot = (index: number) => {
-  activeScreenshotIndex.value = index;
-};
-
-const closeScreenshot = () => {
-  activeScreenshotIndex.value = null;
-};
-
-const handleLightboxKeydown = (event: KeyboardEvent) => {
-  if (event.key === 'Escape' && activeScreenshotIndex.value !== null) {
-    closeScreenshot();
-  }
-};
-
-onMounted(() => {
-  window.addEventListener('keydown', handleLightboxKeydown);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener('keydown', handleLightboxKeydown);
-});
 </script>
 
 <template>
@@ -309,6 +272,28 @@ onBeforeUnmount(() => {
           </a>
         </div>
       </div>
+
+      <aside class="relative">
+        <div class="mb-4 flex flex-wrap justify-center gap-2" aria-label="Technology stack used">
+          <span
+            v-for="item in techStack"
+            :key="item"
+            class="rounded-full border border-accent2/15 bg-white/80 px-3 py-1.5 text-[11px] font-semibold text-ink3 shadow-[0_3px_12px_rgb(13_17_23_/_5%)]"
+          >
+            {{ item }}
+          </span>
+        </div>
+
+        <ProjectScreenshotLightbox
+          :src="bavariaDashboardScreenshot"
+          alt="Bavaria Admin dashboard screenshot from the Pharmatrial clinical trial portal"
+          title="Bavaria Admin Dashboard"
+          type="Pharmatrial Dashboard"
+          loading="eager"
+          trigger-class="group block w-full overflow-hidden rounded-[14px] border border-border bg-white text-left shadow-[0_16px_48px_rgb(13_17_23_/_10%)] transition-transform duration-200 hover:-translate-y-1 focus-visible:ring-offset-cream"
+          image-class="bg-white"
+        />
+      </aside>
     </section>
 
     <section class="relative overflow-hidden bg-ink py-24 text-white" aria-label="Project numbers">
@@ -354,7 +339,7 @@ onBeforeUnmount(() => {
             </div>
 
             <h2 class="font-display text-[34px] font-bold leading-[1.06] tracking-normal text-ink md:text-[48px]">
-              {{ narrativeTitle }}
+              A front-end simulation of a blinded clinical trial lifecycle.
             </h2>
           </div>
 
@@ -443,20 +428,17 @@ onBeforeUnmount(() => {
             </p>
           </div>
 
-          <button
-            class="group block w-full bg-[#f5f2ec] p-3 text-left transition-colors hover:bg-[#ebe7df] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-            type="button"
-            :aria-label="`Open full-size screenshot: ${screen.title}`"
-            @click="openScreenshot(index)"
-          >
-            <img
-              class="block h-auto w-full rounded-[10px] border border-[#dedad3] bg-white object-contain transition-transform duration-200 group-hover:scale-[1.01]"
-              :class="index === 0 ? 'max-h-[560px]' : 'max-h-[420px]'"
-              :src="screen.image"
-              :alt="screen.alt"
-              loading="lazy"
-            />
-          </button>
+          <ProjectScreenshotLightbox
+            :src="screen.image"
+            :alt="screen.alt"
+            :title="screen.title"
+            :type="screen.type"
+            trigger-class="group block w-full bg-[#f5f2ec] p-3 text-left transition-colors hover:bg-[#ebe7df] focus-visible:ring-offset-white"
+            :image-class="[
+              'rounded-[10px] border border-[#dedad3] bg-white transition-transform duration-200 group-hover:scale-[1.01]',
+              index === 0 ? 'max-h-[560px]' : 'max-h-[420px]',
+            ]"
+          />
         </article>
       </div>
     </section>
@@ -465,11 +447,11 @@ onBeforeUnmount(() => {
       <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
         <div>
           <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">
-            {{ stateKicker }}
+            Implementation Story
           </div>
 
           <h2 class="font-display text-[34px] font-bold leading-[1.06] tracking-normal text-ink md:text-[48px]">
-            {{ stateTitle }}
+            The source code models product rules as state, tabs, and guarded actions.
           </h2>
         </div>
 
@@ -532,11 +514,11 @@ onBeforeUnmount(() => {
         <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
           <div>
             <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">
-              {{ apiKicker }}
+              Source Findings
             </div>
 
             <h2 class="font-display text-[34px] font-bold leading-[1.06] tracking-normal text-ink md:text-[48px]">
-              {{ apiTitle }}
+              The strongest product signal is the role-and-state guardrail system.
             </h2>
           </div>
 
@@ -551,8 +533,8 @@ onBeforeUnmount(() => {
             :key="card.title"
             class="rounded-[14px] border border-border bg-white p-6 shadow-[0_4px_24px_rgb(13_17_23_/_7%)]"
           >
-            <div class="mb-[18px] grid h-10 w-10 place-items-center rounded-[10px] bg-accent-pale font-bold text-accent">
-              {{ card.type.slice(0, 3).toUpperCase() }}
+            <div class="mb-[18px] grid h-10 w-10 place-items-center rounded-[10px] bg-accent-pale text-accent">
+              <SVGIcons :name="card.icon" class="h-5 w-5" />
             </div>
 
             <h3 class="mb-2 text-[15px] font-bold leading-snug tracking-normal text-ink">
@@ -571,11 +553,11 @@ onBeforeUnmount(() => {
       <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
         <div>
           <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">
-            {{ outputKicker }}
+            Implementation Output
           </div>
 
           <h2 class="font-display text-[34px] font-bold leading-[1.06] tracking-normal text-ink md:text-[48px]">
-            {{ outputTitle }}
+            The codebase has enough structure to read as a real product system.
           </h2>
         </div>
 
@@ -610,11 +592,11 @@ onBeforeUnmount(() => {
         <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
           <div>
             <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">
-              {{ validationKicker }}
+              Project Artifacts
             </div>
 
             <h2 class="font-display text-[34px] font-bold leading-[1.06] tracking-normal text-ink md:text-[48px]">
-              {{ validationTitle }}
+              Reviewers can trace the product from docs to implementation.
             </h2>
           </div>
 
@@ -657,7 +639,7 @@ onBeforeUnmount(() => {
         </div>
 
         <h2 class="relative z-[1] max-w-[760px] font-display text-[34px] font-bold leading-[1.06] tracking-normal text-white md:text-[48px]">
-          {{ conclusionTitle }}
+          Pharmatrial succeeds as a front-end systems prototype for regulated collaboration.
         </h2>
 
         <p class="relative z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">
@@ -670,48 +652,5 @@ onBeforeUnmount(() => {
       </div>
     </section>
 
-    <Teleport to="body">
-      <div
-        v-if="activeScreenshot"
-        class="hidden md:flex fixed inset-0 z-[100] items-center justify-center bg-ink/90 px-4 py-8 backdrop-blur-sm"
-        role="dialog"
-        aria-modal="true"
-        :aria-label="`${activeScreenshot.title} full-size screenshot`"
-        @click="closeScreenshot"
-      >
-        <div
-          class="w-[95vw] h-[95vh] overflow-hidden rounded-[14px] border border-white/15 bg-white shadow-[0_24px_80px_rgb(0_0_0_/_45%)]"
-          @click.stop
-        >
-          <div class="flex flex-col gap-3 border-b border-border bg-cream2 px-5 py-4 sm:flex-row sm:items-start sm:justify-between">
-            <div>
-              <div class="mb-1 font-mono text-[11px] uppercase text-ink4">
-                {{ activeScreenshot.type }}
-              </div>
-
-              <h3 class="text-[16px] font-bold leading-snug tracking-normal text-ink">
-                {{ activeScreenshot.title }}
-              </h3>
-            </div>
-
-            <button
-              class="inline-flex min-h-10 items-center justify-center rounded-[10px] bg-ink px-4 text-sm font-semibold text-white transition-colors hover:bg-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cream2"
-              type="button"
-              @click="closeScreenshot"
-            >
-              Close
-            </button>
-          </div>
-
-          <div class="grid max-h-[calc(100vh_-_140px)] place-items-center overflow-auto bg-[#f5f2ec] p-4">
-            <img
-              class="h-auto w-auto object-contain"
-              :src="activeScreenshot.image"
-              :alt="activeScreenshot.alt"
-            />
-          </div>
-        </div>
-      </div>
-    </Teleport>
   </main>
 </template>
