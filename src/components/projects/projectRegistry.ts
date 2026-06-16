@@ -34,7 +34,7 @@ export const projectFilters: ProjectFilter[] = [
 export const projects: ProjectRegistryEntry[] = [
   {
     slug: 'pharmatrial',
-    num: '02',
+    num: '01',
     title: 'Pharmatrial Clinical Trial Portal',
     short: 'Role-aware Vue prototype for blinded clinical trial collaboration.',
     category: 'Front-End Systems Prototype',

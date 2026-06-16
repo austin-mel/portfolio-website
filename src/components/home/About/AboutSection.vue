@@ -45,14 +45,20 @@ const pillars: Pillar[] = [
 
         <!-- COVER LETTER -->
         <div class="relative rounded-2xl border border-border bg-white p-10 shadow-[0_4px_24px_rgba(13,17,23,0.08)]">
-          <div class="mb-6 font-mono text-[11px] text-ink4">April 2026 · Sacramento, CA</div>
+          <div class="mb-6 font-mono text-[11px] text-ink4">June 2026 · Sacramento, CA</div>
 
           <div class="mb-6 text-[13px] leading-normal text-ink3">
             To <strong class="text-ink">hiring managers, collaborators, and future teammates</strong>,
           </div>
 
           <div class="space-y-5 text-sm font-light leading-[1.85] text-ink2">
-            COVER LETTER OR BIO TEXT
+I am a recent double major graduate from California State University, Sacramento with a Bachelor of Science in Computer Science and Statistics, and I am excited to begin my career in data analysis, business intelligence, or applied analytics. My academic background gave me a strong foundation in statistical reasoning, programming, databases, data visualization, and machine learning, while my project experience taught me how to apply those skills to real problems with real stakeholders.
+<br><br>
+I am especially interested in roles where I can turn complex data into clear, useful insights that help teams make better decisions. My background combines statistical training, programming experience, and hands-on project work. I have worked with R, Python, SQL, Tableau, Pandas, Matplotlib, ggplot, and Jupyter Notebook, and I am comfortable cleaning data, exploring patterns, building visualizations, and explaining results clearly. I enjoy taking complex information and turning it into something useful for both technical and non-technical audiences.
+<br><br>
+Through my consulting projects, I gained experience working with real data, real clients, and open-ended research questions. Those experiences helped me become more careful in how I approach data, choose methods, interpret results, and communicate findings. As a student-athlete, I developed strong time management, discipline, and organization while balancing academics, training, work, and competition. Through my leadership roles, I also learned how to coordinate teams, manage responsibilities, communicate with large and small groups, and explain my ideas clearly to others. 
+<br><br>
+I am looking for an entry-level role where I can continue growing as an analyst while contributing to a team that values clear thinking, problem-solving, and data-driven decision-making. I would welcome the opportunity to discuss how my background in computer science, statistics, and applied analysis can support your organization’s goals.
           </div>
 
           <div class="mt-6 border-t border-border pt-6">
