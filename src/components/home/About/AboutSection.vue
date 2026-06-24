@@ -16,7 +16,7 @@ const facts: FactRow[] = [
   { key: 'availability', value: 'Open to opportunities', highlight: true },
   { key: 'experience',   value: '10+ years coding' },
   { key: 'remote',       value: 'Yes — fully comfortable' },
-  { key: 'education',    value: 'B.S. Computer Science and Statistics, CSUS' },
+  { key: 'education',    value: 'B.S. Computer Science and Statistics' },
   { key: 'timezone',     value: 'Pacific (PT)' },
 ];
 
@@ -71,7 +71,7 @@ I am looking for an entry-level role where I can continue growing as an analyst 
       <!-- RIGHT COLUMN -->
       <div>
         <!-- FACTS TABLE -->
-        <div class="mb-8 flex flex-col gap-px overflow-hidden rounded-xl border border-border bg-border">
+        <div class=" mb-8 lg:mt-56 flex flex-col gap-px overflow-hidden rounded-xl border border-border bg-border">
           <div
             v-for="f in facts"
             :key="f.key"

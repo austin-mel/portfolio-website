@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import SVGIcons from '@/assets/SVGIcons.vue';
-import type { ProjectFilter, ProjectFilterId, ProjectRegistryEntry } from '@/components/projects/projectRegistry';
+import type { ProjectFilter, ProjectFilterId, ProjectRegistryEntry, ProjectTagType } from '@/components/projects/projectRegistry';
 
 const props = defineProps<{
   projects: ProjectRegistryEntry[];
@@ -19,6 +19,22 @@ const visibleProjects = computed(() =>
     ? props.projects
     : props.projects.filter((project) => project.filter === props.activeFilter)
 );
+
+const projectTagLabels: Record<ProjectTagType, string> = {
+  report: 'Report',
+  dashboard: 'Dashboard',
+  liveDemo: 'Live Demo',
+  modeling: 'Modeling',
+  simulation: 'Simulation',
+};
+
+const projectTagClasses: Record<ProjectTagType, string> = {
+  report: 'border-gold/30 bg-[#fff7dc] text-[#8a6500]',
+  dashboard: 'border-accent2/20 bg-accent-pale text-accent',
+  liveDemo: 'border-[#147a4d]/25 bg-[#e9f8ef] text-[#147a4d]',
+  modeling: 'border-purple-200 bg-purple-50 text-purple-700',
+  simulation: 'border-orange-200 bg-orange-50 text-orange-700',
+};
 </script>
 
 <template>
@@ -73,13 +89,14 @@ const visibleProjects = computed(() =>
             </div>
           </div>
 
-          <div class="hidden flex-col items-end gap-1.5 md:flex">
-            <span class="rounded-full border border-accent2/20 bg-accent-pale px-2.5 py-[3px] text-[10px] font-medium text-accent">
-              {{ project.badge }}
-            </span>
-
-            <span class="rounded-full border border-border bg-white px-2.5 py-[3px] text-[10px] font-medium text-ink3">
-              Case study
+          <div class="hidden flex-col items-end gap-2 md:flex">
+            <span
+              v-for="tag in project.tags"
+              :key="tag"
+              class="rounded-full border px-3 py-1 text-[11.5px] font-medium"
+              :class="projectTagClasses[tag]"
+            >
+              {{ projectTagLabels[tag] }}
             </span>
           </div>
 

@@ -242,7 +242,7 @@ const validationCards = [
       aria-hidden="true"
     ></div>
 
-    <section class="relative z-[1] mx-auto grid min-h-[690px] w-[min(1120px,calc(100%_-_48px))] grid-cols-1 items-center gap-12 py-[58px] pt-[76px] lg:grid-cols-[0.95fr_1.05fr]">
+    <section class="relative z-[1] mx-auto grid min-h-[690px] w-[min(1120px,calc(100%_-_48px))] grid-cols-1 items-center gap-12 py-[58px] pt-[76px] text-center lg:w-[min(1400px,calc(100%_-_48px))] lg:grid-cols-[0.65fr_1.35fr] lg:text-left">
       <div>
         <div class="mb-7 inline-flex items-center gap-2.5 rounded-full border border-accent2/20 bg-accent-pale px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-accent before:h-1.5 before:w-1.5 before:rounded-full before:bg-gold before:content-['']">
           Vue 3 Clinical Workflow Case Study
@@ -256,24 +256,24 @@ const validationCards = [
           A privacy-aware Vue and TypeScript proof of concept modeling blinded collaboration between Jane Hopkins Hospital, Bavaria Pharma, and FDA Administration across approvals, enrollment, dose tracking, treatment assignment, disclosure, and reporting.
         </p>
 
-        <div class="mt-9 flex flex-wrap gap-3">
+        <div class="mt-9 flex flex-wrap justify-center gap-3 lg:justify-start">
           <a
             class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] bg-ink px-[22px] text-sm font-semibold text-white no-underline transition-colors hover:bg-accent"
             href="#product"
           >
-            View product story
+            View demo
           </a>
 
           <a
             class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] border border-border2 px-[22px] text-sm font-semibold text-ink no-underline transition-colors hover:border-accent2 hover:text-accent2"
-            href="#features"
+            href="#narrative"
           >
-            See role workflow
+            See project narrative
           </a>
         </div>
       </div>
 
-      <aside class="relative">
+      <aside class="relative lg:-mr-12">
         <div class="mb-4 flex flex-wrap justify-center gap-2" aria-label="Technology stack used">
           <span
             v-for="item in techStack"
@@ -290,7 +290,7 @@ const validationCards = [
           title="Bavaria Admin Dashboard"
           type="Pharmatrial Dashboard"
           loading="eager"
-          trigger-class="group block w-full overflow-hidden rounded-[14px] border border-border bg-white text-left shadow-[0_16px_48px_rgb(13_17_23_/_10%)] transition-transform duration-200 hover:-translate-y-1 focus-visible:ring-offset-cream"
+          trigger-class="group block w-full overflow-hidden rounded-[14px] border border-border bg-white text-left shadow-[0_16px_48px_rgb(13_17_23_/_10%)] transition-transform duration-200 hover:-translate-y-1 focus-visible:ring-offset-cream max-md:pointer-events-none max-md:cursor-default"
           image-class="bg-white"
         />
       </aside>
@@ -334,7 +334,7 @@ const validationCards = [
       <div class="mx-auto w-[min(1120px,calc(100%_-_48px))]">
         <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
           <div>
-            <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">
+            <div id="narrative" class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">
               Project Narrative
             </div>
 
@@ -368,7 +368,7 @@ const validationCards = [
           </article>
         </div>
 
-        <div id="features" class="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
           <article
             v-for="card in featureCards"
             :key="card.title"
@@ -433,7 +433,7 @@ const validationCards = [
             :alt="screen.alt"
             :title="screen.title"
             :type="screen.type"
-            trigger-class="group block w-full bg-[#f5f2ec] p-3 text-left transition-colors hover:bg-[#ebe7df] focus-visible:ring-offset-white"
+            trigger-class="group block w-full bg-[#f5f2ec] p-3 text-left transition-colors hover:bg-[#ebe7df] focus-visible:ring-offset-white max-md:pointer-events-none max-md:cursor-default"
             :image-class="[
               'rounded-[10px] border border-[#dedad3] bg-white transition-transform duration-200 group-hover:scale-[1.01]',
               index === 0 ? 'max-h-[560px]' : 'max-h-[420px]',
@@ -641,12 +641,11 @@ const validationCards = [
         <h2 class="relative z-[1] max-w-[760px] font-display text-[34px] font-bold leading-[1.06] tracking-normal text-white md:text-[48px]">
           Pharmatrial succeeds as a front-end systems prototype for regulated collaboration.
         </h2>
-
-        <p class="relative z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">
-          The project is strongest when framed as a role-aware clinical operations prototype. It demonstrates how a front end can encode trial lifecycle state, partner-specific permissions, patient privacy, blinded assignment, dose completion, and disclosure timing in a workspace that different stakeholders can navigate without seeing the same data.
+        
+        <p class="relative mt-10 z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">
+          The project demonstrates how a front end can encode trial lifecycle state, partner-specific permissions, patient privacy, blinded assignment, dose completion, and disclosure timing in a workspace that different stakeholders can navigate without seeing the same data.
         </p>
-
-        <p class="relative z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">
+        <p class="relative mt-10 z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">
           The current implementation is intentionally a browser-side proof of concept using seeded TypeScript data and Pinia state. Its next production step would be a backend API with server-side RBAC, encrypted PII storage, durable audit logs, database persistence, soft deletion, and compliance review. As a portfolio artifact, the recommendation is to lead with the source-backed workflow story: four portals, eight seeded trials, twenty-six synthetic patients, sixty-eight Vue components, and a clear privacy model that separates clinical care from regulatory and sponsor visibility.
         </p>
       </div>
