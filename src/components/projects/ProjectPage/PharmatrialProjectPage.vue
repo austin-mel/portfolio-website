@@ -14,6 +14,9 @@ import fdaAssignmentsScreenshot from '@/assets/projects/pharmatrial/fda-assignme
 import bavariaBatchScreenshot from '@/assets/projects/pharmatrial/bavaria-batch.png';
 import bavariaReportScreenshot from '@/assets/projects/pharmatrial/bavaria-report.png';
 
+const githubRepoUrl = 'https://github.com/austin-mel/pharmatrial';
+const liveDemoUrl = '#product';
+
 const projectNumbers = [
   {
     value: '4',
@@ -257,16 +260,25 @@ const validationCards = [
         <div class="mt-9 flex flex-wrap justify-center gap-3 lg:justify-start">
           <a
             class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] bg-ink px-[22px] text-sm font-semibold text-white no-underline transition-colors hover:bg-accent"
-            href="#product"
+            :href="githubRepoUrl"
+            target="_blank"
+            rel="noreferrer"
           >
-            View demo
+            View Github repo
           </a>
 
           <a
             class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] border border-border2 px-[22px] text-sm font-semibold text-ink no-underline transition-colors hover:border-accent2 hover:text-accent2"
-            href="#narrative"
+            href="#overview"
           >
-            See project narrative
+            See project description
+          </a>
+
+          <a
+            class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] border border-accent2 bg-accent-pale px-[22px] text-sm font-semibold text-accent no-underline transition-colors hover:bg-accent hover:text-white"
+            :href="liveDemoUrl"
+          >
+            View live demo
           </a>
         </div>
       </div>
@@ -332,8 +344,8 @@ const validationCards = [
       <div class="mx-auto w-[min(1120px,calc(100%_-_48px))]">
         <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
           <div>
-            <div id="narrative" class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">
-              Project Narrative
+            <div id="overview" class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">
+              Project Overview
             </div>
 
             <h2 class="font-display text-[34px] font-bold leading-[1.06] tracking-normal text-ink md:text-[48px]">
@@ -342,7 +354,7 @@ const validationCards = [
           </div>
 
           <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-            Pharmatrial is a single-page proof of concept for controlled data exchange among a hospital, a pharmaceutical sponsor, and a regulator. The product question is not just how to display trial data, but how to keep each user inside the right workflow and privacy boundary while live state is persisted through an API.
+            Pharmatrial is a single-page proof of concept for controlled data exchange among a hospital, a pharmaceutical sponsor, and a regulator. The system persists live workflow state through an API while enforcing role-specific permissions, workflow boundaries, and patient privacy constraints.
           </p>
         </header>
 
@@ -461,7 +473,7 @@ const validationCards = [
       <div class="grid grid-cols-1 gap-6 md:grid-cols-[0.92fr_1.08fr]">
         <article class="rounded-[12px] border border-border bg-white p-7">
           <h3 class="mb-2 text-[15px] font-bold tracking-normal text-ink">
-            What this demonstrates
+            Implemented scope
           </h3>
 
           <p class="m-0 text-[13px] leading-[1.6] text-ink3">
@@ -521,7 +533,7 @@ const validationCards = [
           </div>
 
           <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-            The docs define Pharmatrial as a proof of concept rather than a production clinical system. Its value is the way it demonstrates workflow sequencing, patient privacy boundaries, blinded assignment, role-specific action availability, live PostgreSQL persistence, and seeded fallback data for offline review.
+            The documentation defines Pharmatrial as a proof of concept rather than a production clinical system. It records workflow sequencing, patient privacy boundaries, blinded assignment, role-specific action availability, live PostgreSQL persistence, and seeded fallback data for offline review.
           </p>
         </header>
 
@@ -594,7 +606,7 @@ const validationCards = [
             </div>
 
             <h2 class="font-display text-[34px] font-bold leading-[1.06] tracking-normal text-ink md:text-[48px]">
-              Reviewers can trace the product from docs to implementation.
+              Artifacts trace the product from documentation to implementation.
             </h2>
           </div>
 
@@ -622,6 +634,15 @@ const validationCards = [
             </p>
           </article>
         </div>
+
+        <a
+          class="mt-6 inline-flex min-h-[58px] w-full items-center justify-center rounded-[12px] bg-ink px-6 text-base font-semibold text-white no-underline transition-colors hover:bg-accent"
+          :href="githubRepoUrl"
+          target="_blank"
+          rel="noreferrer"
+        >
+          View Github repo
+        </a>
       </div>
     </section>
 
@@ -641,10 +662,10 @@ const validationCards = [
         </h2>
         
         <p class="relative mt-10 z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">
-          The project demonstrates how a Vue frontend and Express backend can coordinate trial lifecycle state, partner-specific permissions, patient privacy, blinded assignment, dose completion, and disclosure timing in a workspace that different stakeholders can navigate without seeing the same data.
+          The project implements a Vue frontend and Express backend that coordinate trial lifecycle state, partner-specific permissions, patient privacy, blinded assignment, dose completion, and disclosure timing in a workspace with separated stakeholder visibility.
         </p>
         <p class="relative mt-10 z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">
-          The current implementation pairs live backend mode with a seeded frontend fallback: Express routes authenticate demo or persisted users, Prisma stores workflow records in PostgreSQL, and the Vue app keeps seeded portals, trials, patients, ICD codes, and assignments available when the API cannot be used. Its next production step would be stronger authentication, encrypted PII storage, formal migrations, retention policies, and compliance review. As a portfolio artifact, the recommendation is to lead with the source-backed workflow story: four portals, eight seeded fallback trials, twenty-six synthetic patients, sixty-eight Vue components, nine database models, and a clear privacy model that separates clinical care from regulatory and sponsor visibility.
+          The current implementation pairs live backend mode with a seeded frontend fallback: Express routes authenticate demo or persisted users, Prisma stores workflow records in PostgreSQL, and the Vue app keeps seeded portals, trials, patients, ICD codes, and assignments available when the API cannot be used. Production hardening would require stronger authentication, encrypted PII storage, formal migrations, retention policies, and compliance review. The implemented scope includes four portals, eight seeded fallback trials, twenty-six synthetic patients, sixty-eight Vue components, nine database models, and a privacy model that separates clinical care from regulatory and sponsor visibility.
         </p>
       </div>
     </section>

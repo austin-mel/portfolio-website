@@ -18,7 +18,7 @@ const emit = defineEmits<{
 const visibleProjects = computed(() =>
   props.activeFilter === 'all'
     ? props.projects
-    : props.projects.filter((project) => project.filter === props.activeFilter)
+    : props.projects.filter((project) => project.filters.includes(props.activeFilter))
 );
 </script>
 

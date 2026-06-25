@@ -18,17 +18,15 @@ const projectTagLabels: Record<ProjectTagType, string> = {
   'full-stack': 'Full-Stack',
   liveDemo: 'Live Demo',
   modeling: 'Modeling',
-  simulation: 'Simulation',
   analysis: 'Analysis',
 };
 
 const projectTagClasses: Record<ProjectTagType, string> = {
   report: 'border-gold/30 bg-[#fff7dc] text-[#8a6500]',
   product: 'border-accent2/20 bg-accent-pale text-accent',
-  'full-stack': 'border-indigo-200 bg-indigo-50 text-indigo-700',
+  'full-stack': 'border-orange-200 bg-orange-50 text-orange-700',
   liveDemo: 'border-[#147a4d]/25 bg-[#e9f8ef] text-[#147a4d]',
   modeling: 'border-purple-200 bg-purple-50 text-purple-700',
-  simulation: 'border-orange-200 bg-orange-50 text-orange-700',
   analysis: 'border-rose-200 bg-rose-50 text-rose-700',
 };
 

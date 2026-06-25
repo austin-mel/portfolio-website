@@ -10,6 +10,8 @@ import torontoQqFigure from '@/assets/projects/scicomm/model-toronto-change-qq.p
 import jeffersonCeilingFigure from '@/assets/projects/scicomm/model-jefferson-ceiling-effect.png';
 import torontoCeilingFigure from '@/assets/projects/scicomm/model-toronto-ceiling-effect.png';
 
+const githubRepoUrl = 'https://github.com/austin-mel/science-communication-empathy';
+
 const techStack = ['R', 'Regression', 'EDA', 'Survey Data', 'Model Diagnostics'];
 
 const overviewStats = [
@@ -58,7 +60,7 @@ const exploratoryFigures = [
   {
     image: torontoLinesFigure,
     title: 'Toronto Pre/Post paired change',
-    body: 'Toronto changes are smaller than Jefferson changes and should be interpreted on the Toronto scale only.',
+    body: 'Toronto changes are smaller than Jefferson changes and are interpreted on the Toronto scale only.',
     alt: 'Toronto Pre/Post paired change plot by condition and STEM',
   },
   {
@@ -120,8 +122,8 @@ const modelingFigures = [
           Statistics capstone project for CSUS Biological Sciences evaluating an empathy-focused science communication intervention using matched Pre/Post survey data, Control and Intervention arms, and separate Jefferson and Toronto empathy outcomes.
         </p>
         <div class="mt-9 flex flex-wrap justify-center gap-3 lg:justify-start">
-          <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] bg-ink px-[22px] text-sm font-semibold text-white no-underline transition-colors hover:bg-accent" href="#results">View model evidence</a>
-          <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] border border-border2 px-[22px] text-sm font-semibold text-ink no-underline transition-colors hover:border-accent2 hover:text-accent2" href="#workflow">Review design</a>
+          <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] bg-ink px-[22px] text-sm font-semibold text-white no-underline transition-colors hover:bg-accent" :href="githubRepoUrl" target="_blank" rel="noreferrer">View Github repo</a>
+          <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] border border-border2 px-[22px] text-sm font-semibold text-ink no-underline transition-colors hover:border-accent2 hover:text-accent2" href="#workflow">See project description</a>
         </div>
       </div>
 
@@ -170,7 +172,7 @@ const modelingFigures = [
       <div class="mx-auto w-[min(1120px,calc(100%_-_48px))]">
         <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
           <div>
-            <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Project Narrative</div>
+            <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Project Overview</div>
             <h2 class="font-display text-[34px] font-bold leading-[1.06] text-ink md:text-[48px]">The project turns raw survey answers into a controlled test of empathy change.</h2>
           </div>
           <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">The analysis moves from paired pre/post responses into exploratory plots, change-score summaries, regression models, and diagnostic checks while keeping Jefferson and Toronto as separate outcomes.</p>
@@ -224,7 +226,7 @@ const modelingFigures = [
           <div class="font-mono text-[11px] uppercase text-ink4">Training-effect logic</div>
           <strong class="mt-4 block text-[15px] text-ink">Intervention must beat the counterfactual.</strong>
           <code class="my-3 block rounded-[10px] bg-cream px-4 py-4 font-mono text-[13px] leading-[1.6] text-accent">training effect = Intervention change - Control change</code>
-          <p class="m-0 text-[13px] leading-[1.6] text-ink3">Overall improvement is not enough. The Control arm separates intervention-specific change from general time, familiarity, or course effects.</p>
+          <p class="m-0 text-[13px] leading-[1.6] text-ink3">Overall improvement does not establish an intervention-specific effect. The Control arm separates intervention-specific change from general time, familiarity, or course effects.</p>
         </article>
       </div>
 
@@ -295,7 +297,7 @@ const modelingFigures = [
         </article>
         <article class="min-h-[168px] rounded-[12px] border border-border bg-white p-[22px]">
           <div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">Assumption checks</div>
-          <strong class="block text-[15px] text-ink">Diagnostics support robust interpretation, not blind normal theory.</strong>
+          <strong class="block text-[15px] text-ink">Diagnostics support model interpretation and nonparametric checks.</strong>
           <p class="mt-2 text-[13px] leading-[1.55] text-ink3">Residual normality checks were significant for change and baseline models, while Levene tests suggested approximately equal variances.</p>
         </article>
         <article class="min-h-[168px] rounded-[12px] border border-border bg-white p-[22px]">
@@ -369,18 +371,20 @@ const modelingFigures = [
       <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
         <div>
           <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Deliverables</div>
-          <h2 class="font-display text-[34px] font-bold leading-[1.06] text-ink md:text-[48px]">The project leaves a reproducible analysis path for future reviewers.</h2>
+          <h2 class="font-display text-[34px] font-bold leading-[1.06] text-ink md:text-[48px]">The project includes a reproducible analysis path from data cleaning through reporting.</h2>
         </div>
         <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">The artifact set supports tracing the work from raw survey cleaning to figures, models, diagnostics, and a final written conclusion.</p>
       </header>
 
       <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <article v-for="card in [['Notebook','01-preprocessing.ipynb','Scores Likert items, reverse-codes survey questions, standardizes majors, derives STEM and condition, and writes cleaned datasets.'],['Notebook','02-assumptions.ipynb','Produces numerical summaries, EDA figures, pairing checks, diagnostic plots, variance checks, and ceiling-effect plots.'],['Notebook','03-modeling.ipynb','Runs Welch tests, paired tests, change-score models, mixed ANOVA, ANCOVA, demographic checks, and model exports.'],['Cleaned data','survey_clean.csv','Long-format cleaned dataset with one row per participant per survey time, 444 rows total.'],['Cleaned data','matched_change.csv','One row per matched participant, including Pre totals, Post totals, and scale-specific change scores.'],['Report','SciComm Empathy Intervention Report.pdf','Full report documenting background, preprocessing, EDA, assumptions, modeling, conclusions, and recommendations.']]" :key="card[1]" class="rounded-[12px] border border-border bg-white p-[22px]">
+        <article v-for="card in [['Notebook','01-preprocessing.ipynb','Scores Likert items, reverse-codes survey questions, standardizes majors, derives STEM and condition, and writes cleaned datasets.'],['Notebook','02-assumptions.ipynb','Produces numerical summaries, EDA figures, pairing checks, diagnostic plots, variance checks, and ceiling-effect plots.'],['Notebook','03-modeling.ipynb','Runs Welch tests, paired tests, change-score models, mixed ANOVA, ANCOVA, demographic checks, and model exports.'],['Cleaned data','survey_clean.csv','Long-format cleaned dataset with one row per participant per survey time, 444 rows total.'],['Cleaned data','matched_change.csv','One row per matched participant, including Pre totals, Post totals, and scale-specific change scores.'],['Report','SciComm Empathy Intervention Report.pdf','Full report documenting background, preprocessing, EDA, assumptions, modeling, conclusions, and reporting constraints.']]" :key="card[1]" class="rounded-[12px] border border-border bg-white p-[22px]">
           <div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">{{ card[0] }}</div>
           <strong class="block text-[15px] text-ink">{{ card[1] }}</strong>
           <p class="mt-2 text-[13px] leading-[1.55] text-ink3">{{ card[2] }}</p>
         </article>
       </div>
+
+      <a class="mt-6 inline-flex min-h-[58px] w-full items-center justify-center rounded-[12px] bg-ink px-6 text-base font-semibold text-white no-underline transition-colors hover:bg-accent" :href="githubRepoUrl" target="_blank" rel="noreferrer">View Github repo</a>
     </section>
 
     <section class="bg-cream2 py-[82px]">
@@ -389,10 +393,10 @@ const modelingFigures = [
           <div class="pointer-events-none absolute right-[-170px] top-[-170px] h-[500px] w-[500px] rounded-full border border-white/[0.05]" aria-hidden="true"></div>
           <div class="relative z-[1] mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-white/65 before:h-0.5 before:w-[26px] before:bg-white/65 before:content-['']">Final Conclusions</div>
           <h2 class="relative z-[1] max-w-[760px] font-display text-[34px] font-bold leading-[1.06] text-white md:text-[48px]">The evidence supports empathy growth over time, not a confirmed intervention advantage.</h2>
-          <h3 class="relative z-[1] mt-[26px] text-[15px] font-bold text-white">Final Project Conclusion</h3>
-          <p class="relative z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">In the matched sample of 222 students, self-reported empathy increased significantly from Pre to Post on both the Jefferson Scale of Empathy and the modified Toronto Empathy Questionnaire. Jefferson showed the larger within-person effect, but the two scales have different ranges and constructs, so their magnitudes should not be directly compared.</p>
+          <h3 class="relative z-[1] mt-[26px] text-[15px] font-bold text-white">Project conclusion</h3>
+          <p class="relative z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">In the matched sample of 222 students, self-reported empathy increased significantly from Pre to Post on both the Jefferson Scale of Empathy and the modified Toronto Empathy Questionnaire. Jefferson showed the larger within-person effect, but the two scales have different ranges and constructs, so their magnitudes are not directly comparable.</p>
           <p class="relative z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">The Intervention group did not improve significantly more than the Control group, and STEM status did not explain baseline empathy, improvement, or the Intervention-Control difference in improvement. Baseline empathy was the strongest predictor of Post empathy in ANCOVA models, and ceiling-effect diagnostics suggest students who began with higher empathy had less room to improve.</p>
-          <h3 class="relative z-[1] mt-[26px] text-[15px] font-bold text-white">Recommendations</h3>
+          <h3 class="relative z-[1] mt-[26px] text-[15px] font-bold text-white">Reporting conclusion</h3>
           <p class="relative z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">Report the study as evidence of overall Pre-to-Post empathy growth, not as causal proof that the empathy module outperformed the Control condition. Keep Jefferson and Toronto analyses separate, preserve the matched-participant design, and use Control comparisons as the standard for any training-effect claim.</p>
         </div>
       </div>
