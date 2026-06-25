@@ -9,7 +9,7 @@ import labCurvesFigure from '@/assets/projects/baseline/eda-lab-level-curves.png
 import modelDensityFigure from '@/assets/projects/baseline/model-kde-log-skew-t.png';
 import modelCdfFigure from '@/assets/projects/baseline/model-cdf-comparison.png';
 
-const techStack = ['Python', 'Statistical Modeling', 'MLE', 'EDA', 'Scientific Reporting'];
+const techStack = ['Python', 'Statistical Modeling', 'EDA', 'Scientific Reporting'];
 
 const overviewStats = [
   ['492k', 'cleaned BCA observations in the long-format dataset'],
@@ -104,17 +104,29 @@ const modelFigures = [
         </div>
       </div>
 
-      <aside class="rounded-[14px] border border-border bg-white/85 p-[22px] text-left shadow-[0_16px_48px_rgb(13_17_23_/_9%)]" aria-label="Baseline-noise project overview">
-        <div class="mb-[18px] grid grid-cols-1 gap-3 xs:grid-cols-2">
-          <div v-for="stat in overviewStats" :key="stat[0]" class="min-h-[108px] rounded-[10px] border border-border bg-cream p-4">
-            <strong class="mb-2 block font-display text-[28px] leading-none text-ink">{{ stat[0] }}</strong>
-            <span class="text-[13px] leading-[1.55] text-ink3">{{ stat[1] }}</span>
-          </div>
+      <aside class="relative" aria-label="Baseline-noise project overview">
+        <div class="mb-4 flex flex-nowrap gap-2 overflow-x-auto pb-1 md:justify-center" aria-label="Technology stack used">
+          <span
+            v-for="item in techStack"
+            :key="item"
+            class="shrink-0 rounded-full border border-accent2/15 bg-white/80 px-3 py-1.5 text-[11px] font-semibold text-ink3 shadow-[0_3px_12px_rgb(13_17_23_/_5%)]"
+          >
+            {{ item }}
+          </span>
         </div>
-        <div class="rounded-[10px] bg-accent p-[18px] text-white">
-          <div class="mb-2 text-[10px] font-bold uppercase tracking-[1.4px] text-white/70">Final Recommendation</div>
-          <strong class="block text-[22px] leading-tight tracking-normal">Use a dwell-time-specific reparameterized log-skew-t framework.</strong>
-          <p class="mt-2.5 text-[13px] leading-[1.6] text-white/75">Baseline noise cannot be treated as one constant background value; location, spread, and tail behavior all change with dwell time.</p>
+
+        <div class="rounded-[14px] border border-border bg-white/85 p-[22px] text-left shadow-[0_16px_48px_rgb(13_17_23_/_9%)]">
+          <div class="mb-[18px] grid grid-cols-1 gap-3 xs:grid-cols-2">
+            <div v-for="stat in overviewStats" :key="stat[0]" class="min-h-[108px] rounded-[10px] border border-border bg-cream p-4">
+              <strong class="mb-2 block font-display text-[28px] leading-none text-ink">{{ stat[0] }}</strong>
+              <span class="text-[13px] leading-[1.55] text-ink3">{{ stat[1] }}</span>
+            </div>
+          </div>
+          <div class="rounded-[10px] bg-accent p-[18px] text-white">
+            <div class="mb-2 text-[10px] font-bold uppercase tracking-[1.4px] text-white/70">Final Recommendation</div>
+            <strong class="block text-[22px] leading-tight tracking-normal">Use a dwell-time-specific reparameterized log-skew-t framework.</strong>
+            <p class="mt-2.5 text-[13px] leading-[1.6] text-white/75">Baseline noise cannot be treated as one constant background value; location, spread, and tail behavior all change with dwell time.</p>
+          </div>
         </div>
       </aside>
     </section>

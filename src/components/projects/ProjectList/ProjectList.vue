@@ -26,6 +26,7 @@ const projectTagLabels: Record<ProjectTagType, string> = {
   liveDemo: 'Live Demo',
   modeling: 'Modeling',
   simulation: 'Simulation',
+  analysis: 'Analysis',
 };
 
 const projectTagClasses: Record<ProjectTagType, string> = {
@@ -34,6 +35,7 @@ const projectTagClasses: Record<ProjectTagType, string> = {
   liveDemo: 'border-[#147a4d]/25 bg-[#e9f8ef] text-[#147a4d]',
   modeling: 'border-purple-200 bg-purple-50 text-purple-700',
   simulation: 'border-orange-200 bg-orange-50 text-orange-700',
+  analysis: 'border-sky-200 bg-sky-50 text-sky-700',
 };
 </script>
 
@@ -78,11 +80,11 @@ const projectTagClasses: Record<ProjectTagType, string> = {
               {{ project.short }}
             </p>
 
-            <div class="mt-2 flex flex-wrap gap-1.5">
+            <div class="mt-2 flex max-w-full flex-nowrap gap-1.5 overflow-x-auto pb-1">
               <span
                 v-for="item in project.stack"
                 :key="item"
-                class="rounded border border-border bg-cream2 px-2 py-[2px] text-[10px] text-ink4"
+                class="shrink-0 rounded border border-border bg-cream2 px-2 py-[2px] text-[10px] text-ink4"
               >
                 {{ item }}
               </span>

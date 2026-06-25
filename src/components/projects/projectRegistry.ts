@@ -3,7 +3,7 @@ import type { Component } from 'vue';
 
 export type ProjectFilterId = 'all' | 'modeling' | 'product' | 'simulation' | 'analysis';
 export type ProjectCategory = Exclude<ProjectFilterId, 'all'>;
-export type ProjectTagType = 'report' | 'dashboard' | 'liveDemo' | 'modeling' | 'simulation';
+export type ProjectTagType = 'report' | 'dashboard' | 'liveDemo' | 'modeling' | 'simulation' | 'analysis';
 
 export interface ProjectFilter {
   id: ProjectFilterId;
@@ -40,8 +40,8 @@ export const projects: ProjectRegistryEntry[] = [
     short: 'Dwell-time-specific statistical model for Prisma Pro mass spectrometer baseline noise.',
     category: 'Statistical Modeling Case Study',
     filter: 'modeling',
-    tags: ['modeling', 'report'],
-    stack: ['Python', 'Statistics', 'MLE', 'Notebooks'],
+    tags: ['modeling', 'analysis', 'report'],
+    stack: ['Python', 'Statistical Modeling', 'EDA', 'Scientific Reporting'],
     sourceMockup: 'src/reference/baseline-noise-project-mockup.html',
     summary:
       'Model Prisma Pro mass spectrometer baseline noise and explain why dwell-time-specific correction is required.',
@@ -51,15 +51,31 @@ export const projects: ProjectRegistryEntry[] = [
     slug: 'pharmatrial',
     num: '02',
     title: 'Pharmatrial Clinical Trial Portal',
-    short: 'Role-aware Vue prototype for blinded clinical trial collaboration.',
-    category: 'Front-End Systems Prototype',
+    short: 'Full-stack Vue and Express portal for blinded clinical trial collaboration.',
+    category: 'Full-Stack Clinical Workflow Product',
     filter: 'product',
     tags: ['dashboard', 'liveDemo'],
-    stack: ['Vue', 'TypeScript', 'Pinia', 'Tailwind'],
+    stack: ['Vue', 'TypeScript', 'Express', 'Prisma', 'PostgreSQL'],
     sourceMockup: 'src/reference/pharmatrial-project-mockup.html',
     summary:
-      'Show a role-aware clinical trial operations prototype with lifecycle guardrails, privacy boundaries, and blinded assignment.',
+      'Show a role-aware clinical trial operations portal with live database-backed workflows, seeded fallback data, privacy boundaries, and blinded assignment.',
     component: defineAsyncComponent(() => import('@/components/projects/ProjectPage/PharmatrialProjectPage.vue')),
+  },
+  {
+    slug: 'science-communication-empathy',
+    num: '03',
+    title: 'Empathy in Scientific Communication',
+    short: 'Pre/post analysis of empathy scores across Jefferson and Toronto instruments.',
+    category: 'Applied Statistical Analysis',
+    filter: 'analysis',
+    tags: ['analysis', 'report'],
+    stack: ['R', 'Regression', 'EDA', 'Survey Data'],
+    sourceMockup: 'src/reference/scicomm-project-mockup.html',
+    summary:
+      'Explain whether a science communication intervention changed self-reported empathy across two survey instruments.',
+    component: defineAsyncComponent(
+      () => import('@/components/projects/ProjectPage/ScienceCommunicationEmpathyProjectPage.vue')
+    ),
   },
 ];
 

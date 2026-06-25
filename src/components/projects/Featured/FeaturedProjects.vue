@@ -117,8 +117,8 @@ useScrollObserver('.anim-up,.feat-card');
             <span class="mb-2.5 inline-block rounded-full border border-accent2/20 bg-accent-pale px-2.5 py-[3px] text-[10px] font-medium text-accent">{{ featuredHero.badge.t }}</span>
             <div class="mb-1.5 font-display text-[17px] font-bold leading-snug text-ink xs:text-lg">{{ featuredHero.title }}</div>
             <div class="text-[13px] font-light leading-relaxed text-ink3">End-to-end Tableau dashboard tracking revenue, churn, and funnel metrics - replaced 4 weekly manual reports.</div>
-            <div class="mt-3 flex flex-wrap gap-1.5">
-              <span v-for="t in ['Tableau', 'Snowflake', 'SQL']" :key="t" class="rounded border border-border bg-cream2 px-2 py-[2px] text-[10px] text-ink3">{{ t }}</span>
+            <div class="mt-3 flex max-w-full flex-nowrap gap-1.5 overflow-x-auto pb-1">
+              <span v-for="t in ['Tableau', 'Snowflake', 'SQL']" :key="t" class="shrink-0 rounded border border-border bg-cream2 px-2 py-[2px] text-[10px] text-ink3">{{ t }}</span>
             </div>
           </div>
         </button>

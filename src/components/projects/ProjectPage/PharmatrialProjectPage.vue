@@ -21,7 +21,7 @@ const projectNumbers = [
   },
   {
     value: '8',
-    label: 'seeded trials spanning pending, active, rejected, completed, and batch-ready states',
+    label: 'seeded fallback trials spanning pending, active, rejected, completed, and batch-ready states',
   },
   {
     value: '68',
@@ -126,10 +126,10 @@ const programScreenshots = [
 ];
 
 const roleFacts = [
-  ['Framework', 'Vue 3 + TypeScript'],
-  ['State', '5 Pinia stores'],
+  ['Frontend', 'Vue 3 + TypeScript'],
+  ['State', '4 Pinia stores + API hydration'],
   ['Logic', '13 composable modules'],
-  ['Models', '9 TypeScript type files'],
+  ['Persistence', '9 Prisma database models'],
 ];
 
 const techStack = [
@@ -138,7 +138,9 @@ const techStack = [
   'Pinia',
   'Vue Router',
   'Tailwind CSS',
-  'Flowbite Vue',
+  'Express 5',
+  'Prisma',
+  'PostgreSQL',
   'Zod',
   'Vite',
 ];
@@ -151,21 +153,21 @@ const apiCards: {
 }[] = [
   {
     icon: 'check',
-    type: 'Functional requirements',
-    title: '8 functional requirements',
-    body: 'Portal login, patient management, review, sponsor workflow, FDA approval, assignment, disclosure, and reports.',
+    type: 'Live API',
+    title: '14 API-backed workflow actions',
+    body: 'Login, snapshot hydration, trial creation, approvals, enrollment, CSV import, appointments, batches, assignments, notification, disclosure, archive, and delete actions sync with the backend.',
   },
   {
     icon: 'shield',
-    type: 'Security requirements',
-    title: '4 security requirements',
-    body: 'PII confidentiality, blinded assignment, role-based access, and workflow-state guardrails.',
+    type: 'Server guardrails',
+    title: 'Role-gated workflow mutations',
+    body: 'Express middleware verifies bearer tokens, then the service layer enforces FDA, Jane Hopkins, and Bavaria permissions before Prisma writes.',
   },
   {
     icon: 'database',
-    type: 'Data dictionary',
-    title: 'Data dictionary coverage',
-    body: 'Patient, trial, eligibility, enrollment, appointment, assignment, report, auth, and audit event models are defined.',
+    type: 'Database',
+    title: '9 persisted Prisma models',
+    body: 'Portal users, trials, patients, enrollments, appointments, batches, assignments, trial reports, and audit events are modeled for PostgreSQL-compatible databases.',
   },
   {
     icon: 'communication',
@@ -194,19 +196,19 @@ const outputCards = [
     body: 'Trial header, lifecycle, tab bar, overview, patients, appointments, dose tracker, assignments, batch, disclosure, report, and modals.',
   },
   {
-    type: 'Workflow state',
-    title: 'src/stores/trials.store.ts',
-    body: 'Transition methods cover approval, rejection, batch submission, assignment, notification, final disclosure, archive, and deletion.',
+    type: 'Live data client',
+    title: 'src/api + src/stores',
+    body: 'The fetch client logs in, stores a bearer token, hydrates /workflow/snapshot, maps DTOs, and lets Pinia apply returned snapshots after workflow mutations.',
   },
   {
-    type: 'Reusable logic',
-    title: 'src/composables',
-    body: 'Composable modules separate filtering, workflow actions, route state, and derived trial behavior from the component tree.',
+    type: 'Backend workflow',
+    title: 'src/services/pharmatrial.service.ts',
+    body: 'The Express service gates trial creation, approvals, enrollments, appointments, batch submission, assignment locking, FDA notification, disclosure, archive, and deletion before Prisma persistence.',
   },
   {
-    type: 'Privacy helpers',
-    title: 'src/utils/privacy.ts',
-    body: 'Display rules mask names and dates for FDA and Bavaria while preserving full hospital clinical views.',
+    type: 'Database schema',
+    title: 'prisma/schema.prisma',
+    body: 'PostgreSQL persistence covers users, trials, patients, enrollments, appointments, batches, assignments, reports, and audit events with relations and indexes.',
   },
 ];
 
@@ -214,17 +216,17 @@ const validationCards = [
   {
     type: 'Documentation',
     title: 'README.md and docs/*.md',
-    body: 'Role guides explain Jane Hopkins Doctor, Jane Hopkins Admin, FDA Admin, and Bavaria Admin responsibilities.',
+    body: 'Frontend and backend READMEs, architecture notes, role guides, and the data dictionary explain live mode, fallback mode, and stakeholder responsibilities.',
   },
   {
-    type: 'Source data',
-    title: 'src/data seed modules',
-    body: 'Seed portals, trials, patients, ICD codes, and assignments exercise pending, active, rejected, and completed workflows.',
+    type: 'Seeded fallback',
+    title: 'frontend/src/data seed modules',
+    body: 'Seed portals, trials, patients, ICD codes, and assignments keep demos usable when VITE_DEMO_MODE is true, VITE_API_URI is empty, or the live API is unavailable.',
   },
   {
     type: 'Application code',
-    title: 'Vue, Pinia, Router, Tailwind',
-    body: 'The Vite app uses typed domain models and reusable front-end workflow components.',
+    title: 'Vue, Pinia, Express, Prisma',
+    body: 'The Vite app handles role-specific workspaces while the backend persists workflow records, shapes role-filtered snapshots, and records audit events.',
   },
 ];
 </script>
@@ -253,7 +255,7 @@ const validationCards = [
         </h1>
 
         <p class="mt-7 max-w-[600px] text-[18px] font-light leading-[1.72] text-ink3">
-          A privacy-aware Vue and TypeScript proof of concept modeling blinded collaboration between Jane Hopkins Hospital, Bavaria Pharma, and FDA Administration across approvals, enrollment, dose tracking, treatment assignment, disclosure, and reporting.
+          A privacy-aware Vue, TypeScript, Express, and Prisma proof of concept modeling blinded collaboration between Jane Hopkins Hospital, Bavaria Pharma, and FDA Administration across live database-backed approvals, enrollment, dose tracking, treatment assignment, disclosure, and reporting.
         </p>
 
         <div class="mt-9 flex flex-wrap justify-center gap-3 lg:justify-start">
@@ -274,11 +276,11 @@ const validationCards = [
       </div>
 
       <aside class="relative lg:-mr-12">
-        <div class="mb-4 flex flex-wrap justify-center gap-2" aria-label="Technology stack used">
+        <div class="mb-4 flex flex-nowrap gap-2 overflow-x-auto pb-1 md:justify-center" aria-label="Technology stack used">
           <span
             v-for="item in techStack"
             :key="item"
-            class="rounded-full border border-accent2/15 bg-white/80 px-3 py-1.5 text-[11px] font-semibold text-ink3 shadow-[0_3px_12px_rgb(13_17_23_/_5%)]"
+            class="shrink-0 rounded-full border border-accent2/15 bg-white/80 px-3 py-1.5 text-[11px] font-semibold text-ink3 shadow-[0_3px_12px_rgb(13_17_23_/_5%)]"
           >
             {{ item }}
           </span>
@@ -339,12 +341,12 @@ const validationCards = [
             </div>
 
             <h2 class="font-display text-[34px] font-bold leading-[1.06] tracking-normal text-ink md:text-[48px]">
-              A front-end simulation of a blinded clinical trial lifecycle.
+              A full-stack simulation of a blinded clinical trial lifecycle.
             </h2>
           </div>
 
           <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-            Pharmatrial is a single-page proof of concept for controlled data exchange among a hospital, a pharmaceutical sponsor, and a regulator. The product question is not just how to display trial data, but how to keep each user inside the right workflow and privacy boundary.
+            Pharmatrial is a single-page proof of concept for controlled data exchange among a hospital, a pharmaceutical sponsor, and a regulator. The product question is not just how to display trial data, but how to keep each user inside the right workflow and privacy boundary while live state is persisted through an API.
           </p>
         </header>
 
@@ -451,12 +453,12 @@ const validationCards = [
           </div>
 
           <h2 class="font-display text-[34px] font-bold leading-[1.06] tracking-normal text-ink md:text-[48px]">
-            The source code models product rules as state, tabs, and guarded actions.
+            The source code models product rules as state, tabs, guarded actions, and database-backed workflow records.
           </h2>
         </div>
 
         <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-          The app is intentionally front-end only: seeded TypeScript modules and Pinia stores simulate the trial database, while Vue components and composables translate role, trial status, and privacy state into visible workspace behavior.
+          The app now runs against a live Express API when <code>VITE_API_URI</code> is configured: login returns an in-memory bearer token, the dashboard hydrates from <code>/workflow/snapshot</code>, and workflow mutations sync through Prisma-backed endpoints. When the API is unavailable or demo mode is enabled, Pinia falls back to seeded TypeScript data so the full workflow remains reviewable.
         </p>
       </header>
 
@@ -467,7 +469,7 @@ const validationCards = [
           </h3>
 
           <p class="m-0 text-[13px] leading-[1.6] text-ink3">
-            A mature front-end structure with typed stores, composables, reusable forms, modal orchestration, role-specific tabs, patient privacy helpers, and workflow-specific trial components.
+            A mature full-stack structure with typed stores, composables, reusable forms, modal orchestration, role-specific tabs, patient privacy helpers, workflow-specific trial components, API DTO mapping, and server-side workflow services.
           </p>
 
           <div class="mt-[18px] grid gap-[11px]">
@@ -493,14 +495,14 @@ const validationCards = [
           </h3>
 
           <p class="m-0 text-[13px] leading-[1.6] text-ink3">
-            `trials.store.ts` and the workflow composables control approval, rejection, batch submission, assignment locking, appointment logging, FDA notification, final disclosure, archive toggling, and rejected-trial deletion.
+            <code>trials.store.ts</code>, the API client, and the backend workflow service coordinate approval, rejection, batch submission, assignment locking, appointment logging, FDA notification, final disclosure, archive toggling, and rejected-trial deletion.
           </p>
 
-          <div class="mt-[18px] flex flex-wrap gap-2">
+          <div class="mt-[18px] flex flex-nowrap gap-2 overflow-x-auto pb-1">
             <span
               v-for="item in techStack"
               :key="item"
-              class="rounded-md border border-border bg-cream2 px-[9px] py-[5px] text-[12px] text-ink3"
+              class="shrink-0 rounded-md border border-border bg-cream2 px-[9px] py-[5px] text-[12px] text-ink3"
             >
               {{ item }}
             </span>
@@ -518,12 +520,12 @@ const validationCards = [
             </div>
 
             <h2 class="font-display text-[34px] font-bold leading-[1.06] tracking-normal text-ink md:text-[48px]">
-              The strongest product signal is the role-and-state guardrail system.
+              The strongest product signal is the live role-and-state guardrail system.
             </h2>
           </div>
 
           <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-            The docs define Pharmatrial as a front-end proof of concept, not a production clinical system. Its value is the way it demonstrates workflow sequencing, patient privacy boundaries, blinded assignment, and role-specific action availability with seeded data.
+            The docs define Pharmatrial as a proof of concept rather than a production clinical system. Its value is the way it demonstrates workflow sequencing, patient privacy boundaries, blinded assignment, role-specific action availability, live PostgreSQL persistence, and seeded fallback data for offline review.
           </p>
         </header>
 
@@ -562,7 +564,7 @@ const validationCards = [
         </div>
 
         <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-          The source tree separates views, router metadata, stores, composables, typed models, seed data, privacy utilities, and reusable components. That makes the project stronger as an engineering case study than as a pure visual mockup.
+          The source tree separates views, router metadata, stores, composables, typed models, API integration, seed data, privacy utilities, backend routes, service logic, Prisma persistence, and reusable components. That makes the project stronger as an engineering case study than as a pure visual mockup.
         </p>
       </header>
 
@@ -601,7 +603,7 @@ const validationCards = [
           </div>
 
           <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-            The project includes role guides, architecture notes, a data dictionary, seeded TypeScript data, reusable Vue components, and a static requirements document that explains the original course scope.
+            The project includes role guides, frontend and backend architecture notes, a data dictionary, seeded TypeScript fallback data, reusable Vue components, an Express API, a Prisma schema, and a static requirements document that explains the original course scope.
           </p>
         </header>
 
@@ -639,14 +641,14 @@ const validationCards = [
         </div>
 
         <h2 class="relative z-[1] max-w-[760px] font-display text-[34px] font-bold leading-[1.06] tracking-normal text-white md:text-[48px]">
-          Pharmatrial succeeds as a front-end systems prototype for regulated collaboration.
+          Pharmatrial succeeds as a full-stack systems prototype for regulated collaboration.
         </h2>
         
         <p class="relative mt-10 z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">
-          The project demonstrates how a front end can encode trial lifecycle state, partner-specific permissions, patient privacy, blinded assignment, dose completion, and disclosure timing in a workspace that different stakeholders can navigate without seeing the same data.
+          The project demonstrates how a Vue frontend and Express backend can coordinate trial lifecycle state, partner-specific permissions, patient privacy, blinded assignment, dose completion, and disclosure timing in a workspace that different stakeholders can navigate without seeing the same data.
         </p>
         <p class="relative mt-10 z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">
-          The current implementation is intentionally a browser-side proof of concept using seeded TypeScript data and Pinia state. Its next production step would be a backend API with server-side RBAC, encrypted PII storage, durable audit logs, database persistence, soft deletion, and compliance review. As a portfolio artifact, the recommendation is to lead with the source-backed workflow story: four portals, eight seeded trials, twenty-six synthetic patients, sixty-eight Vue components, and a clear privacy model that separates clinical care from regulatory and sponsor visibility.
+          The current implementation pairs live backend mode with a seeded frontend fallback: Express routes authenticate demo or persisted users, Prisma stores workflow records in PostgreSQL, and the Vue app keeps seeded portals, trials, patients, ICD codes, and assignments available when the API cannot be used. Its next production step would be stronger authentication, encrypted PII storage, formal migrations, retention policies, and compliance review. As a portfolio artifact, the recommendation is to lead with the source-backed workflow story: four portals, eight seeded fallback trials, twenty-six synthetic patients, sixty-eight Vue components, nine database models, and a clear privacy model that separates clinical care from regulatory and sponsor visibility.
         </p>
       </div>
     </section>
