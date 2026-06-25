@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import SVGIcons from '@/assets/SVGIcons.vue';
-import type { ProjectFilter, ProjectFilterId, ProjectRegistryEntry, ProjectTagType } from '@/components/projects/projectRegistry';
+import { ProjectTags } from '@/components/projects/ProjectTags';
+import type { ProjectFilter, ProjectFilterId, ProjectRegistryEntry } from '@/components/projects/projectRegistry';
 
 const props = defineProps<{
   projects: ProjectRegistryEntry[];
@@ -19,24 +20,6 @@ const visibleProjects = computed(() =>
     ? props.projects
     : props.projects.filter((project) => project.filter === props.activeFilter)
 );
-
-const projectTagLabels: Record<ProjectTagType, string> = {
-  report: 'Report',
-  dashboard: 'Dashboard',
-  liveDemo: 'Live Demo',
-  modeling: 'Modeling',
-  simulation: 'Simulation',
-  analysis: 'Analysis',
-};
-
-const projectTagClasses: Record<ProjectTagType, string> = {
-  report: 'border-gold/30 bg-[#fff7dc] text-[#8a6500]',
-  dashboard: 'border-accent2/20 bg-accent-pale text-accent',
-  liveDemo: 'border-[#147a4d]/25 bg-[#e9f8ef] text-[#147a4d]',
-  modeling: 'border-purple-200 bg-purple-50 text-purple-700',
-  simulation: 'border-orange-200 bg-orange-50 text-orange-700',
-  analysis: 'border-sky-200 bg-sky-50 text-sky-700',
-};
 </script>
 
 <template>
@@ -91,16 +74,11 @@ const projectTagClasses: Record<ProjectTagType, string> = {
             </div>
           </div>
 
-          <div class="hidden flex-col items-end gap-2 md:flex">
-            <span
-              v-for="tag in project.tags"
-              :key="tag"
-              class="rounded-full border px-3 py-1 text-[11.5px] font-medium"
-              :class="projectTagClasses[tag]"
-            >
-              {{ projectTagLabels[tag] }}
-            </span>
-          </div>
+          <ProjectTags
+            :tags="project.tags"
+            direction="column"
+            class="hidden items-end md:flex"
+          />
 
           <div class="flex h-[38px] w-[38px] items-center justify-center rounded-full border-[1.5px] border-border bg-cream2 text-[15px] text-ink3 transition-all group-hover:-rotate-45 group-hover:border-ink group-hover:bg-ink group-hover:text-white">
             <SVGIcons name="arrowForward" class="h-4 w-4" />

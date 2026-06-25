@@ -3,72 +3,37 @@ import { useRouter } from 'vue-router';
 import { GeoLayer, ProjectCanvas } from '@/components/ui';
 import { useScrollObserver } from '@/composables/useScrollObserver';
 import SVGIcons from '@/assets/SVGIcons.vue';
-import type { Project } from '@/types/types';
+import { ProjectTags } from '@/components/projects/ProjectTags';
+import { projects as projectRegistryProjects } from '@/components/projects/projectRegistry';
+import type { DrawFnName } from '@/types/types';
 
 const router = useRouter();
 
-const projects: Project[] = [
-  {
-    id: 1,
-    num: '01',
-    title: 'Executive KPI Dashboard',
-    short: 'Real-time C-suite dashboard replacing 4 weekly reports.',
-    desc: 'End-to-end Tableau dashboard consolidating revenue, churn, and funnel metrics. Replaced four separate weekly manual reports, saving ~8 analyst hours per week and enabling real-time decision-making for a $40M product line.',
-    cat: 'dashboard',
-    badge: { t: 'Dashboard', c: 'b-blue' },
-    stack: ['Tableau', 'SQL', 'Snowflake', 'dbt'],
-    type: 'Dashboard - Reporting',
-    impact: [
-      { n: '4', d: 'reports consolidated' },
-      { n: '8h', d: 'saved weekly' },
-      { n: '60+', d: 'daily users' },
-    ],
-    hasDemo: true,
-    hasReport: true,
-    color: '#1d4ed8',
-    draw: 'drawDash',
-  },
-  {
-    id: 2,
-    num: '02',
-    title: 'Customer Data Pipeline',
-    short: 'ELT pipeline ingesting 50M+ daily events from 6 sources.',
-    desc: 'Production-grade dbt + Airflow ELT pipeline ingesting 50M+ daily events from six data sources into BigQuery. Reduced reporting latency from 24h to under 1h and improved reliability with 200+ dbt tests.',
-    cat: 'pipeline',
-    badge: { t: 'Pipeline', c: 'b-green' },
-    stack: ['dbt', 'Airflow', 'BigQuery', 'Python', 'SQL'],
-    type: 'Data Engineering',
-    impact: [
-      { n: '50M+', d: 'events/day' },
-      { n: '23x', d: 'faster refresh' },
-      { n: '200+', d: 'dbt tests' },
-    ],
-    hasDemo: false,
-    hasReport: true,
-    color: '#16a34a',
-    draw: 'drawPipe',
-  },
-  {
-    id: 3,
-    num: '03',
-    title: 'Churn Prediction Model',
-    short: 'XGBoost classifier predicting churn 30 days out - 87% AUC.',
-    desc: 'XGBoost binary classifier predicting subscriber churn 30 days in advance. Feature engineering on behavioral, engagement, and billing signals. Served via MLflow; informed retention campaigns that reduced churn by 12%.',
-    cat: 'ml',
-    badge: { t: 'ML Model', c: 'b-purple' },
-    stack: ['Python', 'XGBoost', 'MLflow', 'Pandas', 'SQL'],
-    type: 'Machine Learning',
-    impact: [
-      { n: '87%', d: 'AUC score' },
-      { n: '12%', d: 'churn reduction' },
-      { n: '30d', d: 'prediction horizon' },
-    ],
-    hasDemo: false,
-    hasReport: true,
+const featuredProjectSlugs = [
+  'baseline-noise',
+  'pharmatrial',
+  'science-communication-empathy',
+] as const;
+
+type FeaturedProjectSlug = (typeof featuredProjectSlugs)[number];
+
+const featuredProjectVisuals: Record<
+  FeaturedProjectSlug,
+  { color: string; drawFn: DrawFnName }
+> = {
+  'baseline-noise': {
     color: '#7c3aed',
-    draw: 'drawML',
+    drawFn: 'drawDistribution',
   },
-];
+  pharmatrial: {
+    color: '#1d4ed8',
+    drawFn: 'drawClinicalTrial',
+  },
+  'science-communication-empathy': {
+    color: '#0284c7',
+    drawFn: 'drawSurveyAnalysis',
+  },
+};
 
 const featuredShapes = [
   { type: 'ring' as const, style: { width: '400px', height: '400px', bottom: '-150px', right: '-100px', borderColor: 'rgba(29,78,216,0.07)' } },
@@ -76,12 +41,25 @@ const featuredShapes = [
   { type: 'dotGrid' as const, style: { width: '140px', height: '100px', top: '80px', left: '60px', opacity: '.35' } },
 ];
 
-const featuredHero = projects.find((p) => p.id === 1)!;
-const featuredML = projects.find((p) => p.id === 3)!;
-const featuredPipe = projects.find((p) => p.id === 2)!;
+const getFeaturedProject = (slug: FeaturedProjectSlug) => {
+  const project = projectRegistryProjects.find((entry) => entry.slug === slug);
 
-const openProject = (id: number) => {
-  router.push({ path: '/projects', query: { project: id } });
+  if (!project) {
+    throw new Error(`Missing featured project: ${slug}`);
+  }
+
+  return {
+    ...project,
+    ...featuredProjectVisuals[slug],
+  };
+};
+
+const featuredHero = getFeaturedProject('baseline-noise');
+const featuredProduct = getFeaturedProject('pharmatrial');
+const featuredAnalysis = getFeaturedProject('science-communication-empathy');
+
+const openProject = (slug: string) => {
+  router.push(`/projects/${slug}`);
 };
 
 useScrollObserver('.anim-up,.feat-card');
@@ -108,17 +86,17 @@ useScrollObserver('.anim-up,.feat-card');
         <button
           class="feat-card w-full cursor-pointer overflow-hidden rounded-xl border border-border bg-white text-left opacity-0 translate-y-4 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-accent2 hover:shadow-[0_16px_48px_rgba(13,17,23,0.15)] focus:outline-none focus:ring-2 focus:ring-accent2/40 sm:rounded-2xl [&.vis]:translate-y-0 [&.vis]:opacity-100"
           type="button"
-          @click="openProject(featuredHero.id)"
+          @click="openProject(featuredHero.slug)"
         >
-          <div class="flex h-[160px] items-center justify-center overflow-hidden bg-cream2 xs:h-[180px] sm:h-[200px]">
-            <ProjectCanvas :draw-fn="featuredHero.draw" :color="featuredHero.color" :height="200" />
+          <div class="flex h-[160px] items-center justify-center overflow-hidden bg-cream2 p-3 xs:h-[180px] sm:h-[200px] sm:p-4">
+            <ProjectCanvas :draw-fn="featuredHero.drawFn" :color="featuredHero.color" :height="200" />
           </div>
           <div class="p-4 xs:p-5 sm:p-6">
-            <span class="mb-2.5 inline-block rounded-full border border-accent2/20 bg-accent-pale px-2.5 py-[3px] text-[10px] font-medium text-accent">{{ featuredHero.badge.t }}</span>
+            <ProjectTags :tags="featuredHero.tags" size="sm" class="mb-2.5" />
             <div class="mb-1.5 font-display text-[17px] font-bold leading-snug text-ink xs:text-lg">{{ featuredHero.title }}</div>
-            <div class="text-[13px] font-light leading-relaxed text-ink3">End-to-end Tableau dashboard tracking revenue, churn, and funnel metrics - replaced 4 weekly manual reports.</div>
+            <div class="text-[13px] font-light leading-relaxed text-ink3">{{ featuredHero.short }}</div>
             <div class="mt-3 flex max-w-full flex-nowrap gap-1.5 overflow-x-auto pb-1">
-              <span v-for="t in ['Tableau', 'Snowflake', 'SQL']" :key="t" class="shrink-0 rounded border border-border bg-cream2 px-2 py-[2px] text-[10px] text-ink3">{{ t }}</span>
+              <span v-for="t in featuredHero.stack.slice(0, 4)" :key="t" class="shrink-0 rounded border border-border bg-cream2 px-2 py-[2px] text-[10px] text-ink3">{{ t }}</span>
             </div>
           </div>
         </button>
@@ -127,30 +105,30 @@ useScrollObserver('.anim-up,.feat-card');
           <button
             class="feat-card w-full cursor-pointer overflow-hidden rounded-xl border border-border bg-white text-left opacity-0 translate-y-4 delay-100 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-accent2 hover:shadow-[0_16px_48px_rgba(13,17,23,0.15)] focus:outline-none focus:ring-2 focus:ring-accent2/40 sm:rounded-2xl [&.vis]:translate-y-0 [&.vis]:opacity-100"
             type="button"
-            @click="openProject(featuredML.id)"
+            @click="openProject(featuredProduct.slug)"
           >
-            <div class="flex h-[110px] items-center justify-center overflow-hidden bg-cream2 xs:h-[120px]">
-              <ProjectCanvas :draw-fn="featuredML.draw" :color="featuredML.color" :height="120" />
+            <div class="flex h-[110px] items-center justify-center overflow-hidden bg-cream2 p-3 xs:h-[120px]">
+              <ProjectCanvas :draw-fn="featuredProduct.drawFn" :color="featuredProduct.color" :height="120" />
             </div>
             <div class="p-4 xs:p-5 sm:p-6">
-              <span class="mb-2.5 inline-block rounded-full border border-purple-200 bg-purple-50 px-2.5 py-[3px] text-[10px] font-medium text-purple-600">{{ featuredML.badge.t }}</span>
-              <div class="mb-1.5 font-display text-[17px] font-bold leading-snug text-ink xs:text-lg">{{ featuredML.title }}</div>
-              <div class="text-[13px] font-light leading-relaxed text-ink3">XGBoost classifier with 87% AUC, 12% churn reduction in production.</div>
+              <ProjectTags :tags="featuredProduct.tags" size="sm" class="mb-2.5" />
+              <div class="mb-1.5 font-display text-[17px] font-bold leading-snug text-ink xs:text-lg">{{ featuredProduct.title }}</div>
+              <div class="text-[13px] font-light leading-relaxed text-ink3">{{ featuredProduct.short }}</div>
             </div>
           </button>
 
           <button
             class="feat-card w-full cursor-pointer overflow-hidden rounded-xl border border-border bg-white text-left opacity-0 translate-y-4 delay-200 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-accent2 hover:shadow-[0_16px_48px_rgba(13,17,23,0.15)] focus:outline-none focus:ring-2 focus:ring-accent2/40 sm:rounded-2xl [&.vis]:translate-y-0 [&.vis]:opacity-100"
             type="button"
-            @click="openProject(featuredPipe.id)"
+            @click="openProject(featuredAnalysis.slug)"
           >
-            <div class="flex h-[110px] items-center justify-center overflow-hidden bg-cream2 xs:h-[120px]">
-              <ProjectCanvas :draw-fn="featuredPipe.draw" :color="featuredPipe.color" :height="120" />
+            <div class="flex h-[110px] items-center justify-center overflow-hidden bg-cream2 p-3 xs:h-[120px]">
+              <ProjectCanvas :draw-fn="featuredAnalysis.drawFn" :color="featuredAnalysis.color" :height="120" />
             </div>
             <div class="p-4 xs:p-5 sm:p-6">
-              <span class="mb-2.5 inline-block rounded-full border border-green-200 bg-green-50 px-2.5 py-[3px] text-[10px] font-medium text-green-600">{{ featuredPipe.badge.t }}</span>
-              <div class="mb-1.5 font-display text-[17px] font-bold leading-snug text-ink xs:text-lg">{{ featuredPipe.title }}</div>
-              <div class="text-[13px] font-light leading-relaxed text-ink3">50M+ events/day. 24h -> 1h reporting latency.</div>
+              <ProjectTags :tags="featuredAnalysis.tags" size="sm" class="mb-2.5" />
+              <div class="mb-1.5 font-display text-[17px] font-bold leading-snug text-ink xs:text-lg">{{ featuredAnalysis.title }}</div>
+              <div class="text-[13px] font-light leading-relaxed text-ink3">{{ featuredAnalysis.short }}</div>
             </div>
           </button>
         </div>

@@ -223,6 +223,178 @@ const drawML = (canvas: HTMLCanvasElement, color: string) => {
   ctx.fillText('Churn Model', cardX + 70, H / 2 + 26);
 };
 
+const drawDistribution = (canvas: HTMLCanvasElement, color: string) => {
+  const ctx = lightCanvas(canvas);
+  if (!ctx) return;
+
+  const { width: W, height: H } = canvas;
+  const left = Math.max(28, W * 0.12);
+  const right = W - Math.max(22, W * 0.08);
+  const bottom = H - 28;
+  const top = 22;
+  const chartWidth = right - left;
+  const chartHeight = bottom - top;
+  const bars = [.18, .28, .45, .72, .92, .78, .55, .36, .2, .11];
+  const barGap = Math.max(3, chartWidth * 0.012);
+  const barWidth = (chartWidth - barGap * (bars.length - 1)) / bars.length;
+
+  ctx.strokeStyle = 'rgba(13,17,23,0.18)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(left, top);
+  ctx.lineTo(left, bottom);
+  ctx.lineTo(right, bottom);
+  ctx.stroke();
+
+  bars.forEach((value, index) => {
+    const x = left + index * (barWidth + barGap);
+    const h = chartHeight * value;
+    const gradient = ctx.createLinearGradient(0, bottom - h, 0, bottom);
+    gradient.addColorStop(0, `${color}cc`);
+    gradient.addColorStop(1, `${color}26`);
+    ctx.fillStyle = gradient;
+    roundRect(ctx, x, bottom - h, barWidth, h, 4);
+    ctx.fill();
+  });
+
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  for (let i = 0; i <= 60; i += 1) {
+    const t = i / 60;
+    const x = left + chartWidth * t;
+    const y = bottom - chartHeight * Math.exp(-Math.pow((t - .48) / .24, 2)) * .9;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+
+  ctx.fillStyle = color;
+  ctx.font = 'bold 11px DM Sans, sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('Baseline noise model', left, top + 10);
+};
+
+const drawClinicalTrial = (canvas: HTMLCanvasElement, color: string) => {
+  const ctx = lightCanvas(canvas);
+  if (!ctx) return;
+
+  const { width: W, height: H } = canvas;
+  const panelX = Math.max(18, W * 0.08);
+  const panelY = Math.max(14, H * 0.13);
+  const panelW = W - panelX * 2;
+  const panelH = H - panelY * 2;
+
+  ctx.fillStyle = '#fff';
+  roundRect(ctx, panelX, panelY, panelW, panelH, 12);
+  ctx.fill();
+  ctx.strokeStyle = `${color}33`;
+  ctx.lineWidth = 1;
+  roundRect(ctx, panelX, panelY, panelW, panelH, 12);
+  ctx.stroke();
+
+  ctx.fillStyle = `${color}18`;
+  roundRect(ctx, panelX + 12, panelY + 12, panelW - 24, 24, 8);
+  ctx.fill();
+
+  const columns = ['Site', 'Review', 'Blind'];
+  const columnWidth = (panelW - 42) / columns.length;
+  columns.forEach((label, index) => {
+    const x = panelX + 14 + index * (columnWidth + 7);
+    const y = panelY + 48;
+    ctx.fillStyle = index === 1 ? `${color}14` : '#f8f5ef';
+    roundRect(ctx, x, y, columnWidth, panelH - 64, 9);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(13,17,23,0.08)';
+    ctx.lineWidth = 1;
+    roundRect(ctx, x, y, columnWidth, panelH - 64, 9);
+    ctx.stroke();
+    ctx.fillStyle = index === 1 ? color : 'rgba(13,17,23,0.58)';
+    ctx.font = 'bold 10px DM Sans, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(label, x + columnWidth / 2, y + 18);
+  });
+
+  ctx.strokeStyle = `${color}85`;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(panelX + panelW * .28, panelY + panelH * .62);
+  ctx.lineTo(panelX + panelW * .48, panelY + panelH * .62);
+  ctx.lineTo(panelX + panelW * .48, panelY + panelH * .45);
+  ctx.lineTo(panelX + panelW * .68, panelY + panelH * .45);
+  ctx.stroke();
+
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.arc(panelX + panelW * .48, panelY + panelH * .62, 4, 0, Math.PI * 2);
+  ctx.fill();
+};
+
+const drawSurveyAnalysis = (canvas: HTMLCanvasElement, color: string) => {
+  const ctx = lightCanvas(canvas);
+  if (!ctx) return;
+
+  const { width: W, height: H } = canvas;
+  const left = Math.max(26, W * 0.1);
+  const right = W - left;
+  const top = 22;
+  const bottom = H - 24;
+  const midX = left + (right - left) * .46;
+  const pairs = [
+    [.32, .46],
+    [.44, .58],
+    [.52, .62],
+    [.58, .68],
+    [.66, .73],
+  ];
+
+  ctx.strokeStyle = 'rgba(13,17,23,0.14)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(left, bottom);
+  ctx.lineTo(right, bottom);
+  ctx.stroke();
+
+  pairs.forEach(([before, after], index) => {
+    const y1 = bottom - (bottom - top) * before;
+    const y2 = bottom - (bottom - top) * after;
+    const rowColor = index % 2 === 0 ? `${color}90` : 'rgba(13,17,23,0.45)';
+    ctx.strokeStyle = rowColor;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(left + 18, y1);
+    ctx.lineTo(midX - 12, y2);
+    ctx.stroke();
+    ctx.fillStyle = rowColor;
+    ctx.beginPath();
+    ctx.arc(left + 18, y1, 3, 0, Math.PI * 2);
+    ctx.arc(midX - 12, y2, 3, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  const boxes = [
+    { x: midX + 32, y: top + 38, h: 46 },
+    { x: midX + 82, y: top + 24, h: 58 },
+  ];
+
+  boxes.forEach((box, index) => {
+    ctx.strokeStyle = index === 0 ? 'rgba(13,17,23,0.45)' : color;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(box.x + 15, box.y - 16);
+    ctx.lineTo(box.x + 15, box.y + box.h + 16);
+    ctx.stroke();
+    ctx.fillStyle = index === 0 ? 'rgba(13,17,23,0.08)' : `${color}24`;
+    roundRect(ctx, box.x, box.y, 30, box.h, 5);
+    ctx.fill();
+    ctx.strokeRect(box.x, box.y + box.h * .48, 30, 1);
+  });
+
+  ctx.fillStyle = color;
+  ctx.font = 'bold 11px DM Sans, sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('Pre/post empathy scores', left, top + 10);
+};
+
 const drawFallback = (canvas: HTMLCanvasElement, color: string) => {
   const ctx = lightCanvas(canvas);
   if (!ctx) return;
@@ -240,6 +412,9 @@ const drawMap: Record<DrawFnName, (canvas: HTMLCanvasElement, color: string) => 
   drawDash,
   drawPipe,
   drawML,
+  drawDistribution,
+  drawClinicalTrial,
+  drawSurveyAnalysis,
   drawSelf: drawFallback,
   drawGeo: drawFallback,
   drawBot: drawFallback,

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useRoute, RouterLink } from 'vue-router';
+import { useRoute } from 'vue-router';
+import { BackToProjectsButton } from '@/components/projects/ProjectPage';
 import { getProjectComponent } from '@/components/projects/projectRegistry';
 
 const route = useRoute();
@@ -13,7 +14,13 @@ const ProjectComponent = computed(() => {
 </script>
 
 <template>
-  <component :is="ProjectComponent" v-if="ProjectComponent" />
+  <div v-if="ProjectComponent" class="bg-cream">
+    <div class="pt-[105px]"></div>
+
+    <BackToProjectsButton class="mx-auto w-[min(1100px,calc(100%_-_48px))] pb-4" />
+
+    <component :is="ProjectComponent" />
+  </div>
 
   <main v-else class="min-h-screen bg-cream pt-[120px]">
     <section class="mx-auto w-[min(900px,calc(100%_-_48px))] py-20">
@@ -30,12 +37,7 @@ const ProjectComponent = computed(() => {
         <strong>{{ slug }}</strong>.
       </p>
 
-      <RouterLink
-        class="mt-8 inline-flex min-h-[46px] items-center justify-center rounded-[10px] bg-ink px-5 text-sm font-semibold text-white no-underline transition-colors hover:bg-accent"
-        to="/projects"
-      >
-        Back to projects
-      </RouterLink>
+      <BackToProjectsButton class="mt-8" />
     </section>
   </main>
 </template>

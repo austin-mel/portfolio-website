@@ -1,9 +1,16 @@
 import { defineAsyncComponent } from 'vue';
 import type { Component } from 'vue';
 
-export type ProjectFilterId = 'all' | 'modeling' | 'product' | 'simulation' | 'analysis';
+export type ProjectFilterId = 'all' | 'modeling' | 'full-stack' | 'simulation' | 'analysis';
 export type ProjectCategory = Exclude<ProjectFilterId, 'all'>;
-export type ProjectTagType = 'report' | 'dashboard' | 'liveDemo' | 'modeling' | 'simulation' | 'analysis';
+export type ProjectTagType =
+  | 'report'
+  | 'product'
+  | 'full-stack'
+  | 'liveDemo'
+  | 'modeling'
+  | 'simulation'
+  | 'analysis';
 
 export interface ProjectFilter {
   id: ProjectFilterId;
@@ -27,7 +34,7 @@ export interface ProjectRegistryEntry {
 export const projectFilters: ProjectFilter[] = [
   { id: 'all', label: 'All' },
   { id: 'modeling', label: 'Modeling' },
-  { id: 'product', label: 'Full-Stack Product' },
+  { id: 'full-stack', label: 'Full-Stack Product' },
   { id: 'simulation', label: 'Simulation' },
   { id: 'analysis', label: 'Data Analysis' },
 ];
@@ -53,8 +60,8 @@ export const projects: ProjectRegistryEntry[] = [
     title: 'Pharmatrial Clinical Trial Portal',
     short: 'Full-stack Vue and Express portal for blinded clinical trial collaboration.',
     category: 'Full-Stack Clinical Workflow Product',
-    filter: 'product',
-    tags: ['dashboard', 'liveDemo'],
+    filter: 'full-stack',
+    tags: ['full-stack', 'liveDemo', 'product'],
     stack: ['Vue', 'TypeScript', 'Express', 'Prisma', 'PostgreSQL'],
     sourceMockup: 'src/reference/pharmatrial-project-mockup.html',
     summary:

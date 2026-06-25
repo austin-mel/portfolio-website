@@ -13,7 +13,13 @@ const items: NavItem[] = [
   { id: 'contact', label: 'Contact', path: '/contact' },
 ];
 
-const isActive = (path: string) => route.path === path;
+const isActive = (path: string) => {
+  if (path === '/projects') {
+    return route.path === path || route.path.startsWith('/projects/');
+  }
+
+  return route.path === path;
+};
 </script>
 
 <template>

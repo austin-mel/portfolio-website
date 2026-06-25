@@ -113,7 +113,7 @@ const modelingFigures = [
         <div class="mb-7 inline-flex items-center gap-2.5 rounded-full border border-accent2/20 bg-accent-pale px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-accent before:h-1.5 before:w-1.5 before:rounded-full before:bg-gold before:content-['']">
           Science Communication Case Study
         </div>
-        <h1 class="mx-auto max-w-[760px] font-display text-[44px] font-black leading-[0.96] tracking-normal text-ink xs:text-[54px] md:text-[72px] lg:mx-0 lg:text-[88px]">
+        <h1 class="mx-auto max-w-[760px] font-display text-[46px] font-black leading-[0.95] tracking-normal text-ink xs:text-[56px] md:text-[72px] lg:mx-0 lg:text-[88px]">
           Testing whether empathy training changes <em class="text-accent">self-reported empathy.</em>
         </h1>
         <p class="mx-auto mt-7 max-w-[620px] text-[18px] font-light leading-[1.72] text-ink3 lg:mx-0">

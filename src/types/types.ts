@@ -6,6 +6,9 @@ export type DrawFnName =
   | 'drawDash'
   | 'drawPipe'
   | 'drawML'
+  | 'drawDistribution'
+  | 'drawClinicalTrial'
+  | 'drawSurveyAnalysis'
   | 'drawSelf'
   | 'drawGeo'
   | 'drawBot';

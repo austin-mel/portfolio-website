@@ -136,13 +136,9 @@ const techStack = [
   'Vue 3',
   'TypeScript',
   'Pinia',
-  'Vue Router',
   'Tailwind CSS',
-  'Express 5',
-  'Prisma',
+  'Express',
   'PostgreSQL',
-  'Zod',
-  'Vite',
 ];
 
 const apiCards: {
@@ -244,17 +240,17 @@ const validationCards = [
       aria-hidden="true"
     ></div>
 
-    <section class="relative z-[1] mx-auto grid min-h-[690px] w-[min(1120px,calc(100%_-_48px))] grid-cols-1 items-center gap-12 py-[58px] pt-[76px] text-center lg:w-[min(1400px,calc(100%_-_48px))] lg:grid-cols-[0.65fr_1.35fr] lg:text-left">
+    <section class="relative z-[1] mx-auto grid min-h-[680px] w-[min(1120px,calc(100%_-_48px))] grid-cols-1 items-center gap-10 py-14 pt-[76px] text-center lg:grid-cols-[minmax(0,1.04fr)_minmax(360px,0.76fr)] lg:gap-14 lg:text-left">
       <div>
         <div class="mb-7 inline-flex items-center gap-2.5 rounded-full border border-accent2/20 bg-accent-pale px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-accent before:h-1.5 before:w-1.5 before:rounded-full before:bg-gold before:content-['']">
           Vue 3 Clinical Workflow Case Study
         </div>
 
-        <h1 class="max-w-[760px] font-display text-[46px] font-black leading-[0.96] tracking-normal text-ink xs:text-[56px] md:text-[72px] lg:text-[86px]">
+        <h1 class="max-w-[760px] font-display text-[46px] font-black leading-[0.95] tracking-normal text-ink xs:text-[56px] md:text-[72px] lg:text-[88px]">
           Pharmatrial clinical trial <em class="text-accent">portal.</em>
         </h1>
 
-        <p class="mt-7 max-w-[600px] text-[18px] font-light leading-[1.72] text-ink3">
+        <p class="mt-7 max-w-[620px] text-[18px] font-light leading-[1.72] text-ink3">
           A privacy-aware Vue, TypeScript, Express, and Prisma proof of concept modeling blinded collaboration between Jane Hopkins Hospital, Bavaria Pharma, and FDA Administration across live database-backed approvals, enrollment, dose tracking, treatment assignment, disclosure, and reporting.
         </p>
 
@@ -275,8 +271,8 @@ const validationCards = [
         </div>
       </div>
 
-      <aside class="relative lg:-mr-12">
-        <div class="mb-4 flex flex-nowrap gap-2 overflow-x-auto pb-1 md:justify-center" aria-label="Technology stack used">
+      <aside class="relative">
+        <div class="mb-4 flex flex-nowrap gap-2 pb-1 md:justify-center" aria-label="Technology stack used">
           <span
             v-for="item in techStack"
             :key="item"
@@ -354,7 +350,7 @@ const validationCards = [
           <article
             v-for="role in partnerRoles"
             :key="role.name"
-            class="grid min-h-[106px] grid-cols-[64px_1fr] items-center gap-4 rounded-[14px] border border-border bg-white p-[18px] shadow-[0_4px_24px_rgb(13_17_23_/_7%)]"
+            class="grid min-h-[106px] grid-cols-[64px_1fr] items-center gap-4 rounded-[12px] border border-border bg-white p-[18px]"
           >
             <img class="max-h-14 w-14 object-contain" :src="role.logo" :alt="role.alt" />
 
@@ -374,7 +370,7 @@ const validationCards = [
           <article
             v-for="card in featureCards"
             :key="card.title"
-            class="rounded-[14px] border border-border bg-white p-6 shadow-[0_4px_24px_rgb(13_17_23_/_7%)]"
+            class="rounded-[12px] border border-border bg-white p-6"
           >
             <div class="mb-[18px] grid h-10 w-10 place-items-center rounded-[10px] bg-accent-pale font-bold text-accent">
               {{ card.icon }}
@@ -413,7 +409,7 @@ const validationCards = [
         <article
           v-for="(screen, index) in programScreenshots"
           :key="screen.title"
-          class="overflow-hidden rounded-[14px] border border-border bg-white shadow-[0_4px_24px_rgb(13_17_23_/_7%)]"
+          class="overflow-hidden rounded-[12px] border border-border bg-white"
           :class="{ 'md:col-span-2': index === 0 }"
         >
           <div class="border-b border-border bg-cream2 px-5 py-4">
@@ -463,7 +459,7 @@ const validationCards = [
       </header>
 
       <div class="grid grid-cols-1 gap-6 md:grid-cols-[0.92fr_1.08fr]">
-        <article class="rounded-[14px] border border-border bg-white p-7 shadow-[0_4px_24px_rgb(13_17_23_/_7%)]">
+        <article class="rounded-[12px] border border-border bg-white p-7">
           <h3 class="mb-2 text-[15px] font-bold tracking-normal text-ink">
             What this demonstrates
           </h3>
@@ -489,7 +485,7 @@ const validationCards = [
           </div>
         </article>
 
-        <article class="rounded-[14px] border border-border bg-white p-7 shadow-[0_4px_24px_rgb(13_17_23_/_7%)]">
+        <article class="rounded-[12px] border border-border bg-white p-7">
           <h3 class="mb-2 text-[15px] font-bold tracking-normal text-ink">
             Implemented workflow actions
           </h3>
@@ -533,7 +529,7 @@ const validationCards = [
           <article
             v-for="card in apiCards"
             :key="card.title"
-            class="rounded-[14px] border border-border bg-white p-6 shadow-[0_4px_24px_rgb(13_17_23_/_7%)]"
+            class="rounded-[12px] border border-border bg-white p-6"
           >
             <div class="mb-[18px] grid h-10 w-10 place-items-center rounded-[10px] bg-accent-pale text-accent">
               <SVGIcons :name="card.icon" class="h-5 w-5" />
@@ -572,7 +568,7 @@ const validationCards = [
         <article
           v-for="card in outputCards"
           :key="card.title"
-          class="rounded-[14px] border border-border bg-white p-6 shadow-[0_4px_24px_rgb(13_17_23_/_7%)]"
+          class="rounded-[12px] border border-border bg-white p-6"
         >
           <div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">
             {{ card.type }}
@@ -611,7 +607,7 @@ const validationCards = [
           <article
             v-for="card in validationCards"
             :key="card.title"
-            class="rounded-[14px] border border-border bg-white p-6 shadow-[0_4px_24px_rgb(13_17_23_/_7%)]"
+            class="rounded-[12px] border border-border bg-white p-6"
           >
             <div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">
               {{ card.type }}
@@ -630,7 +626,7 @@ const validationCards = [
     </section>
 
     <section class="mx-auto w-[min(1120px,calc(100%_-_48px))] py-[82px]">
-      <div class="relative overflow-hidden rounded-2xl bg-ink p-8 text-white md:p-11">
+      <div class="relative overflow-hidden rounded-[14px] bg-ink p-8 text-white md:p-11">
         <div
           class="pointer-events-none absolute right-[-170px] top-[-170px] h-[500px] w-[500px] rounded-full border border-white/[0.05]"
           aria-hidden="true"
