@@ -97,6 +97,22 @@ export const projects: ProjectRegistryEntry[] = [
       'Present an R package that simulates SIR, SIS, and SIRS disease spread across two-dimensional matrices.',
     component: defineAsyncComponent(() => import('@/components/projects/ProjectPage/SirsSimulationProjectPage.vue')),
   },
+  {
+    slug: 'sirs-survival-analysis',
+    num: '05',
+    title: 'Reproducible Baseline SIRS Survival Analysis',
+    short: 'Cell-level survival endpoints derived from a mortality-enabled SIRS run.',
+    category: 'Reproducible Simulation Case Study',
+    filters: ['modeling', 'analysis'],
+    tags: ['modeling', 'analysis', 'report'],
+    stack: ['R', 'Survival', 'Kaplan-Meier', 'Simulation'],
+    sourceMockup: 'src/reference/survival-analysis-project-mockup.html',
+    summary:
+      'Turn a mortality-enabled SIRS simulation into cell-level infection, recovery, and death survival endpoints.',
+    component: defineAsyncComponent(
+      () => import('@/components/projects/ProjectPage/SirsSurvivalAnalysisProjectPage.vue')
+    ),
+  },
 ];
 
 export const getProjectBySlug = (slug: string) =>

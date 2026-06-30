@@ -14,7 +14,7 @@ import fdaAssignmentsScreenshot from '@/assets/projects/pharmatrial/fda-assignme
 import bavariaBatchScreenshot from '@/assets/projects/pharmatrial/bavaria-batch.png';
 import bavariaReportScreenshot from '@/assets/projects/pharmatrial/bavaria-report.png';
 
-const githubRepoUrl = 'https://github.com/austin-mel/pharmatrial';
+const githubRepoUrl = 'https://github.com/austin-mel/csc131-mock-pharmatrial-portal';
 const liveDemoUrl = '#product';
 
 const projectNumbers = [

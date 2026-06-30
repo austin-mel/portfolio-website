@@ -7,7 +7,7 @@ import probabilitySweepFigure from '@/assets/projects/sirs/probability-sweep.png
 import finalMatrixFigure from '@/assets/projects/sirs/sir-final-matrix.png';
 import historyFigure from '@/assets/projects/sirs/sir-history.png';
 
-const githubRepoUrl = 'https://github.com/austin-mel/SIRSsim';
+const githubRepoUrl = 'https://github.com/austin-mel/sirmodelsimulation';
 
 const techStack = ['R', 'Package', 'Simulation', 'Visualization'];
 
