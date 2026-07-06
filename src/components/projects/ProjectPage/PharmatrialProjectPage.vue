@@ -20,41 +20,50 @@ const liveDemoUrl = 'https://austin-mel.github.io/csc131-mock-pharmatrial-portal
 const projectNumbers = [
   {
     value: '4',
-    label: 'role-selected demo portals for doctor, hospital admin, FDA, and Bavaria users',
+    label: 'fictional demo roles for hospital, sponsor, and regulator workflows',
   },
   {
-    value: '8',
-    label: 'seeded fallback trials spanning pending, active, rejected, completed, and batch-ready states',
+    value: '14',
+    label: 'API-backed workflow actions for approvals, enrollment, batches, disclosure, and archive state',
   },
   {
-    value: '68',
-    label: 'Vue components across dashboards, trial tabs, modals, patient tables, and navigation',
+    value: '9',
+    label: 'Prisma models for users, trials, patients, enrollments, appointments, batches, assignments, reports, and audit events',
   },
   {
-    value: '26',
-    label: 'synthetic patient records supporting CSV import, eligibility, dosing, and reports',
+    value: '2',
+    label: 'operating modes: live API persistence and seeded frontend fallback',
   },
 ];
 
 const partnerRoles = [
   {
-    name: 'Jane Hopkins',
+    name: 'Demo Hospital',
     logo: jhLogo,
-    alt: 'Jane Hopkins logo',
-    body: 'Doctor and admin portals coordinate patient intake, hospital-side review, appointments, dosing, and clinical operations.',
+    alt: 'Demo hospital logo',
+    body: 'Doctor and admin roles coordinate patient intake, hospital-side review, appointments, dosing, and clinical operations.',
   },
   {
-    name: 'FDA Administration',
+    name: 'Demo Regulator',
     logo: fdaLogo,
-    alt: 'FDA Administration logo',
-    body: 'Regulatory portal approves trials, controls assignments, reviews batches, and publishes final disclosure.',
+    alt: 'Demo regulator logo',
+    body: 'Regulator role approves trials, controls assignment locking, reviews batches, and publishes final disclosure in the demo workflow.',
   },
   {
-    name: 'Bavaria Pharma',
+    name: 'Demo Sponsor',
     logo: bavariaLogo,
-    alt: 'Bavaria Pharma logo',
-    body: 'Sponsor portal creates trial drafts, submits batch metadata, monitors status without PII, and reviews disclosed reports.',
+    alt: 'Demo sponsor logo',
+    body: 'Sponsor role creates trial drafts, submits batch metadata, monitors status without PII, and reviews disclosed reports.',
   },
+];
+
+const engineeringSummary = [
+  ['Problem', 'Show how a trial workflow can expose different actions and patient visibility to hospital, sponsor, and regulator roles without presenting the demo as a production clinical system.'],
+  ['My role', 'Built the Vue/TypeScript interface, Pinia state flow, API client integration, Express workflow service, Prisma data model, seeded fallback mode, and role-filtered snapshots.'],
+  ['Implementation', 'The frontend hydrates a workflow snapshot, maps API DTOs into stores, and applies returned snapshots after mutations; the backend validates role-specific actions before Prisma writes.'],
+  ['Validation', 'The page now treats the app as a proof of concept and calls out the evidence a reviewer can inspect: workflow actions, persisted models, docs, role guides, seed data, and audit events.'],
+  ['Result', 'The workflow includes trial creation, review, enrollment, batch submission, assignment locking, dosing, disclosure, and archival states.'],
+  ['Limitation', 'Demo bearer-token auth and synthetic clinical data are not production controls; real deployment would need identity, encryption, retention, audit, and compliance review.'],
 ];
 
 const featureCards = [
@@ -66,12 +75,12 @@ const featureCards = [
   {
     icon: '02',
     title: 'Trial lifecycle control',
-    body: 'Tracks draft creation, FDA review, JH review, batch submission, assignment locking, dosing, notification, disclosure, and archive state.',
+    body: 'Tracks draft creation, regulator review, hospital review, batch submission, assignment locking, dosing, notification, disclosure, and archive state.',
   },
   {
     icon: '03',
     title: 'Patient privacy boundary',
-    body: 'Jane Hopkins roles see clinical PII; FDA and Bavaria views use masked patient display helpers before disclosure.',
+    body: 'Hospital roles see synthetic clinical PII; sponsor and regulator views use masked patient display helpers before disclosure.',
   },
   {
     icon: '04',
@@ -81,12 +90,12 @@ const featureCards = [
   {
     icon: '05',
     title: 'Operational modals',
-    body: 'Includes focused flows for trial creation, approvals, FDA assignment, patient intake, CSV upload, and appointment logging.',
+    body: 'Includes focused flows for trial creation, approvals, assignment locking, patient intake, CSV upload, and appointment logging.',
   },
   {
     icon: '06',
     title: 'Post-disclosure reports',
-    body: 'Derives outcome, comparison, and adverse-event tables only after FDA publishes final disclosure.',
+    body: 'Derives outcome, comparison, and adverse-event tables only after the regulator publishes final disclosure.',
   },
 ];
 
@@ -95,36 +104,36 @@ const programScreenshots = [
     image: loginFormScreenshot,
     title: 'Role-based login form',
     type: 'Portal entry',
-    body: 'Demo users enter the proof of concept through role-specific access points for hospital, FDA, and sponsor workflows.',
+    body: 'Demo users enter the proof of concept through role-specific access points for hospital, regulator, and sponsor workflows.',
     alt: 'Pharmatrial role-based login form screenshot',
   },
   {
     image: jhApprovalScreenshot,
-    title: 'Jane Hopkins approval workspace',
-    type: 'Clinical workflow',
-    body: 'Hospital administrators review trial details, patient context, and approval state from the clinical operations portal.',
-    alt: 'Jane Hopkins approval workspace screenshot',
+    title: 'Hospital approval workspace',
+    type: 'Hospital workflow',
+    body: 'Hospital administrators review trial details, patient context, and approval state from the operations portal.',
+    alt: 'Hospital approval workspace screenshot',
   },
   {
     image: fdaAssignmentsScreenshot,
-    title: 'FDA assignment controls',
-    type: 'Regulatory workflow',
-    body: 'The FDA view controls blinded treatment assignment and keeps regulatory actions separated from hospital and sponsor visibility.',
-    alt: 'FDA assignment controls screenshot',
+    title: 'Regulator assignment controls',
+    type: 'Regulator workflow',
+    body: 'The regulator view controls blinded treatment assignment and keeps assignment actions separated from hospital and sponsor visibility.',
+    alt: 'Regulator assignment controls screenshot',
   },
   {
     image: bavariaBatchScreenshot,
-    title: 'Bavaria batch submission',
+    title: 'Sponsor batch submission',
     type: 'Sponsor workflow',
     body: 'Sponsor users submit and monitor batch metadata without accessing hospital-side patient PII.',
-    alt: 'Bavaria Pharma batch submission screenshot',
+    alt: 'Sponsor batch submission screenshot',
   },
   {
     image: bavariaReportScreenshot,
-    title: 'Bavaria disclosed report',
+    title: 'Sponsor disclosed report',
     type: 'Post-disclosure output',
-    body: 'Final reports become visible only after the FDA publishes disclosure and the blinded workflow is complete.',
-    alt: 'Bavaria Pharma disclosed report screenshot',
+    body: 'Final reports become visible only after the regulator publishes disclosure and the blinded workflow is complete.',
+    alt: 'Sponsor disclosed report screenshot',
   },
 ];
 
@@ -144,6 +153,26 @@ const techStack = [
   'PostgreSQL',
 ];
 
+const architectureRows = [
+  ['Vue views and tabs', 'Render role-specific dashboards, trial tabs, patient tables, modals, and report screens.'],
+  ['Pinia stores', 'Hold current portal, trial state, patient data, assignments, and returned workflow snapshots.'],
+  ['API client', 'Logs in, stores a demo bearer token in memory, maps DTOs, and submits workflow mutations.'],
+  ['Express service layer', 'Checks role and workflow state before approving, enrolling, assigning, disclosing, archiving, or deleting records.'],
+  ['Prisma and PostgreSQL', 'Persist users, trials, patients, enrollments, appointments, batches, assignments, reports, and audit events.'],
+  ['Seeded fallback', 'Keeps the demo usable when live API mode is disabled or unavailable.'],
+];
+
+const permissionRows = [
+  ['Create trial', 'Sponsor', 'Sponsor creates draft trial metadata before review.'],
+  ['Approve or reject trial', 'Regulator, Hospital admin', 'Regulator review precedes hospital-side operational approval.'],
+  ['View patient PII', 'Hospital roles', 'Sponsor and regulator views use masked patient displays before disclosure.'],
+  ['Enroll patients', 'Doctor', 'Doctor role evaluates synthetic eligibility and enrolls patients.'],
+  ['Submit batch', 'Sponsor', 'Sponsor submits treatment batch metadata without hospital PII.'],
+  ['Lock assignments', 'Regulator', 'Regulator controls blinded assignment locking.'],
+  ['Publish disclosure', 'Regulator', 'Reports become visible only after final disclosure.'],
+  ['Archive or delete', 'Regulator, allowed workflow states', 'Archive and delete actions are constrained by status.'],
+];
+
 const apiCards: {
   icon: AppIconName;
   type: string;
@@ -158,9 +187,9 @@ const apiCards: {
   },
   {
     icon: 'shield',
-    type: 'Server guardrails',
+    type: 'Server checks',
     title: 'Role-gated workflow mutations',
-    body: 'Express middleware verifies bearer tokens, then the service layer enforces FDA, Jane Hopkins, and Bavaria permissions before Prisma writes.',
+    body: 'Express middleware verifies demo bearer tokens, then the service layer checks hospital, sponsor, and regulator permissions before Prisma writes.',
   },
   {
     icon: 'database',
@@ -171,14 +200,14 @@ const apiCards: {
   {
     icon: 'communication',
     type: 'PII',
-    title: 'Privacy boundary is product logic.',
-    body: 'Jane Hopkins can see clinical PII; FDA and Bavaria see anonymized patient displays before disclosure.',
+    title: 'Privacy masking is application logic.',
+    body: 'Hospital roles can see synthetic clinical PII; sponsor and regulator views see anonymized patient displays before disclosure.',
   },
   {
     icon: 'visibilityOff',
     type: 'Blinding',
     title: 'Blinding is preserved until disclosure.',
-    body: 'Hospital and sponsor users cannot inspect Bavaria/placebo assignment before final FDA publication.',
+    body: 'Hospital and sponsor users cannot inspect treatment assignment before final regulator publication.',
   },
   {
     icon: 'chart',
@@ -202,7 +231,7 @@ const outputCards = [
   {
     type: 'Backend workflow',
     title: 'src/services/pharmatrial.service.ts',
-    body: 'The Express service gates trial creation, approvals, enrollments, appointments, batch submission, assignment locking, FDA notification, disclosure, archive, and deletion before Prisma persistence.',
+    body: 'The Express service checks trial creation, approvals, enrollments, appointments, batch submission, assignment locking, regulator notification, disclosure, archive, and deletion before Prisma persistence.',
   },
   {
     type: 'Database schema',
@@ -228,10 +257,16 @@ const validationCards = [
     body: 'The Vite app handles role-specific workspaces while the backend persists workflow records, shapes role-filtered snapshots, and records audit events.',
   },
 ];
+
+const productionLimitations = [
+  ['Authentication', 'Current bearer-token login is for demo review only; production would need a real identity provider, session policy, token rotation, and server-side authorization review.'],
+  ['Patient data', 'Current records are synthetic; production PII would require encryption, access logging, retention rules, and documented data-handling policy.'],
+  ['Compliance', 'The project is not a compliant clinical-trial system; it is a workflow prototype showing engineering boundaries.'],
+];
 </script>
 
 <template>
-  <main class="relative overflow-hidden bg-cream text-ink">
+  <main class="relative overflow-hidden break-words bg-cream text-ink">
     <div
       class="pointer-events-none absolute right-[-180px] top-[-245px] h-[620px] w-[620px] rounded-full border border-accent2/[0.07]"
       aria-hidden="true"
@@ -243,18 +278,18 @@ const validationCards = [
       aria-hidden="true"
     ></div>
 
-    <section class="relative z-[1] mx-auto grid min-h-[680px] w-[min(1120px,calc(100%_-_48px))] grid-cols-1 items-center gap-10 py-14 pt-[76px] text-center lg:grid-cols-[minmax(0,1.04fr)_minmax(360px,0.76fr)] lg:gap-14 lg:text-left">
+    <section class="relative z-[1] mx-auto grid min-h-[680px] w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] grid-cols-1 items-center gap-10 py-14 pt-[76px] text-center lg:grid-cols-[minmax(0,1.04fr)_minmax(360px,0.76fr)] lg:gap-14 lg:text-left">
       <div>
         <div class="mb-7 inline-flex items-center gap-2.5 rounded-full border border-accent2/20 bg-accent-pale px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-accent before:h-1.5 before:w-1.5 before:rounded-full before:bg-gold before:content-['']">
-          Vue 3 Clinical Workflow Case Study
+          Full-Stack Workflow Demo
         </div>
 
-        <h1 class="max-w-[760px] font-display text-[46px] font-black leading-[0.95] tracking-normal text-ink xs:text-[56px] md:text-[72px] lg:text-[88px]">
+        <h1 class="max-w-[760px] font-display text-[40px] font-black xxs:text-[46px] leading-[0.95] tracking-normal text-ink xs:text-[56px] md:text-[72px] lg:text-[88px]">
           Pharmatrial clinical trial <em class="text-accent">portal.</em>
         </h1>
 
         <p class="mt-7 max-w-[620px] text-[18px] font-light leading-[1.72] text-ink3">
-          A privacy-aware Vue, TypeScript, Express, and Prisma proof of concept modeling blinded collaboration between Jane Hopkins Hospital, Bavaria Pharma, and FDA Administration across live database-backed approvals, enrollment, dose tracking, treatment assignment, disclosure, and reporting.
+          A fictional Vue, TypeScript, Express, and Prisma proof of concept that models role-specific trial workflow actions across hospital, sponsor, and regulator demo portals.
         </p>
 
         <div class="mt-9 flex flex-wrap justify-center gap-3 lg:justify-start">
@@ -297,8 +332,8 @@ const validationCards = [
 
         <ProjectScreenshotLightbox
           :src="bavariaDashboardScreenshot"
-          alt="Bavaria Admin dashboard screenshot from the Pharmatrial clinical trial portal"
-          title="Bavaria Admin Dashboard"
+          alt="Sponsor dashboard screenshot from the Pharmatrial workflow demo"
+          title="Sponsor Dashboard"
           type="Pharmatrial Dashboard"
           loading="eager"
           trigger-class="group block w-full overflow-hidden rounded-[14px] border border-border bg-white text-left shadow-[0_16px_48px_rgb(13_17_23_/_10%)] transition-transform duration-200 hover:-translate-y-1 focus-visible:ring-offset-cream max-md:pointer-events-none max-md:cursor-default"
@@ -318,7 +353,7 @@ const validationCards = [
         aria-hidden="true"
       ></div>
 
-      <div class="relative mx-auto w-[min(1120px,calc(100%_-_48px))]">
+      <div class="relative mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
         <div class="mb-11 text-[10px] font-bold uppercase tracking-[2px] text-white/35">
           By the numbers
         </div>
@@ -329,7 +364,7 @@ const validationCards = [
             :key="stat.value"
             class="min-h-40 border-white/[0.08] py-8 md:border-r md:px-8 last:border-r-0"
           >
-            <strong class="block font-display text-[54px] font-black leading-none tracking-normal text-white">
+            <strong class="block font-display text-[44px] font-black xs:text-[54px] leading-none tracking-normal text-white">
               {{ stat.value }}
             </strong>
 
@@ -341,21 +376,41 @@ const validationCards = [
       </div>
     </section>
 
+    <section class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]">
+      <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
+        <div>
+          <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Engineering Summary</div>
+          <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] tracking-normal text-ink md:text-[48px]">The page documents workflow state, demo roles, and production limits.</h2>
+        </div>
+
+        <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
+          The project is presented as a full-stack demo with synthetic data and fictional organizations. It shows role-aware state transitions, persistence, and visibility rules while naming the production security gap clearly.
+        </p>
+      </header>
+
+      <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+        <article v-for="item in engineeringSummary" :key="item[0]" class="rounded-[12px] border border-border bg-white p-[22px]">
+          <div class="mb-3 font-mono text-[11px] uppercase text-ink4">{{ item[0] }}</div>
+          <p class="m-0 text-[13px] leading-[1.6] text-ink3">{{ item[1] }}</p>
+        </article>
+      </div>
+    </section>
+
     <section class="bg-cream2 py-[82px]">
-      <div class="mx-auto w-[min(1120px,calc(100%_-_48px))]">
+      <div class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
         <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
           <div>
             <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">
               Project Overview
             </div>
 
-            <h2 class="font-display text-[34px] font-bold leading-[1.06] tracking-normal text-ink md:text-[48px]">
-              A full-stack simulation of a blinded clinical trial lifecycle.
+            <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] tracking-normal text-ink md:text-[48px]">
+              A full-stack demo of role-specific trial workflow state.
             </h2>
           </div>
 
           <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-            Pharmatrial is a single-page proof of concept for controlled data exchange among a hospital, a pharmaceutical sponsor, and a regulator. The system persists live workflow state through an API while enforcing role-specific permissions, workflow boundaries, and patient privacy constraints.
+            Pharmatrial is a single-page proof of concept for controlled data exchange among fictional hospital, sponsor, and regulator roles. The system persists live workflow state through an API while checking role-specific permissions, workflow state, and patient visibility rules.
           </p>
         </header>
 
@@ -401,20 +456,20 @@ const validationCards = [
       </div>
     </section>
 
-    <section class="mx-auto w-[min(1120px,calc(100%_-_48px))] py-[82px]">
+    <section class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]">
       <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
         <div>
           <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">
             Program Screens
           </div>
 
-          <h2 class="font-display text-[34px] font-bold leading-[1.06] tracking-normal text-ink md:text-[48px]">
+          <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] tracking-normal text-ink md:text-[48px]">
             The prototype screens show each stakeholder workflow in context.
           </h2>
         </div>
 
         <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-          These screenshots make the product artifact visible beyond the static hero mockup: login, hospital approval, FDA assignment, sponsor batch submission, and post-disclosure reporting.
+          These screenshots make the interface visible beyond the static hero mockup: login, hospital approval, regulator assignment, sponsor batch submission, and post-disclosure reporting.
         </p>
       </header>
 
@@ -454,21 +509,21 @@ const validationCards = [
       </div>
     </section>
 
-    <section class="mx-auto w-[min(1120px,calc(100%_-_48px))] py-[82px]">
+    <section class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]">
       <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
         <div>
           <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">
             Implementation Story
           </div>
 
-          <h2 class="font-display text-[34px] font-bold leading-[1.06] tracking-normal text-ink md:text-[48px]">
+          <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] tracking-normal text-ink md:text-[48px]">
             The source code models product rules as state, tabs, guarded actions, and database-backed workflow records.
           </h2>
         </div>
 
         <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-          The app now runs against a live Express API when <code>VITE_API_URI</code> is configured: login returns an in-memory bearer token, the dashboard hydrates from <code>/workflow/snapshot</code>, and workflow mutations sync through Prisma-backed endpoints. When the API is unavailable or demo mode is enabled, Pinia falls back to seeded TypeScript data so the full workflow remains reviewable.
-        </p>
+            The app now runs against a live Express API when <code>VITE_API_URI</code> is configured: login returns an in-memory bearer token, the dashboard hydrates from <code>/workflow/snapshot</code>, and workflow mutations sync through Prisma-backed endpoints. When the API is unavailable or demo mode is enabled, Pinia falls back to seeded TypeScript data so the full workflow remains reviewable.
+          </p>
       </header>
 
       <div class="grid grid-cols-1 gap-6 md:grid-cols-[0.92fr_1.08fr]">
@@ -478,7 +533,7 @@ const validationCards = [
           </h3>
 
           <p class="m-0 text-[13px] leading-[1.6] text-ink3">
-            A mature full-stack structure with typed stores, composables, reusable forms, modal orchestration, role-specific tabs, patient privacy helpers, workflow-specific trial components, API DTO mapping, and server-side workflow services.
+            Typed stores, composables, reusable forms, modal orchestration, role-specific tabs, patient privacy helpers, workflow-specific trial components, API DTO mapping, and server-side workflow services.
           </p>
 
           <div class="mt-[18px] grid gap-[11px]">
@@ -504,7 +559,7 @@ const validationCards = [
           </h3>
 
           <p class="m-0 text-[13px] leading-[1.6] text-ink3">
-            <code>trials.store.ts</code>, the API client, and the backend workflow service coordinate approval, rejection, batch submission, assignment locking, appointment logging, FDA notification, final disclosure, archive toggling, and rejected-trial deletion.
+            <code>trials.store.ts</code>, the API client, and the backend workflow service coordinate approval, rejection, batch submission, assignment locking, appointment logging, regulator notification, final disclosure, archive toggling, and rejected-trial deletion.
           </p>
 
           <div class="mt-[18px] flex flex-nowrap gap-2 overflow-x-auto pb-1">
@@ -520,23 +575,62 @@ const validationCards = [
       </div>
     </section>
 
-    <section id="api" class="bg-cream2 py-[82px]">
-      <div class="mx-auto w-[min(1120px,calc(100%_-_48px))]">
+    <section id="architecture" class="bg-cream2 py-[82px]">
+      <div class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
         <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
           <div>
             <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">
-              Source Findings
+              Architecture And Permissions
             </div>
 
-            <h2 class="font-display text-[34px] font-bold leading-[1.06] tracking-normal text-ink md:text-[48px]">
-              The strongest product signal is the live role-and-state guardrail system.
+            <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] tracking-normal text-ink md:text-[48px]">
+              Workflow data moves through Vue state, API mutations, Express checks, and Prisma persistence.
             </h2>
           </div>
 
           <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-            The documentation defines Pharmatrial as a proof of concept rather than a production clinical system. It records workflow sequencing, patient privacy boundaries, blinded assignment, role-specific action availability, live PostgreSQL persistence, and seeded fallback data for offline review.
+            The documentation defines Pharmatrial as a proof of concept rather than a production clinical system. It records workflow sequencing, patient masking, blinded assignment, role-specific action availability, live PostgreSQL persistence, and seeded fallback data for offline review.
           </p>
         </header>
+
+        <article class="mb-6 overflow-hidden rounded-[12px] border border-border bg-white p-6">
+          <div class="mb-4 flex items-baseline justify-between gap-4"><h3 class="text-[15px] font-bold text-ink">Data flow</h3><span class="font-mono text-[11px] text-ink4">frontend to persistence</span></div>
+          <div class="overflow-x-auto">
+            <table class="w-full min-w-[700px] border-collapse text-left text-xs">
+              <thead class="text-ink3">
+                <tr class="border-b border-border">
+                  <th class="p-2.5">Layer</th>
+                  <th class="p-2.5">Responsibility</th>
+                </tr>
+              </thead>
+              <tbody class="text-ink3">
+                <tr v-for="row in architectureRows" :key="row[0]" class="border-b border-cream3 last:border-b-0">
+                  <td v-for="cell in row" :key="cell" class="p-2.5">{{ cell }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="mb-6 overflow-hidden rounded-[12px] border border-border bg-white p-6">
+          <div class="mb-4 flex items-baseline justify-between gap-4"><h3 class="text-[15px] font-bold text-ink">Role-permission matrix</h3><span class="font-mono text-[11px] text-ink4">demo scope</span></div>
+          <div class="overflow-x-auto">
+            <table class="w-full min-w-[760px] border-collapse text-left text-xs">
+              <thead class="text-ink3">
+                <tr class="border-b border-border">
+                  <th class="p-2.5">Action</th>
+                  <th class="p-2.5">Allowed role</th>
+                  <th class="p-2.5">Rule shown in the demo</th>
+                </tr>
+              </thead>
+              <tbody class="text-ink3">
+                <tr v-for="row in permissionRows" :key="row[0]" class="border-b border-cream3 last:border-b-0">
+                  <td v-for="cell in row" :key="cell" class="p-2.5">{{ cell }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
 
         <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
           <article
@@ -560,20 +654,20 @@ const validationCards = [
       </div>
     </section>
 
-    <section id="outputs" class="mx-auto w-[min(1120px,calc(100%_-_48px))] py-[82px]">
+    <section id="outputs" class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]">
       <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
         <div>
           <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">
             Implementation Output
           </div>
 
-          <h2 class="font-display text-[34px] font-bold leading-[1.06] tracking-normal text-ink md:text-[48px]">
-            The codebase has enough structure to read as a real product system.
+          <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] tracking-normal text-ink md:text-[48px]">
+            The codebase is organized around inspectable engineering surfaces.
           </h2>
         </div>
 
         <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-          The source tree separates views, router metadata, stores, composables, typed models, API integration, seed data, privacy utilities, backend routes, service logic, Prisma persistence, and reusable components. That makes the project stronger as an engineering case study than as a pure visual mockup.
+          The source tree separates views, router metadata, stores, composables, typed models, API integration, seed data, privacy utilities, backend routes, service logic, Prisma persistence, and reusable components.
         </p>
       </header>
 
@@ -599,21 +693,21 @@ const validationCards = [
     </section>
 
     <section class="bg-cream2 py-[82px]">
-      <div class="mx-auto w-[min(1120px,calc(100%_-_48px))]">
+      <div class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
         <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
           <div>
             <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">
-              Project Artifacts
+              Documentation And Demo Boundaries
             </div>
 
-            <h2 class="font-display text-[34px] font-bold leading-[1.06] tracking-normal text-ink md:text-[48px]">
-              Artifacts trace the product from documentation to implementation.
+            <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] tracking-normal text-ink md:text-[48px]">
+              Documentation connects the demo behavior to implementation files.
             </h2>
           </div>
 
-          <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-            The project includes role guides, frontend and backend architecture notes, a data dictionary, seeded TypeScript fallback data, reusable Vue components, an Express API, a Prisma schema, and a static requirements document that explains the original course scope.
-          </p>
+        <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
+          The project includes role guides, frontend and backend architecture notes, a data dictionary, seeded TypeScript fallback data, reusable Vue components, an Express API, a Prisma schema, and a static requirements document that explains the original course scope.
+        </p>
         </header>
 
         <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -636,6 +730,14 @@ const validationCards = [
           </article>
         </div>
 
+        <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+          <article v-for="item in productionLimitations" :key="item[0]" class="rounded-[12px] border border-border bg-white p-6">
+            <div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">Production limit</div>
+            <h3 class="mb-2 text-[15px] font-bold tracking-normal text-ink">{{ item[0] }}</h3>
+            <p class="m-0 text-[13px] leading-[1.6] text-ink3">{{ item[1] }}</p>
+          </article>
+        </div>
+
         <a
           class="mt-6 inline-flex min-h-[58px] w-full items-center justify-center rounded-[12px] bg-ink px-6 text-base font-semibold text-white no-underline transition-colors hover:bg-accent"
           :href="githubRepoUrl"
@@ -647,7 +749,7 @@ const validationCards = [
       </div>
     </section>
 
-    <section class="mx-auto w-[min(1120px,calc(100%_-_48px))] py-[82px]">
+    <section class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]">
       <div class="relative overflow-hidden rounded-[14px] bg-ink p-8 text-white md:p-11">
         <div
           class="pointer-events-none absolute right-[-170px] top-[-170px] h-[500px] w-[500px] rounded-full border border-white/[0.05]"
@@ -658,15 +760,15 @@ const validationCards = [
           Final Conclusions
         </div>
 
-        <h2 class="relative z-[1] max-w-[760px] font-display text-[34px] font-bold leading-[1.06] tracking-normal text-white md:text-[48px]">
-          Pharmatrial succeeds as a full-stack systems prototype for regulated collaboration.
+        <h2 class="relative z-[1] max-w-[760px] font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] tracking-normal text-white md:text-[48px]">
+          Pharmatrial is a full-stack workflow prototype with explicit demo limits.
         </h2>
         
         <p class="relative mt-10 z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">
-          The project implements a Vue frontend and Express backend that coordinate trial lifecycle state, partner-specific permissions, patient privacy, blinded assignment, dose completion, and disclosure timing in a workspace with separated stakeholder visibility.
+          The project implements a Vue frontend and Express backend that coordinate trial lifecycle state, role-specific permissions, patient masking, blinded assignment, dose completion, and disclosure timing in a workspace with separated stakeholder visibility.
         </p>
         <p class="relative mt-10 z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">
-          The current implementation pairs live backend mode with a seeded frontend fallback: Express routes authenticate demo or persisted users, Prisma stores workflow records in PostgreSQL, and the Vue app keeps seeded portals, trials, patients, ICD codes, and assignments available when the API cannot be used. Production hardening would require stronger authentication, encrypted PII storage, formal migrations, retention policies, and compliance review. The implemented scope includes four portals, eight seeded fallback trials, twenty-six synthetic patients, sixty-eight Vue components, nine database models, and a privacy model that separates clinical care from regulatory and sponsor visibility.
+          The current implementation pairs live backend mode with a seeded frontend fallback: Express routes authenticate demo or persisted users, Prisma stores workflow records in PostgreSQL, and the Vue app keeps seeded portals, trials, patients, ICD codes, and assignments available when the API cannot be used. Production hardening would require identity-provider authentication, encrypted PII storage, formal migrations, retention policies, and compliance review.
         </p>
       </div>
     </section>

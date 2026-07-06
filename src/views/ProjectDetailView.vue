@@ -17,7 +17,7 @@ const ProjectComponent = computed(() => {
   <div v-if="ProjectComponent" class="bg-cream">
     <div class="pt-[105px]"></div>
 
-    <BackToProjectsButton class="mx-auto w-[min(1100px,calc(100%_-_48px))] pb-4" />
+    <BackToProjectsButton class="mx-auto w-[min(1100px,calc(100%_-_32px))] pb-4 xs:w-[min(1100px,calc(100%_-_48px))]" />
 
     <component :is="ProjectComponent" />
   </div>

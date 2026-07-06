@@ -29,6 +29,15 @@ const projectNumbers = [
   ['100 / 122', 'STEM and Non-STEM participants under the preserved classification rule'],
 ];
 
+const analystSummary = [
+  ['Question', 'Did the Intervention group improve in self-reported empathy more than the Control group after accounting for the matched Pre/Post design?'],
+  ['My role', 'Cleaned the survey export, scored Jefferson and modified Toronto scales, built matched participant records, ran the primary models, and wrote the interpretation boundaries.'],
+  ['Data', '222 matched students with one Pre and one Post record, analyzed as 444 long-format rows and one matched change-score row per participant.'],
+  ['Method', 'Used paired change tests for overall movement, change-score models for Intervention-Control differences, ANCOVA for baseline-adjusted Post scores, and diagnostics for assumptions.'],
+  ['Result', 'Both empathy scales increased from Pre to Post, but Intervention did not improve significantly more than Control on either scale.'],
+  ['Limit', 'Scores are self-reported survey constructs; the study supports overall empathy growth, not a causal claim that the module outperformed Control.'],
+];
+
 const workflowSteps = [
   [
     '01',
@@ -47,9 +56,16 @@ const workflowSteps = [
   ],
   [
     '04',
-    'Model Change',
-    'Fit paired tests, Welch tests, factorial change-score models, mixed ANOVA, ANCOVA, and ceiling-effect diagnostics.',
+    'Model Primary Question',
+    'Treat Intervention-Control change as primary, then use paired tests, ANCOVA, nonparametric checks, and ceiling diagnostics as supporting analyses.',
   ],
+];
+
+const primaryAnalysisRows = [
+  ['Primary model', 'Change score by Condition, STEM status, and Condition x STEM.', 'Tests the Intervention advantage directly.'],
+  ['Paired change check', 'Pre/Post paired tests within the matched sample for each scale.', 'Confirms whether empathy moved over time, but does not prove Intervention effect.'],
+  ['Baseline-adjusted model', 'ANCOVA predicting Post score from Pre score, Condition, STEM, and interaction terms.', 'Checks whether the group result changes after accounting for baseline empathy.'],
+  ['Diagnostics and sensitivity', 'Residual plots, Q-Q checks, Levene tests, nonparametric checks, and ceiling-effect models.', 'Qualifies interpretation rather than expanding the claim set.'],
 ];
 
 const exploratoryFigures = [
@@ -101,27 +117,27 @@ const modelingFigures = [
   {
     image: torontoCeilingFigure,
     title: 'Toronto ceiling-effect model',
-    body: 'The negative slope is stronger for Toronto, where baseline and change correlate r=-0.302.',
+    body: 'Toronto baseline and change correlate r=-0.302; Jefferson baseline and change correlate r=-0.236.',
     alt: 'Toronto baseline score versus Toronto change score',
   },
 ];
 </script>
 
 <template>
-  <main class="relative overflow-hidden bg-cream text-ink">
+  <main class="relative overflow-hidden break-words bg-cream text-ink">
     <div class="pointer-events-none absolute right-[-180px] top-[-260px] h-[620px] w-[620px] rounded-full border border-accent2/[0.08]" aria-hidden="true"></div>
     <div class="pointer-events-none absolute bottom-[360px] left-[-120px] h-[280px] w-[280px] rounded-full border border-accent2/[0.08]" aria-hidden="true"></div>
 
-    <section class="relative z-[1] mx-auto grid min-h-[680px] w-[min(1120px,calc(100%_-_48px))] grid-cols-1 items-center gap-10 py-14 pt-[76px] text-center lg:grid-cols-[minmax(0,1.04fr)_minmax(360px,0.76fr)] lg:gap-14 lg:text-left">
+    <section class="relative z-[1] mx-auto grid min-h-[680px] w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] grid-cols-1 items-center gap-10 py-14 pt-[76px] text-center lg:grid-cols-[minmax(0,1.04fr)_minmax(360px,0.76fr)] lg:gap-14 lg:text-left">
       <div>
         <div class="mb-7 inline-flex items-center gap-2.5 rounded-full border border-accent2/20 bg-accent-pale px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-accent before:h-1.5 before:w-1.5 before:rounded-full before:bg-gold before:content-['']">
-          Science Communication Case Study
+          Applied Survey Analysis
         </div>
-        <h1 class="mx-auto max-w-[760px] font-display text-[46px] font-black leading-[0.95] tracking-normal text-ink xs:text-[56px] md:text-[72px] lg:mx-0 lg:text-[88px]">
-          Testing whether empathy training changes <em class="text-accent">self-reported empathy.</em>
+        <h1 class="mx-auto max-w-[760px] font-display text-[40px] font-black xxs:text-[46px] leading-[0.95] tracking-normal text-ink xs:text-[56px] md:text-[72px] lg:mx-0 lg:text-[88px]">
+          Testing whether Intervention outperformed Control on <em class="text-accent">empathy change.</em>
         </h1>
         <p class="mx-auto mt-7 max-w-[620px] text-[18px] font-light leading-[1.72] text-ink3 lg:mx-0">
-          Statistics capstone project for CSUS Biological Sciences evaluating an empathy-focused science communication intervention using matched Pre/Post survey data, Control and Intervention arms, and separate Jefferson and Toronto empathy outcomes.
+          Statistics capstone project for CSUS Biological Sciences evaluating whether an empathy-focused science communication intervention produced larger matched Pre/Post gains than the Control condition.
         </p>
         <div class="mt-9 flex flex-wrap justify-center gap-3 lg:justify-start">
           <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] bg-ink px-[22px] text-sm font-semibold text-white no-underline transition-colors hover:bg-accent" :href="githubRepoUrl" target="_blank" rel="noreferrer">View Github repo</a>
@@ -156,7 +172,7 @@ const modelingFigures = [
           <div class="rounded-[10px] bg-accent p-[18px] text-white">
             <div class="mb-2 text-[10px] font-bold uppercase tracking-[1.4px] text-white/70">Final Takeaway</div>
             <strong class="block text-[22px] leading-tight tracking-normal">Empathy scores increased overall, but not specifically because of Intervention.</strong>
-            <p class="mt-2.5 text-[13px] leading-[1.6] text-white/75">The strongest finding is Pre-to-Post improvement on both scales. Intervention, STEM status, and the Condition x STEM interaction were not statistically significant in the primary models.</p>
+            <p class="mt-2.5 text-[13px] leading-[1.6] text-white/75">Both scales increased from Pre to Post. Intervention, STEM status, and the Condition x STEM interaction were not statistically significant in the primary models.</p>
           </div>
         </div>
       </aside>
@@ -165,25 +181,42 @@ const modelingFigures = [
     <section class="relative overflow-hidden bg-ink py-24 text-white" aria-label="Cleaned analysis dataset">
       <div class="pointer-events-none absolute right-[-40px] top-1/2 h-[400px] w-[400px] -translate-y-1/2 rounded-full border border-white/[0.04]" aria-hidden="true"></div>
       <div class="pointer-events-none absolute right-[-140px] top-1/2 h-[600px] w-[600px] -translate-y-1/2 rounded-full border border-white/[0.03]" aria-hidden="true"></div>
-      <div class="relative mx-auto w-[min(1120px,calc(100%_-_48px))]">
+      <div class="relative mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
         <div class="mb-11 text-[10px] font-bold uppercase tracking-[2px] text-white/35">Cleaned Analysis Dataset</div>
         <div class="grid grid-cols-1 md:grid-cols-4">
           <div v-for="(stat, index) in projectNumbers" :key="stat[0]" class="min-h-40 border-white/[0.08] py-8 md:border-r md:px-8" :class="{ 'md:border-r-0': index === projectNumbers.length - 1, 'border-b md:border-b-0': index !== projectNumbers.length - 1 }">
-            <strong class="block font-display text-[54px] font-black leading-none tracking-normal text-white">{{ stat[0] }}</strong>
+            <strong class="block font-display text-[44px] font-black xs:text-[54px] leading-none tracking-normal text-white">{{ stat[0] }}</strong>
             <p id="overview" class="mt-2.5 max-w-[210px] text-[13px] font-light leading-[1.45] text-white/45">{{ stat[1] }}</p>
           </div>
         </div>
       </div>
     </section>
 
+    <section class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]">
+      <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
+        <div>
+          <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Analyst Summary</div>
+          <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The primary question is the Intervention-Control difference.</h2>
+        </div>
+        <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">The page separates overall Pre/Post improvement from the claim that Intervention produced additional improvement beyond Control.</p>
+      </header>
+
+      <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+        <article v-for="item in analystSummary" :key="item[0]" class="rounded-[12px] border border-border bg-white p-[22px]">
+          <div class="mb-3 font-mono text-[11px] uppercase text-ink4">{{ item[0] }}</div>
+          <p class="m-0 text-[13px] leading-[1.6] text-ink3">{{ item[1] }}</p>
+        </article>
+      </div>
+    </section>
+
     <section class="bg-cream2 py-[82px]">
-      <div class="mx-auto w-[min(1120px,calc(100%_-_48px))]">
+      <div class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
         <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
           <div>
             <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Project Overview</div>
-            <h2 class="font-display text-[34px] font-bold leading-[1.06] text-ink md:text-[48px]">The project turns raw survey answers into a controlled test of empathy change.</h2>
+            <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The project turns survey answers into a controlled test of differential change.</h2>
           </div>
-          <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">The analysis moves from paired pre/post responses into exploratory plots, change-score summaries, regression models, and diagnostic checks while keeping Jefferson and Toronto as separate outcomes.</p>
+          <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">The analysis moves from paired Pre/Post responses into exploratory plots, change-score summaries, primary Intervention-Control models, and diagnostic checks while keeping Jefferson and Toronto as separate outcomes.</p>
         </header>
 
         <div class="mb-7 grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -214,11 +247,11 @@ const modelingFigures = [
       </div>
     </section>
 
-    <section class="mx-auto w-[min(1120px,calc(100%_-_48px))] py-[82px]">
+    <section class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]">
       <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
         <div>
           <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Measurement Problem</div>
-          <h2 class="font-display text-[34px] font-bold leading-[1.06] text-ink md:text-[48px]">Empathy is measured twice, but the scales are not interchangeable.</h2>
+          <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">Empathy is measured twice, but the scales are not interchangeable.</h2>
         </div>
         <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">The report treats empathy as a scored survey construct rather than a directly observed behavior. Measurement discipline comes first: score each instrument correctly, preserve the matched design, and avoid comparing Jefferson and Toronto totals as if they shared one unit.</p>
       </header>
@@ -258,11 +291,11 @@ const modelingFigures = [
       </div>
     </section>
 
-    <section class="mx-auto w-[min(1120px,calc(100%_-_48px))] py-[82px]">
+    <section class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]">
       <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
         <div>
           <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Exploratory Findings</div>
-          <h2 class="font-display text-[34px] font-bold leading-[1.06] text-ink md:text-[48px]">The EDA shows broad improvement, high baseline scores, and modest group separation.</h2>
+          <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The EDA shows broad improvement, high baseline scores, and modest group separation.</h2>
         </div>
         <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">Exploratory analysis used 444 cleaned survey rows and 222 matched change-score records. Average empathy scores increased from Pre to Post in all four Condition x STEM groups on both scales, but the visual summaries do not show a large or consistent Intervention advantage.</p>
       </header>
@@ -317,18 +350,38 @@ const modelingFigures = [
     </section>
 
     <section id="results" class="bg-cream2 py-[82px]">
-      <div class="mx-auto w-[min(1120px,calc(100%_-_48px))]">
+      <div class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
         <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
           <div>
             <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Modeling Output</div>
-            <h2 class="font-display text-[34px] font-bold leading-[1.06] text-ink md:text-[48px]">The formal models confirm improvement over time, but not a clear intervention-specific effect.</h2>
+            <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The formal models confirm improvement over time, but not a clear intervention-specific effect.</h2>
           </div>
-          <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">The modeling notebook and final report evaluate the research questions using paired tests, Welch tests, factorial change-score models, mixed ANOVA, ANCOVA, nonparametric checks, and ceiling-effect models.</p>
+          <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">The modeling notebook treats the Intervention-Control change comparison as primary. Paired tests, ANCOVA, nonparametric checks, and ceiling-effect models are supporting analyses used to qualify the interpretation.</p>
         </header>
+
+        <article class="mb-6 overflow-hidden rounded-[12px] border border-border bg-white p-6">
+          <div class="mb-4 flex items-baseline justify-between gap-4"><h3 class="text-[15px] font-bold text-ink">Primary analysis plan</h3><span class="font-mono text-[11px] text-ink4">model hierarchy</span></div>
+          <div class="overflow-x-auto">
+            <table class="w-full min-w-[700px] border-collapse text-left text-xs">
+              <thead class="text-ink3">
+                <tr class="border-b border-border">
+                  <th class="p-2.5">Analysis</th>
+                  <th class="p-2.5">Specification</th>
+                  <th class="p-2.5">Why it matters</th>
+                </tr>
+              </thead>
+              <tbody class="text-ink3">
+                <tr v-for="row in primaryAnalysisRows" :key="row[0]" class="border-b border-cream3 last:border-b-0">
+                  <td v-for="cell in row" :key="cell" class="p-2.5">{{ cell }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
 
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
           <article class="rounded-[12px] border border-border bg-white p-6">
-            <h3 class="text-[15px] font-bold text-ink">Primary paired change tests</h3>
+            <h3 class="text-[15px] font-bold text-ink">Paired change checks</h3>
             <div class="mt-[18px] grid grid-cols-1 gap-2.5 xs:grid-cols-2">
               <div class="rounded-lg bg-cream p-3"><strong class="block font-mono text-[17px] text-ink">+5.96</strong><span class="text-[11px] leading-[1.35] text-ink3">Jefferson mean change, t(221)=-12.17, p&lt;.001, Cohen's d=0.817</span></div>
               <div class="rounded-lg bg-cream p-3"><strong class="block font-mono text-[17px] text-ink">+1.31</strong><span class="text-[11px] leading-[1.35] text-ink3">Toronto mean change, t(221)=-4.55, p&lt;.001, Cohen's d=0.306</span></div>
@@ -375,13 +428,13 @@ const modelingFigures = [
       </div>
     </section>
 
-    <section class="mx-auto w-[min(1120px,calc(100%_-_48px))] py-[82px]">
+    <section class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]">
       <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
         <div>
           <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Deliverables</div>
-          <h2 class="font-display text-[34px] font-bold leading-[1.06] text-ink md:text-[48px]">The project includes a reproducible analysis path from data cleaning through reporting.</h2>
+          <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The project includes a reproducible analysis path from data cleaning through reporting.</h2>
         </div>
-        <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">The artifact set supports tracing the work from raw survey cleaning to figures, models, diagnostics, and a final written conclusion.</p>
+        <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">The deliverables support tracing the work from raw survey cleaning to figures, models, diagnostics, and a final written conclusion.</p>
       </header>
 
       <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -396,14 +449,14 @@ const modelingFigures = [
     </section>
 
     <section class="bg-cream2 py-[82px]">
-      <div class="mx-auto w-[min(1120px,calc(100%_-_48px))]">
+      <div class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
         <div class="relative overflow-hidden rounded-[14px] bg-ink p-8 text-white md:p-11">
           <div class="pointer-events-none absolute right-[-170px] top-[-170px] h-[500px] w-[500px] rounded-full border border-white/[0.05]" aria-hidden="true"></div>
           <div class="relative z-[1] mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-white/65 before:h-0.5 before:w-[26px] before:bg-white/65 before:content-['']">Final Conclusions</div>
-          <h2 class="relative z-[1] max-w-[760px] font-display text-[34px] font-bold leading-[1.06] text-white md:text-[48px]">The evidence supports empathy growth over time, not a confirmed intervention advantage.</h2>
+          <h2 class="relative z-[1] max-w-[760px] font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-white md:text-[48px]">Matched scores increased over time; Intervention did not outperform Control.</h2>
           <h3 class="relative z-[1] mt-[26px] text-[15px] font-bold text-white">Project conclusion</h3>
           <p class="relative z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">In the matched sample of 222 students, self-reported empathy increased significantly from Pre to Post on both the Jefferson Scale of Empathy and the modified Toronto Empathy Questionnaire. Jefferson showed the larger within-person effect, but the two scales have different ranges and constructs, so their magnitudes are not directly comparable.</p>
-          <p class="relative z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">The Intervention group did not improve significantly more than the Control group, and STEM status did not explain baseline empathy, improvement, or the Intervention-Control difference in improvement. Baseline empathy was the strongest predictor of Post empathy in ANCOVA models, and ceiling-effect diagnostics suggest students who began with higher empathy had less room to improve.</p>
+          <p class="relative z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">The Intervention group did not improve significantly more than the Control group, and STEM status did not explain baseline empathy, improvement, or the Intervention-Control difference in improvement. Baseline empathy predicted Post empathy in ANCOVA models, and ceiling-effect diagnostics suggest students who began with higher empathy had less room to improve.</p>
           <h3 class="relative z-[1] mt-[26px] text-[15px] font-bold text-white">Reporting conclusion</h3>
           <p class="relative z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">Report the study as evidence of overall Pre-to-Post empathy growth, not as causal proof that the empathy module outperformed the Control condition. Keep Jefferson and Toronto analyses separate, preserve the matched-participant design, and use Control comparisons as the standard for any training-effect claim.</p>
         </div>

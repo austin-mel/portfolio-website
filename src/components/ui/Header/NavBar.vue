@@ -28,12 +28,12 @@ const isActive = (path: string) => {
 >
   <HeaderLogo class="hidden sm:flex justify-self-start" />
 
-  <nav class="col-span-3 sm:col-span-1 justify-self-center flex gap-[2px] overflow-x-auto no-scrollbar">
+  <nav class="col-span-3 flex max-w-full justify-self-stretch justify-start gap-[2px] overflow-x-auto no-scrollbar sm:col-span-1 sm:justify-self-center sm:justify-center">
     <button
       v-for="item in items"
       :key="item.id"
       @click="router.push(item.path)"
-      class="whitespace-nowrap px-3 sm:px-4 py-[7px] rounded-[8px] text-[13px] font-normal font-sans transition-colors duration-150"
+      class="whitespace-nowrap rounded-[8px] px-2 py-[7px] font-sans text-[12px] font-normal transition-colors duration-150 xxs:px-3 xxs:text-[13px] sm:px-4"
       :class="[
         isActive(item.path)
           ? 'bg-accent-pale text-accent font-medium'

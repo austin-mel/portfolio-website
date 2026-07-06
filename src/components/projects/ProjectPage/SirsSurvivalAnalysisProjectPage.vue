@@ -27,6 +27,15 @@ const projectNumbers = [
   ['83', '', 'cells remained susceptible in the final matrix'],
 ];
 
+const analystSummary = [
+  ['Question', 'Can a single mortality-enabled SIRS run be converted into a correctly censored event-time dataset for infection, recovery, and death?'],
+  ['My role', 'Defined the baseline scenario, generated the full per-cell log, derived endpoint times and censoring flags, and rendered reproducible survival-analysis outputs.'],
+  ['Data', 'One audited 10 x 10 center-seeded SIRS run using seed 94128, infection probability 0.25, immunity probability 0.70, mortality enabled, and fatality probability 0.15.'],
+  ['Method', 'Treated each cell as a subject, derived event indicators for each endpoint, fit Kaplan-Meier curves, and used log-rank/Cox summaries descriptively.'],
+  ['Result', 'The run ended at step 9 with 20 first-infection events, 13 recoveries, 4 deaths, and substantial endpoint-specific censoring.'],
+  ['Limit', 'This is a methods demonstration from one fixed run; simulation-study claims require repeated seeds and parameter-grid comparisons.'],
+];
+
 const contextCards = [
   {
     type: 'Object of study',
@@ -52,7 +61,7 @@ const workflowSteps = [
   ['01', 'Define Scenario', 'Use a 10 x 10 center-seeded SIRS model with mortality enabled and fixed run parameters.'],
   ['02', 'Run Simulation', 'Generate the full per-cell log, history table, and final matrix from the baseline run.'],
   ['03', 'Derive Endpoints', 'Calculate infection, recovery, death, event flags, censoring times, and spatial covariates.'],
-  ['04', 'Plot Evidence', 'Write simulation history, final matrix, Kaplan-Meier, and stratified Kaplan-Meier figures.'],
+  ['04', 'Plot Run and Curves', 'Write simulation history, final matrix, Kaplan-Meier, and stratified Kaplan-Meier figures.'],
   ['05', 'Render Reports', 'Create reports connecting the raw run, endpoint table, survival curves, and interpretation.'],
 ];
 
@@ -75,6 +84,11 @@ const endpointRows = [
   ['Death', '4', '96', '4%', 'Mortality is rare in this single baseline run.'],
 ];
 
+const survivalFramingRows = [
+  ['Naive transition summary', 'Final state counts and aggregate history curves.', 'Useful for seeing where the run ended, but loses which cells were never observed for each endpoint.'],
+  ['Survival framing', 'One row per cell with endpoint time plus TRUE/FALSE event status.', 'Preserves censored cells and makes infection, recovery, and death comparable as event-time questions.'],
+];
+
 const endpointChecks = [
   ['100', 'survival endpoint rows, exactly one per cell'],
   ['TRUE', 'logical event indicators for survival status columns'],
@@ -93,9 +107,9 @@ const outputCards = [
   },
   {
     type: 'Descriptive modeling',
-    title: 'Log-rank tests and Cox models',
+    title: 'Log-rank tests and Cox summaries',
     body:
-      'Models use row, column, distance from center, and initial infection status as descriptive covariates for one fixed baseline run.',
+      'These summaries use row, column, distance from center, and initial infection status as descriptive covariates for one fixed baseline run only.',
   },
   {
     type: 'Interpretation',
@@ -179,7 +193,7 @@ const deliverables = [
 const scopeCards = [
   {
     type: 'What is strong',
-    title: 'The chain of evidence is complete.',
+    title: 'The audit chain is reproducible.',
     body: 'The runner writes data, figures, reports, commands, and session information from the same baseline scenario.',
   },
   {
@@ -196,22 +210,22 @@ const scopeCards = [
 </script>
 
 <template>
-  <main class="relative overflow-hidden bg-cream text-ink">
+  <main class="relative overflow-hidden break-words bg-cream text-ink">
     <div class="pointer-events-none absolute right-[-180px] top-[-260px] h-[620px] w-[620px] rounded-full border border-accent2/[0.08]" aria-hidden="true"></div>
     <div class="pointer-events-none absolute bottom-[360px] left-[-120px] h-[280px] w-[280px] rounded-full border border-accent2/[0.08]" aria-hidden="true"></div>
 
-    <section class="relative z-[1] mx-auto grid min-h-[680px] w-[min(1120px,calc(100%_-_48px))] grid-cols-1 items-center gap-10 py-14 pt-[76px] text-center lg:grid-cols-[minmax(0,1.04fr)_minmax(360px,0.76fr)] lg:gap-14 lg:text-left">
+    <section class="relative z-[1] mx-auto grid min-h-[680px] w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] grid-cols-1 items-center gap-10 py-14 pt-[76px] text-center lg:grid-cols-[minmax(0,1.04fr)_minmax(360px,0.76fr)] lg:gap-14 lg:text-left">
       <div>
         <div class="mb-7 inline-flex items-center gap-2.5 rounded-full border border-accent2/20 bg-accent-pale px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-accent before:h-1.5 before:w-1.5 before:rounded-full before:bg-gold before:content-['']">
-          Reproducible Simulation Case Study
+          Censored Event-Time Demo
         </div>
 
-        <h1 class="max-w-[760px] font-display text-[46px] font-black leading-[0.95] tracking-normal text-ink xs:text-[56px] md:text-[72px] lg:text-[88px]">
+        <h1 class="max-w-[760px] font-display text-[40px] font-black xxs:text-[46px] leading-[0.95] tracking-normal text-ink xs:text-[56px] md:text-[72px] lg:text-[88px]">
           Survival analysis for a <em class="text-accent">baseline SIRS</em> simulation.
         </h1>
 
         <p class="mt-7 max-w-[620px] text-[18px] font-light leading-[1.72] text-ink3">
-          This project turns a mortality-enabled SIRS grid simulation into a cell-level survival analysis where each matrix cell is a subject and each transition can become an endpoint.
+          This project turns one mortality-enabled SIRS grid run into a cell-level event-time dataset where infection, recovery, and death are modeled with explicit censoring.
         </p>
 
         <div class="mt-9 flex flex-wrap justify-center gap-3 lg:justify-start">
@@ -254,24 +268,41 @@ const scopeCards = [
       <div class="pointer-events-none absolute right-[-40px] top-1/2 h-[400px] w-[400px] -translate-y-1/2 rounded-full border border-white/[0.04]" aria-hidden="true"></div>
       <div class="pointer-events-none absolute right-[-140px] top-1/2 h-[600px] w-[600px] -translate-y-1/2 rounded-full border border-white/[0.03]" aria-hidden="true"></div>
 
-      <div class="relative mx-auto w-[min(1120px,calc(100%_-_48px))]">
+      <div class="relative mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
         <div class="mb-11 text-[10px] font-bold uppercase tracking-[2px] text-white/35">Baseline run by the numbers</div>
 
         <div class="grid grid-cols-1 md:grid-cols-4">
           <div v-for="(stat, index) in projectNumbers" :key="stat[0]" class="min-h-40 border-white/[0.08] py-8 md:border-r md:px-8" :class="{ 'md:border-r-0': index === projectNumbers.length - 1, 'border-b md:border-b-0': index !== projectNumbers.length - 1 }">
-            <strong class="block font-display text-[54px] font-black leading-none tracking-normal text-white">{{ stat[0] }}<span class="text-accent2">{{ stat[1] }}</span></strong>
+            <strong class="block font-display text-[44px] font-black xs:text-[54px] leading-none tracking-normal text-white">{{ stat[0] }}<span class="text-accent2">{{ stat[1] }}</span></strong>
             <p id="overview" class="mt-2.5 max-w-[190px] text-[13px] font-light leading-[1.45] text-white/45">{{ stat[2] }}</p>
           </div>
         </div>
       </div>
     </section>
 
+    <section class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]">
+      <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
+        <div>
+          <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Analyst Summary</div>
+          <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The endpoint table stores event times and censoring for one SIRS run.</h2>
+        </div>
+        <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">The derived table keeps cells that never experience an endpoint and labels the output as one fixed-seed run.</p>
+      </header>
+
+      <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+        <article v-for="item in analystSummary" :key="item[0]" class="rounded-[12px] border border-border bg-white p-[22px]">
+          <div class="mb-3 font-mono text-[11px] uppercase text-ink4">{{ item[0] }}</div>
+          <p class="m-0 text-[13px] leading-[1.6] text-ink3">{{ item[1] }}</p>
+        </article>
+      </div>
+    </section>
+
     <section class="bg-cream2 py-[82px]">
-      <div class="mx-auto w-[min(1120px,calc(100%_-_48px))]">
+      <div class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
         <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
           <div>
             <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Project Narrative</div>
-            <h2 class="font-display text-[34px] font-bold leading-[1.06] text-ink md:text-[48px]">A small simulation becomes a complete survival-analysis object.</h2>
+            <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">One audited run becomes a censored event-time dataset.</h2>
           </div>
           <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
             The project defines one reproducible baseline scenario, logs every cell at every step, derives endpoint times and censoring indicators, then renders simulation and survival-analysis reports.
@@ -296,11 +327,11 @@ const scopeCards = [
       </div>
     </section>
 
-    <section class="mx-auto w-[min(1120px,calc(100%_-_48px))] py-[82px]">
+    <section class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]">
       <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
         <div>
           <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Simulation Setup</div>
-          <h2 class="font-display text-[34px] font-bold leading-[1.06] text-ink md:text-[48px]">The baseline scenario is simple enough to audit cell by cell.</h2>
+          <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The baseline scenario is simple enough to audit cell by cell.</h2>
         </div>
         <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
           The run uses infection probability 0.25, immunity probability 0.70, mortality enabled, fatality probability 0.15, full logging, and seed 94128.
@@ -325,16 +356,39 @@ const scopeCards = [
       </div>
     </section>
 
-    <section id="endpoints" class="mx-auto w-[min(1120px,calc(100%_-_48px))] py-[82px]">
+    <section id="endpoints" class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]">
       <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
         <div>
           <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Endpoint Dataset</div>
-          <h2 class="font-display text-[34px] font-bold leading-[1.06] text-ink md:text-[48px]">The derived table connects the grid to survival methods.</h2>
+          <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The derived table connects the grid to survival methods.</h2>
         </div>
         <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
           survival_endpoints.csv contains one row per cell with endpoint times, event flags, final state, initial state, distance from center, and near or far distance group.
         </p>
       </header>
+
+      <article class="mb-6 overflow-hidden rounded-[12px] border border-border bg-white p-6">
+        <div class="mb-4 flex items-baseline justify-between gap-4">
+          <h3 class="text-[15px] font-bold text-ink">Why survival framing matters</h3>
+          <span class="font-mono text-[11px] text-ink4">method choice</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[700px] border-collapse text-left text-xs">
+            <thead class="text-ink3">
+              <tr class="border-b border-border">
+                <th class="p-2.5">Frame</th>
+                <th class="p-2.5">What it records</th>
+                <th class="p-2.5">Analyst value</th>
+              </tr>
+            </thead>
+            <tbody class="text-ink3">
+              <tr v-for="row in survivalFramingRows" :key="row[0]" class="border-b border-cream3 last:border-b-0">
+                <td v-for="cell in row" :key="cell" class="p-2.5">{{ cell }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
 
       <div class="grid grid-cols-1 gap-6 md:grid-cols-[1.06fr_0.94fr]">
         <article class="overflow-hidden rounded-[12px] border border-border bg-white p-6">
@@ -384,11 +438,11 @@ const scopeCards = [
     </section>
 
     <section id="outputs" class="bg-cream2 py-[82px]">
-      <div class="mx-auto w-[min(1120px,calc(100%_-_48px))]">
+      <div class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
         <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
           <div>
             <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Survival Output</div>
-            <h2 class="font-display text-[34px] font-bold leading-[1.06] text-ink md:text-[48px]">The fitted curves describe this baseline run without overclaiming.</h2>
+            <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The fitted curves describe this baseline run without overclaiming.</h2>
           </div>
           <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
             Kaplan-Meier curves describe time to first infection, recovery, and death. Stratified curves compare infection by initial status and death by distance group.
@@ -414,11 +468,11 @@ const scopeCards = [
       </div>
     </section>
 
-    <section class="mx-auto w-[min(1120px,calc(100%_-_48px))] py-[82px]">
+    <section class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]">
       <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
         <div>
           <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Deliverables</div>
-          <h2 class="font-display text-[34px] font-bold leading-[1.06] text-ink md:text-[48px]">The project includes raw data, derived data, figures, and reports.</h2>
+          <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The project includes raw data, derived data, figures, and reports.</h2>
         </div>
         <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
           The output structure lets a reader trace the work from simulation parameters to raw logs, endpoint construction, figures, rendered reports, command history, and session context.
@@ -435,14 +489,14 @@ const scopeCards = [
     </section>
 
     <section class="bg-cream2 py-[82px]">
-      <div class="mx-auto w-[min(1120px,calc(100%_-_48px))]">
+      <div class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
         <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
           <div>
             <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Interpretation Boundary</div>
-            <h2 class="font-display text-[34px] font-bold leading-[1.06] text-ink md:text-[48px]">The analysis is reproducible, descriptive, and intentionally scoped.</h2>
+            <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The analysis is reproducible, descriptive, and intentionally scoped.</h2>
           </div>
           <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-            The curves and models explain one simulated baseline run. They are useful for demonstrating survival-analysis structure, not for making population-level claims about all possible SIRS runs.
+            The curves and models explain one simulated baseline run. They document survival-analysis structure without making population-level claims about all possible SIRS runs.
           </p>
         </header>
 
@@ -457,11 +511,11 @@ const scopeCards = [
     </section>
 
     <section class="bg-cream2 py-[82px]">
-      <div class="mx-auto w-[min(1120px,calc(100%_-_48px))]">
+      <div class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
         <div class="relative overflow-hidden rounded-[14px] bg-ink p-8 text-white md:p-11">
           <div class="pointer-events-none absolute right-[-170px] top-[-170px] h-[500px] w-[500px] rounded-full border border-white/[0.05]" aria-hidden="true"></div>
           <div class="relative z-[1] mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-white/65 before:h-0.5 before:w-[26px] before:bg-white/65 before:content-['']">Final Conclusions</div>
-          <h2 class="relative z-[1] max-w-[760px] font-display text-[34px] font-bold leading-[1.06] tracking-normal text-white md:text-[48px]">A compact SIRS run can be read as a survival-analysis dataset.</h2>
+          <h2 class="relative z-[1] max-w-[760px] font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] tracking-normal text-white md:text-[48px]">The SIRS run is stored as a cell-level survival-analysis dataset.</h2>
           <h3 class="relative z-[1] mt-[26px] text-[15px] font-bold text-white">Project conclusion</h3>
           <p class="relative z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">
             The baseline run starts with one infected center cell and ends at step 9 with 83 susceptible, 13 recovered, 4 deceased, and 0 actively infected cells. The survival analysis turns those state histories into first-infection, recovery, and death endpoints for all 100 cells.
@@ -471,7 +525,7 @@ const scopeCards = [
           </p>
           <h3 class="relative z-[1] mt-[26px] text-[15px] font-bold text-white">Recommendation</h3>
           <p class="relative z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">
-            Treat the current outputs as a reproducible baseline demonstration. For stronger inference, repeat the simulation across multiple seeds and parameter settings before comparing endpoint distributions, stratified survival curves, and Cox summaries.
+            Treat the current outputs as a reproducible baseline demonstration. For simulation-study inference, repeat the simulation across multiple seeds and parameter settings before comparing endpoint distributions, stratified survival curves, and Cox summaries.
           </p>
         </div>
       </div>

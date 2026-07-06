@@ -55,7 +55,7 @@ const visibleProjects = computed(() =>
           </div>
 
           <div class="min-w-0">
-            <h2 class="font-display text-lg font-bold leading-tight tracking-normal text-ink transition-colors group-hover:text-accent">
+            <h2 class="break-words font-display text-base font-bold leading-tight tracking-normal text-ink transition-colors group-hover:text-accent xs:text-lg">
               {{ project.title }}
             </h2>
 

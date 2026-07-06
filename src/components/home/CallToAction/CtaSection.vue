@@ -17,11 +17,11 @@ useScrollObserver('.anim-up');
 </script>
 
 <template>
-  <section class="relative overflow-hidden bg-cream px-12 py-32 text-center">
+  <section class="relative overflow-hidden bg-cream px-4 py-24 text-center xs:px-6 sm:py-32 md:px-12">
     <GeoLayer :shapes="ctaShapes" />
 
     <div class="relative z-[1] mx-auto max-w-[640px]">
-      <h2 class="anim-up mb-5 translate-y-[18px] font-display text-[52px] font-black leading-[1.05] tracking-[-2px] text-ink opacity-0 transition-all duration-[600ms] ease-out [&.vis]:translate-y-0 [&.vis]:opacity-100">
+      <h2 class="anim-up mb-5 translate-y-[18px] break-words font-display text-[38px] font-black leading-[1.05] tracking-normal text-ink opacity-0 transition-all duration-[600ms] ease-out xs:text-[44px] sm:text-[52px] sm:tracking-[-2px] [&.vis]:translate-y-0 [&.vis]:opacity-100">
         Ready to work<br>on something <em class="italic text-accent">great?</em>
       </h2>
 
