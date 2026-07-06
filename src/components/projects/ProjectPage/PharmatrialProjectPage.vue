@@ -15,7 +15,7 @@ import bavariaBatchScreenshot from '@/assets/projects/pharmatrial/bavaria-batch.
 import bavariaReportScreenshot from '@/assets/projects/pharmatrial/bavaria-report.png';
 
 const githubRepoUrl = 'https://github.com/austin-mel/csc131-mock-pharmatrial-portal';
-const liveDemoUrl = '#product';
+const liveDemoUrl = 'https://austin-mel.github.io/csc131-mock-pharmatrial-portal/';
 
 const projectNumbers = [
   {
@@ -277,6 +277,7 @@ const validationCards = [
           <a
             class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] border border-accent2 bg-accent-pale px-[22px] text-sm font-semibold text-accent no-underline transition-colors hover:bg-accent hover:text-white"
             :href="liveDemoUrl"
+            target="_blank"
           >
             View live demo
           </a>
@@ -332,7 +333,7 @@ const validationCards = [
               {{ stat.value }}
             </strong>
 
-            <p class="mt-2.5 max-w-[190px] text-[13px] font-light leading-[1.45] text-white/45">
+            <p id="overview"  class="mt-2.5 max-w-[190px] text-[13px] font-light leading-[1.45] text-white/45">
               {{ stat.label }}
             </p>
           </div>
@@ -340,11 +341,11 @@ const validationCards = [
       </div>
     </section>
 
-    <section id="product" class="bg-cream2 py-[82px]">
+    <section class="bg-cream2 py-[82px]">
       <div class="mx-auto w-[min(1120px,calc(100%_-_48px))]">
         <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
           <div>
-            <div id="overview" class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">
+            <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">
               Project Overview
             </div>
 

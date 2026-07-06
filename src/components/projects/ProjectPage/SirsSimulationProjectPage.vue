@@ -133,9 +133,9 @@ const figures = [
   },
   {
     image: infectionHeatmapFigure,
-    title: 'Infection heatmap across 10 SIR runs',
-    body: 'Darker cells were infected more often across repeated runs, with counts ranging from 2 to 10.',
-    alt: 'Generated heatmap of cells infected at least once across 10 SIR runs',
+    title: 'Infection heatmap across 100 SIR runs',
+    body: 'Darker red cells were infected more often across repeated runs, with counts ranging from 0 to 100.',
+    alt: 'Generated heatmap of cells infected at least once across 100 SIR runs',
   },
 ];
 
@@ -194,7 +194,7 @@ const validationCards = [
 
         <div class="mt-9 flex flex-wrap justify-center gap-3 lg:justify-start">
           <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] bg-ink px-[22px] text-sm font-semibold text-white no-underline transition-colors hover:bg-accent" :href="githubRepoUrl" target="_blank" rel="noreferrer">View Github repo</a>
-          <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] border border-border2 px-[22px] text-sm font-semibold text-ink no-underline transition-colors hover:border-accent2 hover:text-accent2" href="#workflow">See project description</a>
+          <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] border border-border2 px-[22px] text-sm font-semibold text-ink no-underline transition-colors hover:border-accent2 hover:text-accent2" href="#overview">See project description</a>
         </div>
       </div>
 
@@ -238,13 +238,13 @@ const validationCards = [
         <div class="grid grid-cols-1 md:grid-cols-4">
           <div v-for="(stat, index) in projectNumbers" :key="stat[0]" class="min-h-40 border-white/[0.08] py-8 md:border-r md:px-8" :class="{ 'md:border-r-0': index === projectNumbers.length - 1, 'border-b md:border-b-0': index !== projectNumbers.length - 1 }">
             <strong class="block font-display text-[54px] font-black leading-none tracking-normal text-white">{{ stat[0] }}<span class="text-accent2">{{ stat[1] }}</span></strong>
-            <p class="mt-2.5 max-w-[190px] text-[13px] font-light leading-[1.45] text-white/45">{{ stat[2] }}</p>
+            <p id="overview" class="mt-2.5 max-w-[190px] text-[13px] font-light leading-[1.45] text-white/45">{{ stat[2] }}</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="workflow" class="bg-cream2 py-[82px]">
+    <section class="bg-cream2 py-[82px]">
       <div class="mx-auto w-[min(1120px,calc(100%_-_48px))]">
         <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
           <div>

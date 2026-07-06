@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { GeoLayer, ProjectCanvas } from '@/components/ui';
+import { GeoLayer } from '@/components/ui';
 import { useScrollObserver } from '@/composables/useScrollObserver';
 import SVGIcons from '@/assets/SVGIcons.vue';
 import { ProjectTags } from '@/components/projects/ProjectTags';
 import { projects as projectRegistryProjects } from '@/components/projects/projectRegistry';
-import type { DrawFnName } from '@/types/types';
 
 const router = useRouter();
 
@@ -16,24 +15,6 @@ const featuredProjectSlugs = [
 ] as const;
 
 type FeaturedProjectSlug = (typeof featuredProjectSlugs)[number];
-
-const featuredProjectVisuals: Record<
-  FeaturedProjectSlug,
-  { color: string; drawFn: DrawFnName }
-> = {
-  'baseline-noise': {
-    color: '#7c3aed',
-    drawFn: 'drawDistribution',
-  },
-  pharmatrial: {
-    color: '#1d4ed8',
-    drawFn: 'drawClinicalTrial',
-  },
-  'science-communication-empathy': {
-    color: '#0284c7',
-    drawFn: 'drawSurveyAnalysis',
-  },
-};
 
 const featuredShapes = [
   { type: 'ring' as const, style: { width: '400px', height: '400px', bottom: '-150px', right: '-100px', borderColor: 'rgba(29,78,216,0.07)' } },
@@ -50,7 +31,6 @@ const getFeaturedProject = (slug: FeaturedProjectSlug) => {
 
   return {
     ...project,
-    ...featuredProjectVisuals[slug],
   };
 };
 
@@ -84,14 +64,12 @@ useScrollObserver('.anim-up,.feat-card');
 
       <div class="grid gap-4 xs:gap-5 lg:grid-cols-[1.3fr_1fr] lg:gap-6">
         <button
-          class="feat-card w-full cursor-pointer overflow-hidden rounded-xl border border-border bg-white text-left opacity-0 translate-y-4 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-accent2 hover:shadow-[0_16px_48px_rgba(13,17,23,0.15)] focus:outline-none focus:ring-2 focus:ring-accent2/40 sm:rounded-2xl [&.vis]:translate-y-0 [&.vis]:opacity-100"
+          class="feat-card flex w-full cursor-pointer flex-col overflow-hidden rounded-xl border border-border bg-cream2 text-left opacity-0 translate-y-4 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-accent2 hover:shadow-[0_16px_48px_rgba(13,17,23,0.15)] focus:outline-none focus:ring-2 focus:ring-accent2/40 sm:rounded-2xl [&.vis]:translate-y-0 [&.vis]:opacity-100"
           type="button"
           @click="openProject(featuredHero.slug)"
         >
-          <div class="flex h-[160px] items-center justify-center overflow-hidden bg-cream2 p-3 xs:h-[180px] sm:h-[200px] sm:p-4">
-            <ProjectCanvas :draw-fn="featuredHero.drawFn" :color="featuredHero.color" :height="200" />
-          </div>
-          <div class="p-4 xs:p-5 sm:p-6">
+          <div class="h-[160px] overflow-hidden bg-cream2 xs:h-[180px] sm:h-[200px]" aria-hidden="true"></div>
+          <div class="flex-1 bg-white p-4 xs:p-5 sm:p-6">
             <ProjectTags :tags="featuredHero.tags" size="sm" class="mb-2.5" />
             <div class="mb-1.5 font-display text-[17px] font-bold leading-snug text-ink xs:text-lg">{{ featuredHero.title }}</div>
             <div class="text-[13px] font-light leading-relaxed text-ink3">{{ featuredHero.short }}</div>
@@ -107,9 +85,7 @@ useScrollObserver('.anim-up,.feat-card');
             type="button"
             @click="openProject(featuredProduct.slug)"
           >
-            <div class="flex h-[110px] items-center justify-center overflow-hidden bg-cream2 p-3 xs:h-[120px]">
-              <ProjectCanvas :draw-fn="featuredProduct.drawFn" :color="featuredProduct.color" :height="120" />
-            </div>
+            <div class="h-[110px] overflow-hidden bg-cream2 xs:h-[120px]" aria-hidden="true"></div>
             <div class="p-4 xs:p-5 sm:p-6">
               <ProjectTags :tags="featuredProduct.tags" size="sm" class="mb-2.5" />
               <div class="mb-1.5 font-display text-[17px] font-bold leading-snug text-ink xs:text-lg">{{ featuredProduct.title }}</div>
@@ -122,9 +98,7 @@ useScrollObserver('.anim-up,.feat-card');
             type="button"
             @click="openProject(featuredAnalysis.slug)"
           >
-            <div class="flex h-[110px] items-center justify-center overflow-hidden bg-cream2 p-3 xs:h-[120px]">
-              <ProjectCanvas :draw-fn="featuredAnalysis.drawFn" :color="featuredAnalysis.color" :height="120" />
-            </div>
+            <div class="h-[110px] overflow-hidden bg-cream2 xs:h-[120px]" aria-hidden="true"></div>
             <div class="p-4 xs:p-5 sm:p-6">
               <ProjectTags :tags="featuredAnalysis.tags" size="sm" class="mb-2.5" />
               <div class="mb-1.5 font-display text-[17px] font-bold leading-snug text-ink xs:text-lg">{{ featuredAnalysis.title }}</div>

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import resumePdf from '@/assets/austin-melendez-resume.pdf';
+
 interface ResumeRole {
   organization: string;
   title: string;
@@ -22,7 +24,8 @@ const contacts = [
   { label: 'Email', value: 'austin.mel@mail.com' },
   { label: 'Website', value: 'www.austinmelendez.com' },
   { label: 'LinkedIn', value: 'austin-melendez' },
-  { label: 'GitHub', value: 'austin-mel' },
+  { label: 'Personal GitHub', value: 'austin-mel' },
+  { label: 'Educational GitHub', value: 'austin-mel-edu' },
 ];
 
 const education = {
@@ -141,12 +144,13 @@ const leadership: LeadershipRole[] = [
             </p>
           </div>
 
-          <button
-            type="button"
+          <a
+            :href="resumePdf"
+            download="austin-melendez-resume.pdf"
             class="inline-flex w-fit items-center rounded-[8px] bg-ink px-5 py-2.5 text-[13px] font-medium text-white transition-all duration-200 hover:-translate-y-px hover:bg-accent"
           >
-            Download PDF
-          </button>
+            Download Resume
+          </a>
         </header>
 
         <div class="grid gap-12 lg:grid-cols-[1fr_260px]">

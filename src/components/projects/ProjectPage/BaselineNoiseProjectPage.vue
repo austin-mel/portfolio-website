@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import ProjectPdfReportModal from '@/components/projects/ProjectPage/ProjectPdfReportModal.vue';
 import ProjectScreenshotLightbox from '@/components/projects/ProjectPage/ProjectScreenshotLightbox.vue';
 
+import baselineReportPdf from '@/assets/projects/baseline/Baseline Noise Report.pdf';
 import histogramFigure from '@/assets/projects/baseline/eda-log10-histograms.png';
 import qqFigure from '@/assets/projects/baseline/eda-qq-plots.png';
 import powerLawFigure from '@/assets/projects/baseline/eda-power-law-diagnostics.png';
@@ -9,7 +11,7 @@ import labCurvesFigure from '@/assets/projects/baseline/eda-lab-level-curves.png
 import modelDensityFigure from '@/assets/projects/baseline/model-kde-log-skew-t.png';
 import modelCdfFigure from '@/assets/projects/baseline/model-cdf-comparison.png';
 
-const githubRepoUrl = 'https://github.com/austin-mel/baseline-noise-distribution';
+const githubRepoUrl = 'https://github.com/austin-mel-edu/sacramento-state-university/tree/master/STAT192%20-%20Senior%20Capstone%20Project/Adam%20G%20-%20Thermochron%20Systems%20LLC';
 
 const techStack = ['Python', 'Statistical Modeling', 'EDA', 'Scientific Reporting'];
 
@@ -102,7 +104,13 @@ const modelFigures = [
         </p>
         <div class="mt-9 flex flex-wrap justify-center gap-3 lg:justify-start">
           <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] bg-ink px-[22px] text-sm font-semibold text-white no-underline transition-colors hover:bg-accent" :href="githubRepoUrl" target="_blank" rel="noreferrer">View Github repo</a>
-          <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] border border-border2 px-[22px] text-sm font-semibold text-ink no-underline transition-colors hover:border-accent2 hover:text-accent2" href="#workflow">See project description</a>
+          <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] border border-border2 px-[22px] text-sm font-semibold text-ink no-underline transition-colors hover:border-accent2 hover:text-accent2" href="#overview">See project description</a>
+          <ProjectPdfReportModal
+            :src="baselineReportPdf"
+            title="Baseline Noise Report"
+            button-label="View full PDF report"
+            trigger-class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] border border-accent2 bg-accent-pale px-[22px] text-sm font-semibold text-accent no-underline transition-colors hover:bg-accent hover:text-white"
+          />
         </div>
       </div>
 
@@ -141,13 +149,13 @@ const modelFigures = [
         <div class="grid grid-cols-1 md:grid-cols-4">
           <div v-for="(stat, index) in projectNumbers" :key="stat[0]" class="min-h-40 border-white/[0.08] py-8 md:border-r md:px-8" :class="{ 'md:border-r-0': index === projectNumbers.length - 1, 'border-b md:border-b-0': index !== projectNumbers.length - 1 }">
             <strong class="block font-display text-[54px] font-black leading-none tracking-normal text-white">{{ stat[0] }}<span class="text-accent2">{{ stat[1] }}</span></strong>
-            <p class="mt-2.5 max-w-[190px] text-[13px] font-light leading-[1.45] text-white/45">{{ stat[2] }}</p>
+            <p id="overview" class="mt-2.5 max-w-[190px] text-[13px] font-light leading-[1.45] text-white/45">{{ stat[2] }}</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="workflow" class="bg-cream2 py-[82px]">
+    <section class="bg-cream2 py-[82px]">
       <div class="mx-auto w-[min(1120px,calc(100%_-_48px))]">
         <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
           <div>
