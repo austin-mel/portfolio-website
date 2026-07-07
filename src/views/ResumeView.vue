@@ -40,7 +40,8 @@ const education = {
     'Statistical Computing in R',
     'Data Mining for Business Analytics',
     'Parallel Programming with GPUs',
-    'Linear Models and Statistical Learning',
+    'Linear Models',
+    'Statistical Learning'
   ],
 };
 
