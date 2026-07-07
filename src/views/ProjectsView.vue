@@ -37,7 +37,7 @@ const openProject = (slug: string) => {
         </h1>
 
         <p class="mt-2 text-[15px] font-light text-ink3">
-          Click any project to open its full case study.
+          Click any project to open the full project page.
         </p>
       </div>
     </section>

@@ -296,7 +296,7 @@ const limitationCards = [
         </p>
 
         <div class="mt-9 flex flex-wrap justify-center gap-3 lg:justify-start">
-          <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] bg-ink px-[22px] text-sm font-semibold text-white no-underline transition-colors hover:bg-accent" :href="githubRepoUrl" target="_blank" rel="noreferrer">View Github repo</a>
+          <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] bg-ink px-[22px] text-sm font-semibold text-white no-underline transition-colors hover:bg-accent" :href="githubRepoUrl" target="_blank" rel="noreferrer">View GitHub repo</a>
           <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] border border-border2 px-[22px] text-sm font-semibold text-ink no-underline transition-colors hover:border-accent2 hover:text-accent2" href="#overview">See project description</a>
         </div>
       </div>
@@ -354,7 +354,7 @@ const limitationCards = [
           <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The package exposes documented simulation functions and tested outputs.</h2>
         </div>
         <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-          The page now emphasizes package design, exported functions, validation, tests, and modeling boundaries instead of implying broad epidemiological forecasting.
+          The package includes exported functions, validation checks, test coverage, documentation, and modeling boundaries for grid-based transition experiments.
         </p>
       </header>
 
@@ -588,7 +588,7 @@ const limitationCards = [
         </article>
       </div>
 
-      <a class="mt-6 inline-flex min-h-[58px] w-full items-center justify-center rounded-[12px] bg-ink px-6 text-base font-semibold text-white no-underline transition-colors hover:bg-accent" :href="githubRepoUrl" target="_blank" rel="noreferrer">View Github repo</a>
+      <a class="mt-6 inline-flex min-h-[58px] w-full items-center justify-center rounded-[12px] bg-ink px-6 text-base font-semibold text-white no-underline transition-colors hover:bg-accent" :href="githubRepoUrl" target="_blank" rel="noreferrer">View GitHub repo</a>
     </section>
 
     <section class="bg-cream2 py-[82px]">
@@ -599,7 +599,7 @@ const limitationCards = [
             <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The simulator stores model assumptions in function arguments and output logs.</h2>
           </div>
           <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-            The project is a package for controlled transition experiments. It is not calibrated to surveillance data and should not be presented as a real-world forecast.
+            SIRSsim supports controlled transition experiments. It is not calibrated to surveillance data and should not be presented as a real-world forecast.
           </p>
         </header>
 

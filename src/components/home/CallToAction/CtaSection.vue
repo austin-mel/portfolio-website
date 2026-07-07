@@ -26,7 +26,7 @@ useScrollObserver('.anim-up');
       </h2>
 
       <p class="anim-up mb-8 translate-y-[18px] text-base font-light leading-[1.7] text-ink3 opacity-0 transition-all duration-[600ms] ease-out [&.vis]:translate-y-0 [&.vis]:opacity-100">
-        I'm actively looking for data analytics, engineering, or consulting roles where I can make a meaningful impact. Let's talk.
+        I'm actively looking for data analytics, software engineering, or consulting roles where I can help teams work with data clearly. Let's talk.
       </p>
 
       <div class="anim-up flex translate-y-[18px] flex-wrap justify-center gap-3.5 opacity-0 transition-all duration-[600ms] ease-out [&.vis]:translate-y-0 [&.vis]:opacity-100">

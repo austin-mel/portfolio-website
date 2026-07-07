@@ -8,10 +8,10 @@ interface NumberStat {
 }
 
 const stats: NumberStat[] = [
-  { big: '10',  span: '+',  desc: 'Years of experience in coding and development' },
-  { big: '4', desc: 'End-to-end projects shipped to production' },
-  { big: '20', span: '26', desc: 'College graduate w/ double major in CS and STATS' },
-  { big: '34', span: '+', desc: 'Comfortable in the 34+ data science and development technologies listed below' }
+  { big: '10',  span: '+',  desc: 'Years writing code and building projects' },
+  { big: '5', desc: 'Portfolio projects across analytics and software engineering' },
+  { big: '20', span: '26', desc: 'Graduate with a double major in Computer Science and Statistics' },
+  { big: '34', span: '+', desc: 'Data science and development tools listed below' }
 ];
 
 useScrollObserver('.num-card');

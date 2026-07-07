@@ -21,10 +21,10 @@ const facts: FactRow[] = [
 ];
 
 const pillars: Pillar[] = [
-  { icon: 'chart',  title: 'Analytical rigor',        desc: 'Every insight is verified, reproducible, and backed by clean data.' },
-  { icon: 'database', title: 'Infrastructure thinking', desc: 'I build systems that scale, not one-off queries that break in a month.' },
+  { icon: 'chart',  title: 'Analytical rigor',        desc: 'I check assumptions, document methods, and keep analysis work reproducible.' },
+  { icon: 'database', title: 'Data systems', desc: 'I connect analysis work to maintainable project structure, databases, and reporting workflows.' },
   { icon: 'communication',  title: 'Clear communication',     desc: 'I translate data into decisions for technical and non-technical audiences alike.' },
-  { icon: 'lightning',  title: 'Speed to impact',         desc: 'Fast iteration, tight feedback loops, and a bias toward shipping value.' },
+  { icon: 'lightning',  title: 'Delivery habits',         desc: 'I work in small iterations, track decisions, and keep project outputs reviewable.' },
 ];
 </script>
 
@@ -52,11 +52,11 @@ const pillars: Pillar[] = [
           </div>
 
           <div class="space-y-5 text-sm font-light leading-[1.85] text-ink2">
-I am a recent double major graduate from California State University, Sacramento with a Bachelor of Science in Computer Science and Statistics, and I am excited to begin my career in data analysis, business intelligence, or applied analytics. My academic background gave me a strong foundation in statistical reasoning, programming, databases, data visualization, and machine learning, while my project experience taught me how to apply those skills to real problems with real stakeholders.
+I am a recent graduate from California State University, Sacramento with a Bachelor of Science in Computer Science and Statistics, and I am excited to begin my career in data analysis, business intelligence, or applied analytics. My academic background gave me a strong foundation in statistical reasoning, programming, databases, data visualization, and machine learning, while my project experience taught me how to apply those skills to real problems with real stakeholders.
 <br><br>
-I am especially interested in roles where I can turn complex data into clear, useful insights that help teams make better decisions. My background combines statistical training, programming experience, and hands-on project work. I have worked with R, Python, SQL, Tableau, Pandas, Matplotlib, ggplot, and Jupyter Notebook, and I am comfortable cleaning data, exploring patterns, building visualizations, and explaining results clearly. I enjoy taking complex information and turning it into something useful for both technical and non-technical audiences.
+I am especially interested in roles where I can turn complex data into clear summaries, dashboards, models, and reports that help teams make better decisions. My background combines statistical training, programming experience, and hands-on project work. I have worked with R, Python, SQL, Tableau, Pandas, Matplotlib, ggplot, and Jupyter Notebook, and I am comfortable cleaning data, exploring patterns, building visualizations, and explaining results clearly.
 <br><br>
-Through my consulting projects, I gained experience working with real data, real clients, and open-ended research questions. Those experiences helped me become more careful in how I approach data, choose methods, interpret results, and communicate findings. As a student-athlete, I developed strong time management, discipline, and organization while balancing academics, training, work, and competition. Through my leadership roles, I also learned how to coordinate teams, manage responsibilities, communicate with large and small groups, and explain my ideas clearly to others. 
+Through my consulting projects, I gained experience working with client datasets, stakeholder questions, and open-ended research problems. Those experiences helped me become more careful in how I approach data, choose methods, interpret results, and communicate findings. As a student-athlete, I developed strong time management, discipline, and organization while balancing academics, training, work, and competition. Through my leadership roles, I also learned how to coordinate teams, manage responsibilities, communicate with large and small groups, and explain my ideas clearly to others.
 <br><br>
 I am looking for an entry-level role where I can continue growing as an analyst while contributing to a team that values clear thinking, problem-solving, and data-driven decision-making. I would welcome the opportunity to discuss how my background in computer science, statistics, and applied analysis can support your organization’s goals.
           </div>

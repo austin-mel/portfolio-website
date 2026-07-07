@@ -61,7 +61,7 @@ const engineeringSummary = [
   ['Problem', 'Show how a trial workflow can expose different actions and patient visibility to hospital, sponsor, and regulator roles without presenting the demo as a production clinical system.'],
   ['My role', 'Built the Vue/TypeScript interface, Pinia state flow, API client integration, Express workflow service, Prisma data model, seeded fallback mode, and role-filtered snapshots.'],
   ['Implementation', 'The frontend hydrates a workflow snapshot, maps API DTOs into stores, and applies returned snapshots after mutations; the backend validates role-specific actions before Prisma writes.'],
-  ['Validation', 'The page now treats the app as a proof of concept and calls out the evidence a reviewer can inspect: workflow actions, persisted models, docs, role guides, seed data, and audit events.'],
+  ['Validation', 'Validated against role guides and seeded workflow data: actions return updated snapshots, patient masking applies outside hospital roles, and workflow changes create audit events.'],
   ['Result', 'The workflow includes trial creation, review, enrollment, batch submission, assignment locking, dosing, disclosure, and archival states.'],
   ['Limitation', 'Demo bearer-token auth and synthetic clinical data are not production controls; real deployment would need identity, encryption, retention, audit, and compliance review.'],
 ];
@@ -299,7 +299,7 @@ const productionLimitations = [
             target="_blank"
             rel="noreferrer"
           >
-            View Github repo
+            View GitHub repo
           </a>
 
           <a
@@ -380,11 +380,11 @@ const productionLimitations = [
       <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
         <div>
           <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Engineering Summary</div>
-          <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] tracking-normal text-ink md:text-[48px]">The page documents workflow state, demo roles, and production limits.</h2>
+          <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] tracking-normal text-ink md:text-[48px]">The demo documents workflow state, demo roles, and production limits.</h2>
         </div>
 
         <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-          The project is presented as a full-stack demo with synthetic data and fictional organizations. It shows role-aware state transitions, persistence, and visibility rules while naming the production security gap clearly.
+          Pharmatrial is presented as a full-stack demo with synthetic data and fictional organizations. It shows role-aware state transitions, persistence, and visibility rules while naming the production security gap clearly.
         </p>
       </header>
 
@@ -589,7 +589,7 @@ const productionLimitations = [
           </div>
 
           <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-            The documentation defines Pharmatrial as a proof of concept rather than a production clinical system. It records workflow sequencing, patient masking, blinded assignment, role-specific action availability, live PostgreSQL persistence, and seeded fallback data for offline review.
+            Pharmatrial is a proof of concept rather than a production clinical system. It records workflow sequencing, patient masking, blinded assignment, role-specific action availability, live PostgreSQL persistence, and seeded fallback data for offline review.
           </p>
         </header>
 
@@ -662,7 +662,7 @@ const productionLimitations = [
           </div>
 
           <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] tracking-normal text-ink md:text-[48px]">
-            The codebase is organized around inspectable engineering surfaces.
+            The source tree separates frontend state, API calls, backend routes, service logic, and Prisma persistence.
           </h2>
         </div>
 
@@ -744,7 +744,7 @@ const productionLimitations = [
           target="_blank"
           rel="noreferrer"
         >
-          View Github repo
+          View GitHub repo
         </a>
       </div>
     </section>

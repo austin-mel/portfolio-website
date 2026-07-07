@@ -229,7 +229,7 @@ const scopeCards = [
         </p>
 
         <div class="mt-9 flex flex-wrap justify-center gap-3 lg:justify-start">
-          <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] bg-ink px-[22px] text-sm font-semibold text-white no-underline transition-colors hover:bg-accent" :href="githubRepoUrl" target="_blank" rel="noreferrer">View Github repo</a>
+          <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] bg-ink px-[22px] text-sm font-semibold text-white no-underline transition-colors hover:bg-accent" :href="githubRepoUrl" target="_blank" rel="noreferrer">View GitHub repo</a>
           <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] border border-border2 px-[22px] text-sm font-semibold text-ink no-underline transition-colors hover:border-accent2 hover:text-accent2" href="#overview">See project description</a>
         </div>
       </div>

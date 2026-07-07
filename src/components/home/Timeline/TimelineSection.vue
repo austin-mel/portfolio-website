@@ -14,7 +14,7 @@ const items: TimelineItem[] = [
   title: 'Software Engineering Contractor',
   subtitle: 'Computer Science Senior Project',
   company: 'WCP Solutions · Sacramento, CA',
-  description: 'Developed an internal dashboard for sales teams to manage client relationships. Built features including searchable client tables, geographic mapping, route directions, contact integration, and note tracking to streamline daily workflows and improve sales efficiency. As a member of a team of eight using the AGILE framework, with bi-weekly sprints, client and advisor meetings and JIRA for task tracking.',
+  description: 'Developed an internal dashboard for sales teams to manage client relationships. Built searchable client tables, geographic mapping, route directions, contact integration, and note tracking to streamline daily workflows. Worked on a team of eight using Agile practices, biweekly sprints, client and advisor meetings, and Jira for task tracking.',
   delay: .12,
 },
 {
@@ -22,7 +22,7 @@ const items: TimelineItem[] = [
   title: 'Research Project Assistant',
   subtitle: 'Statistics Senior Project',
   company: 'CSUS College of Biological Sciences · Sacramento, CA',
-  description: 'Provided statistical consulting for graduate-level research, including a master’s thesis on empathy in scientific communication. Designed and analyzed pre–post survey data as well as interactions between control-intervention groups. Applied appropriate statistical tests, and translated findings into clear, actionable insights.',
+  description: 'Provided statistical consulting for graduate-level research, including a master’s thesis on empathy in scientific communication. Designed and analyzed pre–post survey data and tested differences between control and intervention groups. Applied statistical tests and translated findings into clear research conclusions.',
   delay: .24,
 },
 {
@@ -30,7 +30,7 @@ const items: TimelineItem[] = [
   title: 'Statistical Research Consultant',
   subtitle: 'Statistics Senior Project',
   company: 'Thermochron Systems LLC · Sacramento, CA',
-  description: 'Developed a comprehensize report analyzing and attempting to model baseline noise in sensor data to improve signal reliability and measurement accuracy. Applied statistical techniques to identify noise patterns, reduce variability, and support data-driven calibration decisions.',
+  description: 'Developed a comprehensive report modeling baseline noise in mass spectrometer data to improve signal reliability and measurement accuracy. Applied statistical techniques to identify noise patterns, reduce variability, and support data-driven calibration decisions.',
   delay: .36,
 },
 {
@@ -38,7 +38,7 @@ const items: TimelineItem[] = [
   title: 'B.S. Computer Science and Statistics',
   subtitle: 'Emphasis in Applied Statistics',
   company: 'California State University - Sacramento',
-  description: 'Graduated with a double major in Computer Science and Statistics, with an emphasis in applied statistics. Contributed to multiple senior group projects with external real-world clients and actual actionable product deliverables.',
+  description: 'Graduated with a double major in Computer Science and Statistics, with an emphasis in applied statistics. Contributed to multiple senior group projects with external clients and working project deliverables.',
   delay: .48,
 }
 ];

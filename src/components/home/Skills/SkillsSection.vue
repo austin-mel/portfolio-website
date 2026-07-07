@@ -12,16 +12,16 @@ const skillsShapes = [
 
 const categories: SkillCategory[] = [
     {
-    icon: 'code', title: 'Programming Langauges', delay: .08,
+    icon: 'code', title: 'Programming Languages', delay: .08,
     pills: [
       { name: 'R', highlight: true },
       { name: 'Python', highlight: true },
       { name: 'SQL', highlight: true },
       { name: 'C', highlight: false },
-      { name: 'Typescript', highlight: false },
+      { name: 'TypeScript', highlight: false },
       { name: 'Bash', highlight: false },
       { name: 'Java', highlight: false },
-      { name: 'Javascript', highlight: false },
+      { name: 'JavaScript', highlight: false },
     ],
   },
   {
