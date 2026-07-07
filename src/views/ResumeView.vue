@@ -84,7 +84,7 @@ const experience: ResumeRole[] = [
   {
     organization: 'Thermochron Systems LLC',
     title: 'Statistical Consultant',
-    date: 'Feb 2026 - May 2026',
+    date: 'Jan 2026 - May 2026',
     bullets: [
       'Modeled baseline noise in mass spectrometer measurements to support more accurate experimental signal correction.',
       'Modeled 492,000+ instrument measurements across 6 dwell-time settings and 3 independent lab locations.',
@@ -97,7 +97,7 @@ const experience: ResumeRole[] = [
   {
     organization: 'CSUS Department of Biological Sciences',
     title: 'Statistical Consultant',
-    date: 'Feb 2026 - May 2026',
+    date: 'Jan 2026 - May 2026',
     bullets: [
       'Analyzed whether scientific communication training improved empathy scores in a pre/post survey study.',
       'Analyzed matched pre/post survey data from 222 participants using R.',
@@ -107,24 +107,42 @@ const experience: ResumeRole[] = [
       'Communicated statistical methods, assumptions, limitations, and findings to a biology research client.',
     ],
   },
+  {
+    organization: 'WCP Solutions',
+    title: 'Software Engineering Consultant',
+    date: 'Aug 2024 - May 2025',
+    bullets: [
+      'Developed an internal dashboard for sales teams to manage client relationships and streamline daily workflows.',
+      'Built searchable client tables, geographic mapping, route directions, contact integration, and note-tracking features.',
+      'Improved access to client information by organizing account details, contacts, notes, and location-based data in one interface.',
+      'Collaborated on a team of eight using Agile development practices and biweekly sprint cycles.',
+      'Participated in regular client and advisor meetings to gather feedback, clarify requirements, and guide development priorities.',
+      'Used Jira to manage tasks, track progress, and coordinate project responsibilities across the development team.',
+    ],
+  },
 ];
 
 const leadership: LeadershipRole[] = [
   {
-    title: 'Sacramento State Boxing President',
+    title: 'Sacramento State Boxing Club President',
     date: 'Aug 2025 - May 2026',
     bullets: [
       'Led club operations, team coordination, and initial program development for Sacramento State Boxing.',
       'Coordinated events, competition travel, fundraising efforts, merchandise sales, and administrative requirements.',
       'Represented the club in communication with university staff, team members, and external partners.',
+      '2026 National Collegiate Boxing Association Western Regional Champion Men’s 195lbs',
+      '2026 National Collegiate Boxing Association All-American Boxer ',
+      '2026 National Collegiate Boxing Association National Championship Qualifer'
     ],
   },
   {
-    title: 'Sacramento State Boxing Vice President and Treasurer',
+    title: 'Sacramento State Boxing Club Vice President and Treasurer',
     date: 'Jan 2025 - Aug 2025',
     bullets: [
       'Supported club operations, organization, and member engagement during the program\'s establishment.',
       'Managed club budget tracking, funding needs, and financial planning for team operations.',
+      '2025 National Collegiate Boxing Association Western Regional Champion Men’s 195lbs',
+      '2025 National Collegiate Boxing Association National Championship Qualifer'
     ],
   },
 ];

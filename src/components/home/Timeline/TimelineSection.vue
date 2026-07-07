@@ -11,7 +11,7 @@ const timelineShapes = [
 const items: TimelineItem[] = [
 {
   date: '2024 — 2025',
-  title: 'Software Engineering Contractor',
+  title: 'Software Engineering Consultant',
   subtitle: 'Computer Science Senior Project',
   company: 'WCP Solutions · Sacramento, CA',
   description: 'Developed an internal dashboard for sales teams to manage client relationships. Built searchable client tables, geographic mapping, route directions, contact integration, and note tracking to streamline daily workflows. Worked on a team of eight using Agile practices, biweekly sprints, client and advisor meetings, and Jira for task tracking.',
@@ -19,17 +19,17 @@ const items: TimelineItem[] = [
 },
 {
   date: '2025 — 2026',
-  title: 'Research Project Assistant',
+  title: 'Statistical Consultant',
   subtitle: 'Statistics Senior Project',
-  company: 'CSUS College of Biological Sciences · Sacramento, CA',
+  company: 'CSUS College of Biological Sciences - Sacramento, CA',
   description: 'Provided statistical consulting for graduate-level research, including a master’s thesis on empathy in scientific communication. Designed and analyzed pre–post survey data and tested differences between control and intervention groups. Applied statistical tests and translated findings into clear research conclusions.',
   delay: .24,
 },
 {
   date: '2025 — 2026',
-  title: 'Statistical Research Consultant',
+  title: 'Statistical Consultant',
   subtitle: 'Statistics Senior Project',
-  company: 'Thermochron Systems LLC · Sacramento, CA',
+  company: 'Thermochron Systems LLC - Sacramento, CA',
   description: 'Developed a comprehensive report modeling baseline noise in mass spectrometer data to improve signal reliability and measurement accuracy. Applied statistical techniques to identify noise patterns, reduce variability, and support data-driven calibration decisions.',
   delay: .36,
 },
@@ -37,10 +37,20 @@ const items: TimelineItem[] = [
   date: '2026',
   title: 'B.S. Computer Science and Statistics',
   subtitle: 'Emphasis in Applied Statistics',
-  company: 'California State University - Sacramento',
-  description: 'Graduated with a double major in Computer Science and Statistics, with an emphasis in applied statistics. Contributed to multiple senior group projects with external clients and working project deliverables.',
+  company: 'California State University, Sacramento - Sacramento, CA',
+  description: 'Double major graduate in Computer Science and Statistics with an emphasis in applied statistics.',
   delay: .48,
-}
+}, 
+{
+  date: 'Oct 2024 - Current',
+  title: 'Youth Afterschool Program Coordinator',
+  subtitle: 'Youth Boxing Coach, Multi-Site Programming, and Mentorship',
+  company: 'Flawless Boxing and Fitness',
+  description:
+    'Lead youth boxing and fitness programming focused on structure, safety, mentorship, and personal development. Coordinate multi-site afterschool programs supporting youth ages 8-16 while designing structured sessions that build skill, discipline, confidence, teamwork, emotional regulation, accountability, and goal-setting.',
+  delay: .60,
+},
+
 ];
 
 useScrollObserver('.anim-up,.tl-item');
