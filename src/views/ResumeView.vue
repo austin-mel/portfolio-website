@@ -68,6 +68,16 @@ const skillGroups: SkillGroup[] = [
 
 const industryProjects: ResumeRole[] = [
   {
+    organization: 'Vendia',
+    title: 'Pharmaceutical Clinical Trial Management Portal',
+    date: 'Jan 2023 - May 2023',
+    bullets: [
+      'Developed a clinical trial management platform with isolated portals for the FDA, physicians, and pharmaceutical manufacturers.',
+      'Implemented Vendia database ACLs to enforce role-based data access, protect patient information, and support double-blind trial requirements.',
+      'Collaborated on a six-person development team using Agile practices, biweekly sprints, Git, and Jira while implementing stakeholder feedback.',
+    ],
+  },
+  {
     organization: 'WCP Solutions',
     title: 'Client Relationship Management Platform',
     date: 'Aug 2024 - May 2025',
@@ -124,12 +134,12 @@ const experienceSections = [
 
 const leadership: LeadershipRole[] = [
   {
-    title: 'Sacramento State Boxing President',
-    date: 'Aug 2025 - May 2026',
+    title: 'Sacramento State Boxing Club Vice President & Treasurer',
+    date: 'Jan 2025 - Aug 2025',
   },
   {
-    title: 'Sacramento State Boxing Vice President & Treasurer',
-    date: 'Jan 2025 - Aug 2025',
+    title: 'Sacramento State Boxing Club President',
+    date: 'Aug 2025 - May 2026',
   },
 ];
 

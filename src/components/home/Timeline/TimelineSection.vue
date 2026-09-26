@@ -10,12 +10,20 @@ const timelineShapes = [
 
 const industryProjects: TimelineItem[] = [
   {
+    date: 'Jan 2023 - May 2023',
+    title: 'Pharmaceutical Clinical Trial Management Portal',
+    subtitle: 'Industry Project Experience',
+    company: 'Vendia',
+    description: 'Developed a clinical trial management platform with isolated portals for the FDA, physicians, and pharmaceutical manufacturers. Implemented Vendia database ACLs to enforce role-based data access, protect patient information, and support double-blind trials. Collaborated on a six-person team using Agile practices, biweekly sprints, Git, and Jira while implementing stakeholder feedback.',
+    delay: .12,
+  },
+  {
     date: 'Aug 2024 - May 2025',
     title: 'Client Relationship Management Platform',
     subtitle: 'Industry Project Experience',
     company: 'WCP Solutions',
     description: 'Developed an internal web application for sales teams with searchable client tables, geographic mapping, route directions, contact integration, and customer note tracking. Collaborated on an eight-person team using Agile practices, biweekly sprints, Git, and Jira. Tested and refined functionality through regular meetings with company stakeholders and faculty advisors.',
-    delay: .12,
+    delay: .24,
   },
   {
     date: 'Feb 2026 - May 2026',
@@ -23,7 +31,7 @@ const industryProjects: TimelineItem[] = [
     subtitle: 'Industry Project Experience',
     company: 'Thermochron Systems LLC',
     description: 'Modeled 492,000+ instrument measurements across 6 dwell-time settings and 3 independent lab locations. Built cleaned long-format datasets in Python, quantified dwell-time effects, and evaluated noise distributions using KDE, Q-Q plots, and log-scale statistical modeling. Delivered client-facing findings to support baseline correction strategy.',
-    delay: .24,
+    delay: .36,
   },
   {
     date: 'Feb 2026 - May 2026',
@@ -31,7 +39,7 @@ const industryProjects: TimelineItem[] = [
     subtitle: 'Industry Project Experience',
     company: 'CSUS Department of Biological Sciences',
     description: 'Analyzed matched pre/post survey data from 222 participants in R to assess whether scientific communication training improved empathy scores. Applied Welch’s and paired t-tests, mixed ANOVA, and ANCOVA. Interpreted pre/post improvements and found no significant Intervention vs. Control effect, communicating methods, assumptions, limitations, and findings in client-facing written reports.',
-    delay: .36,
+    delay: .48,
   },
 ];
 
