@@ -2,340 +2,355 @@
 import ProjectPdfReportModal from '@/components/projects/ProjectPage/ProjectPdfReportModal.vue';
 import ProjectScreenshotLightbox from '@/components/projects/ProjectPage/ProjectScreenshotLightbox.vue';
 
-import baselineReportPdf from '@/assets/projects/baseline/Baseline Noise Report.pdf';
-import histogramFigure from '@/assets/projects/baseline/eda-log10-histograms.png';
-import qqFigure from '@/assets/projects/baseline/eda-qq-plots.png';
-import powerLawFigure from '@/assets/projects/baseline/eda-power-law-diagnostics.png';
-import spearmanFigure from '@/assets/projects/baseline/eda-spearman-heatmap.png';
-import labCurvesFigure from '@/assets/projects/baseline/eda-lab-level-curves.png';
-import modelDensityFigure from '@/assets/projects/baseline/model-kde-log-skew-t.png';
-import modelCdfFigure from '@/assets/projects/baseline/model-cdf-comparison.png';
+import clientReportPdf from '@/assets/projects/baseline/Baseline Noise Client Project Report.pdf';
+import technicalReportPdf from '@/assets/projects/baseline/Baseline Noise Technical Project Report.pdf';
+import backgroundFigure from '@/assets/projects/baseline/client-background-distributions.png';
+import modelFigure from '@/assets/projects/baseline/client-model-fit.png';
+import correlationFigure from '@/assets/projects/baseline/client-channel-correlations.png';
 
 const githubRepoUrl = 'https://github.com/austin-mel-edu/sacramento-state-university/tree/master/STAT192%20-%20Senior%20Capstone%20Project/Adam%20G%20-%20Thermochron%20Systems%20LLC';
 
-const techStack = ['Python', 'Statistical Modeling', 'EDA', 'Scientific Reporting'];
-
-const overviewStats = [
-  ['492k', 'cleaned BCA observations in the long-format dataset'],
-  ['82k', 'observations at each Prisma Pro dwell time'],
-  ['71', 'valid BCA runs retained for distributional analysis'],
-  ['491,997', 'positive observations used in log-scale modeling'],
+const keyFindings = [
+  {
+    title: 'Longer readings had less background noise.',
+    body: 'The typical noise level (the median) was 82% lower at 4.096 seconds than at 0.128 seconds. Each reading took 32 times as long, so lower background comes with a measurement-time tradeoff.',
+  },
+  {
+    title: 'Occasional large readings mattered.',
+    body: 'The average was higher than the median at every setting. An average alone cannot describe the full range of background noise.',
+  },
+  {
+    title: 'One channel did not reliably track the others.',
+    body: 'Readings at different measurement times generally did not rise and fall together. That limits the case for using one live background reading to correct every channel.',
+  },
 ];
 
-const projectNumbers = [
-  ['492', 'k', 'cleaned baseline-noise observations from Prisma Pro BCA files'],
-  ['82', 'k', 'observations per dwell time for 0.128s through 4.096s'],
-  ['6', '', 'parallel dwell-time channels modeled on the Prisma Pro grid'],
-  ['3', '', 'nonpositive values dropped before fitting the log model'],
-];
-
-const analystSummary = [
-  ['Question', 'Can Thermochron use a channel-specific baseline-noise estimate instead of one pooled or live baseline value for every Prisma Pro measurement channel?'],
-  ['My role', 'Parsed and cleaned semi-structured BCA files, audited correction outputs, built diagnostics, compared model options, and translated the result into a correction recommendation.'],
-  ['Data', '492,000 cleaned BCA observations from 71 valid Prisma Pro runs, balanced across six dwell-time channels and multiple lab/source batches.'],
-  ['Method', 'Used log-scale EDA, dwell-time summaries, cross-channel dependence checks, KDE diagnostics, and maximum-likelihood log-skew-t modeling.'],
-  ['Result', 'Baseline current decreases with dwell time, while spread and tail behavior also change; a single correction value would mismatch several channels.'],
-  ['Limit', 'The model is suitable for correction planning and risk communication, but production correction still needs validation on held-out experimental samples.'],
-];
-
+// Client report p. 7; technical report §2.5 and §4.
 const workflowSteps = [
-  ['01', 'Parse BCA Files', 'Classify He text files as BCA, PBCA, or Experimental; PBCA files are excluded from distributional modeling.'],
-  ['02', 'Reverse Correction', 'Add back auto-subtracted baseline columns in flagged runs and recheck negatives.'],
-  ['03', 'Repair Timestamps', 'Handle timestamp resets by retaining the final monotonic segment of affected BCA files.'],
-  ['04', 'Export Outputs', 'Write bca_long.csv, bca_wide.csv, and dataframes.pkl for pooled modeling and file-level checks.'],
-  ['05', 'Select Correction Basis', 'Compare simple summaries, diagnostic benchmarks, and parametric fits before recommending dwell-time-specific correction support.'],
-];
-
-const modelSelectionRows = [
-  ['Pooled summary', 'One median or mean across all BCA observations.', 'Ignores the dwell-time pattern and risks systematic overcorrection.'],
-  ['Log-normal reference', 'Normality checks on log10-positive BCA current.', 'Useful baseline assumption; Q-Q tail departures made it too rigid as the final model.'],
-  ['KDE diagnostic', 'Nonparametric density and CDF benchmark by dwell time.', 'Good for checking shape and tail fit, but not stable enough alone for correction rules.'],
-  ['Selected log-skew-t', 'Dwell-time functions for location, scale, and tail heaviness.', 'Selected because the fitted parameters vary by channel dwell time and the remaining validation limits are explicit.'],
-];
-
-const exploratoryFigures = [
   {
-    image: histogramFigure,
-    title: 'Positive BCA log10 histograms by dwell time',
-    body: 'On the log scale, centers move left and the distributions narrow as dwell time increases.',
-    alt: 'Positive BCA intensity log10 histograms by dwell time',
+    number: '01',
+    title: 'Organize the instrument files',
+    body: 'Read the text-file headers, identify baseline runs, and match each measurement column to its dwell time. Keep laboratory and batch labels for later checks.',
   },
   {
-    image: qqFigure,
-    title: 'Q-Q plots against a normal reference',
-    body: 'Systematic tail departures show that the log-normal assumption served as a reference model but was too rigid as the final model.',
-    alt: 'Q-Q plots of positive log10 BCA intensity by dwell time',
+    number: '02',
+    title: 'Handle recording issues',
+    body: 'Reverse suspected automatic baseline subtraction and retain the final continuous segment after a timestamp reset. These cleaning choices rely on assumptions about how the instrument recorded the data.',
   },
   {
-    image: powerLawFigure,
-    title: 'Power-law dwell-time diagnostics',
-    body: 'Median, IQR, and upper-tail summaries decline smoothly with dwell time, supporting dwell-time-aware modeling.',
-    alt: 'Power-law fit diagnostic plots for positive BCA intensity summaries',
+    number: '03',
+    title: 'Compare the noise patterns',
+    body: 'Compare typical levels, variation, and unusually large readings across the six settings. Check whether channels tend to rise and fall together within the same measurement cycle.',
   },
   {
-    image: spearmanFigure,
-    title: 'Spearman correlation across dwell channels',
-    body: 'Cross-dwell dependence is weak and uneven, so one live baseline channel is diagnostic information rather than a direct correction for every channel.',
-    alt: 'Spearman rank correlation heatmap across dwell-time channels',
-  },
-  {
-    image: labCurvesFigure,
-    title: 'Lab-level center, spread, and tail curves',
-    body: 'The lab audit shows source-level differences, but the shared dwell-time pattern remains clear across Glasgow, Salzburg, Wuhan, and Nineamu.',
-    alt: 'Lab-level median, IQR, P95, and P99 curves across dwell time',
+    number: '04',
+    title: 'Fit and inspect a model',
+    body: 'Fit a statistical description of noise that changes with dwell time, then compare it with the observed distributions. Treat the fit as a candidate for further testing.',
   },
 ];
 
-const modelFigures = [
-  {
-    image: modelDensityFigure,
-    title: 'KDE and fitted log-skew-t on log10 scale',
-    body: 'The fitted model follows the main dwell-time-specific distribution shape while pooling structure through smooth parameter functions.',
-    alt: 'Raw data, KDE density, and fitted log-skew-t density by dwell time',
-  },
-  {
-    image: modelCdfFigure,
-    title: 'Empirical CDF versus fitted CDF',
-    body: 'CDF diagnostics check the whole distribution, including tails; remaining tail mismatch is why validation is required before production correction.',
-    alt: 'Empirical CDF and fitted log-skew-t CDF by dwell time',
-  },
+// Client report p. 4: rounded values in femtoamperes, including all three zeros.
+const noiseSummaries = [
+  { dwell: '0.128', median: '29.86', mean: '39.28', spread: '34.87', p95: '108.40' },
+  { dwell: '0.256', median: '19.56', mean: '24.90', spread: '21.39', p95: '66.62' },
+  { dwell: '0.512', median: '12.66', mean: '15.65', spread: '12.92', p95: '40.81' },
+  { dwell: '1.024', median: '8.61', mean: '10.25', spread: '7.97', p95: '25.57' },
+  { dwell: '2.048', median: '6.36', mean: '7.16', spread: '5.13', p95: '16.65' },
+  { dwell: '4.096', median: '5.26', mean: '5.64', spread: '3.70', p95: '12.25' },
+];
+
+const nextSteps = [
+  'Compare the current correction, a median correction matched to dwell time, and the fitted model on independent blanks and samples with known signals.',
+  'Measure how closely known signals are recovered, the remaining error, and uncertainty. Check results separately by instrument and laboratory, especially for weak signals.',
+  'Keep the live baseline channel for monitoring. Test whether it adds useful information before using it to correct another channel.',
+  'Develop a way to report nonnegative signal estimates and their uncertainty. Simple subtraction can still produce negative estimates, even with a positive noise model.',
 ];
 </script>
 
 <template>
   <main class="relative overflow-hidden break-words bg-cream text-ink">
     <div class="pointer-events-none absolute right-[-180px] top-[-260px] h-[620px] w-[620px] rounded-full border border-accent2/[0.08]" aria-hidden="true"></div>
-    <div class="pointer-events-none absolute bottom-[360px] left-[-120px] h-[280px] w-[280px] rounded-full border border-accent2/[0.08]" aria-hidden="true"></div>
 
-    <section class="relative z-[1] mx-auto grid min-h-[680px] w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] grid-cols-1 items-center gap-10 py-14 pt-[76px] text-center lg:grid-cols-[minmax(0,1.04fr)_minmax(360px,0.76fr)] lg:gap-14 lg:text-left">
-      <div>
-        <div class="mb-7 inline-flex items-center gap-2.5 rounded-full border border-accent2/20 bg-accent-pale px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-accent before:h-1.5 before:w-1.5 before:rounded-full before:bg-gold before:content-['']">
-          Measurement-Risk Analysis
-        </div>
-        <h1 class="max-w-[760px] font-display text-[40px] font-black xxs:text-[46px] leading-[0.95] tracking-normal text-ink xs:text-[56px] md:text-[72px] lg:text-[88px]">
-          Identifying the <em class="text-accent">distribution</em> of baseline noise.
+    <section id="executive-summary" class="relative mx-auto w-[min(1120px,calc(100%_-_32px))] pb-14 pt-6 xs:w-[min(1120px,calc(100%_-_48px))] md:pb-20 md:pt-10" aria-labelledby="project-title">
+      <header class="mb-8">
+        <div class="mb-4 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Executive Summary</div>
+        <h1 id="project-title" class="max-w-[850px] font-display text-[34px] font-bold leading-[1.08] tracking-normal text-ink xs:text-[42px] md:text-[56px]">
+          Understanding <em class="text-accent">background noise</em> in scientific measurements.
         </h1>
-        <p class="mt-7 max-w-[620px] text-[18px] font-light leading-[1.72] text-ink3">
-          Statistics capstone project for Thermochron Systems LLC evaluating whether Prisma Pro baseline correction should be matched to each dwell-time channel instead of using one pooled or live baseline value.
-        </p>
-        <div class="mt-9 flex flex-wrap justify-center gap-3 lg:justify-start">
-          <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] bg-ink px-[22px] text-sm font-semibold text-white no-underline transition-colors hover:bg-accent" :href="githubRepoUrl" target="_blank" rel="noreferrer">View GitHub repo</a>
-          <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] border border-border2 px-[22px] text-sm font-semibold text-ink no-underline transition-colors hover:border-accent2 hover:text-accent2" href="#overview">See project description</a>
-          <ProjectPdfReportModal
-            :src="baselineReportPdf"
-            title="Baseline Noise Report"
-            button-label="View full PDF report"
-            trigger-class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] border border-accent2 bg-accent-pale px-[22px] text-sm font-semibold text-accent no-underline transition-colors hover:bg-accent hover:text-white"
-          />
-        </div>
-      </div>
-
-      <aside class="relative" aria-label="Baseline-noise project overview">
-        <div class="mb-4 flex flex-nowrap gap-2 overflow-x-auto pb-1 md:justify-center" aria-label="Technology stack used">
-          <span
-            v-for="item in techStack"
-            :key="item"
-            class="shrink-0 rounded-full border border-accent2/15 bg-white/80 px-3 py-1.5 text-[11px] font-semibold text-ink3 shadow-[0_3px_12px_rgb(13_17_23_/_5%)]"
-          >
-            {{ item }}
-          </span>
-        </div>
-
-        <div class="rounded-[14px] border border-border bg-white/85 p-[22px] text-left shadow-[0_16px_48px_rgb(13_17_23_/_9%)]">
-          <div class="mb-[18px] grid grid-cols-1 gap-3 xs:grid-cols-2">
-            <div v-for="stat in overviewStats" :key="stat[0]" class="min-h-[108px] rounded-[10px] border border-border bg-cream p-4">
-              <strong class="mb-2 block font-display text-[28px] leading-none text-ink">{{ stat[0] }}</strong>
-              <span class="text-[13px] leading-[1.55] text-ink3">{{ stat[1] }}</span>
-            </div>
-          </div>
-          <div class="rounded-[10px] bg-accent p-[18px] text-white">
-            <div class="mb-2 text-[10px] font-bold uppercase tracking-[1.4px] text-white/70">Final Conclusion</div>
-            <strong class="block text-[22px] leading-tight tracking-normal">Use a dwell-time-specific reparameterized log-skew-t framework.</strong>
-            <p class="mt-2.5 text-[13px] leading-[1.6] text-white/75">Baseline noise cannot be treated as one constant background value; location, spread, and tail behavior all change with dwell time.</p>
-          </div>
-        </div>
-      </aside>
-    </section>
-
-    <section class="relative overflow-hidden bg-ink py-24 text-white" aria-label="Project numbers">
-      <div class="pointer-events-none absolute right-[-40px] top-1/2 h-[400px] w-[400px] -translate-y-1/2 rounded-full border border-white/[0.04]" aria-hidden="true"></div>
-      <div class="pointer-events-none absolute right-[-140px] top-1/2 h-[600px] w-[600px] -translate-y-1/2 rounded-full border border-white/[0.03]" aria-hidden="true"></div>
-      <div class="relative mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
-        <div class="mb-11 text-[10px] font-bold uppercase tracking-[2px] text-white/35">By the numbers</div>
-        <div class="grid grid-cols-1 md:grid-cols-4">
-          <div v-for="(stat, index) in projectNumbers" :key="stat[0]" class="min-h-40 border-white/[0.08] py-8 md:border-r md:px-8" :class="{ 'md:border-r-0': index === projectNumbers.length - 1, 'border-b md:border-b-0': index !== projectNumbers.length - 1 }">
-            <strong class="block font-display text-[44px] font-black xs:text-[54px] leading-none tracking-normal text-white">{{ stat[0] }}<span class="text-accent2">{{ stat[1] }}</span></strong>
-            <p id="overview" class="mt-2.5 max-w-[190px] text-[13px] font-light leading-[1.45] text-white/45">{{ stat[2] }}</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]">
-      <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
-        <div>
-          <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Analyst Summary</div>
-          <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">Thermochron needed baseline correction to account for dwell-time risk.</h2>
-        </div>
-        <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">The analysis translates noisy instrument files into a concrete recommendation: correct channels with dwell-time-matched baseline behavior and keep validation limits visible.</p>
+        <p class="mt-4 text-[15px] leading-[1.7] text-ink3">A statistics capstone project for Thermochron Systems.</p>
       </header>
 
-      <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
-        <article v-for="item in analystSummary" :key="item[0]" class="rounded-[12px] border border-border bg-white p-[22px]">
-          <div class="mb-3 font-mono text-[11px] uppercase text-ink4">{{ item[0] }}</div>
-          <p class="m-0 text-[13px] leading-[1.6] text-ink3">{{ item[1] }}</p>
-        </article>
+      <dl class="overflow-hidden rounded-[14px] border border-border bg-white shadow-[0_8px_24px_rgb(13_17_23_/_4%)]">
+        <div class="grid gap-3 border-b border-border p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7">
+          <dt class="text-[15px] font-bold text-ink">The Problem</dt>
+          <dd class="m-0 text-[15px] leading-[1.75] text-ink3">
+            Thermochron Systems needed to understand instrument background noise to guide more reliable estimates of the true sample signal. Could one background reading appropriately correct channels that collect measurements over different lengths of time?
+          </dd>
+        </div>
+        <div class="grid gap-3 border-b border-border p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7">
+          <dt class="text-[15px] font-bold text-ink">The Data &amp; Tools</dt>
+          <dd class="m-0 text-[15px] leading-[1.75] text-ink3">
+            <strong class="font-semibold text-ink">492,000 background readings from 73 Prisma Pro instrument runs</strong>, collected at three laboratories across six measurement durations. These Baseline Characterization Analysis (BCA) readings measure the instrument's background. The analysis used Python with pandas, NumPy, SciPy, and Matplotlib.
+          </dd>
+        </div>
+        <div class="grid gap-3 border-b border-border p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7">
+          <dt class="text-[15px] font-bold text-ink">The Methodology</dt>
+          <dd class="m-0 text-[15px] leading-[1.75] text-ink3">
+            Instrument files were organized, suspected automatic background subtraction was reversed, and timestamp resets were handled. Noise patterns were compared across <strong class="font-semibold text-ink">dwell times, the time spent collecting one reading</strong>, and a statistical model was fitted to describe those patterns.
+          </dd>
+        </div>
+        <div class="grid gap-3 border-b border-border p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7">
+          <dt class="text-[15px] font-bold text-ink">Key Findings</dt>
+          <dd class="m-0">
+            <ol class="m-0 list-decimal space-y-3 pl-5 text-[15px] leading-[1.75] text-ink3 marker:font-semibold marker:text-accent">
+              <li v-for="finding in keyFindings" :key="finding.title" class="pl-1">
+                <strong class="font-semibold text-ink">{{ finding.title }}</strong> {{ finding.body }}
+              </li>
+            </ol>
+          </dd>
+        </div>
+        <div class="grid gap-3 bg-ink p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7">
+          <dt class="text-[15px] font-bold text-white">Business Impact</dt>
+          <dd class="m-0 text-[15px] leading-[1.75] text-white/80">
+            The project gives Thermochron a basis for <strong class="font-semibold text-white">testing corrections matched to each channel's measurement time</strong>. Start with the observed median and compare the fitted model on independent samples. Improved accuracy for real samples or the rock ages calculated from them has not yet been demonstrated.
+          </dd>
+        </div>
+      </dl>
+
+      <div class="mt-8 grid gap-3 md:grid-cols-3" role="group" aria-label="Project repository and reports">
+        <a :href="githubRepoUrl" target="_blank" rel="noreferrer" class="inline-flex min-h-[60px] items-center justify-center rounded-[10px] bg-ink px-8 py-4 text-center text-base font-semibold text-white no-underline transition-colors hover:bg-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">View project repository</a>
+        <ProjectPdfReportModal
+          :src="clientReportPdf"
+          title="Baseline Noise Client Project Report — September 24, 2026 rerun"
+          button-label="Read client report"
+          trigger-class="inline-flex min-h-[60px] items-center justify-center rounded-[10px] border border-accent2 bg-accent-pale px-8 py-4 text-base font-semibold text-accent transition-colors hover:bg-accent hover:text-white"
+        />
+        <ProjectPdfReportModal
+          :src="technicalReportPdf"
+          title="Baseline Noise Technical Project Report — May 19, 2026"
+          button-label="Read technical report"
+          trigger-class="inline-flex min-h-[60px] items-center justify-center rounded-[10px] border border-accent2 bg-accent-pale px-8 py-4 text-base font-semibold text-accent transition-colors hover:bg-accent hover:text-white"
+        />
       </div>
+      <nav class="mx-auto mt-12 grid max-w-[1000px] grid-cols-1 gap-5 md:mt-16 md:grid-cols-2" aria-label="Explore this project">
+        <a href="#findings" class="inline-flex min-h-[88px] w-full items-center justify-center rounded-[10px] bg-ink px-10 py-6 text-center text-lg font-semibold text-white no-underline transition-colors hover:bg-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">Explore the findings</a>
+        <a href="#technical-details" class="inline-flex min-h-[88px] w-full items-center justify-center rounded-[10px] border border-border2 px-10 py-6 text-center text-lg font-semibold text-ink no-underline transition-colors hover:border-accent2 hover:text-accent2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">Jump to technical details</a>
+      </nav>
     </section>
 
-    <section class="bg-cream2 py-[82px]">
+    <section id="context" class="scroll-mt-[100px] bg-cream2 py-14 md:py-[82px]" aria-labelledby="context-title">
       <div class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
         <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
           <div>
-            <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Project Overview</div>
-            <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">A client measurement problem with statistical consequences.</h2>
+            <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Why Background Noise Matters</div>
+            <h2 id="context-title" class="font-display text-[28px] font-bold leading-[1.06] text-ink xs:text-[34px] md:text-[48px]">Small signals need a careful correction.</h2>
           </div>
-          <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">The project moves from semi-structured mass spectrometer files to cleaned BCA observations, distribution checks, dwell-time diagnostics, and a correction recommendation that reduces the chance of physically impossible negative signals.</p>
+          <p class="m-0 text-[15px] leading-[1.76] text-ink3">Gas mass spectrometry helps estimate rock ages by measuring gases released from samples. The instrument measures very small electrical currents, so its own background can affect how the sample signal is interpreted.</p>
         </header>
-
-        <div class="mb-7 grid grid-cols-1 gap-4 md:grid-cols-3">
-          <article class="min-h-[168px] rounded-[12px] border border-border bg-white p-[22px]">
-            <div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">Object of study</div>
-            <strong class="block text-[15px] text-ink">Baseline noise in gas mass spectrometry</strong>
-            <p class="mt-2 text-[13px] leading-[1.55] text-ink3">Even when no sample ions are present, the detector can record a small nonzero current. BCA files measure that background noise process directly.</p>
+        <div class="grid gap-4 md:grid-cols-2">
+          <article class="rounded-[12px] border border-border bg-white p-[22px]">
+            <h3 class="text-[17px] font-bold text-ink">What the instrument sees</h3>
+            <p class="mb-0 mt-3 text-[15px] leading-[1.7] text-ink3">A sample reading includes both the sample signal and instrument background. A BCA run measures a channel where no real gas signal is expected, allowing the background to be studied on its own.</p>
           </article>
-          <article class="min-h-[168px] rounded-[12px] border border-border bg-white p-[22px]">
-            <div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">Project scope</div>
-            <strong class="block text-[15px] text-ink">Prisma Pro BCA runs across labs and batches</strong>
-            <p class="mt-2 text-[13px] leading-[1.55] text-ink3">The dataset represents Glasgow, Salzburg, Wuhan, and a distinct Nineamu experimental batch retained for source-level audit.</p>
-          </article>
-          <article class="min-h-[168px] rounded-[12px] border border-border bg-white p-[22px]">
-            <div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">Meaning</div>
-            <strong class="block text-[15px] text-ink">Correction matched to the measurement channel</strong>
-            <p class="mt-2 text-[13px] leading-[1.55] text-ink3">A mismatched baseline estimate can overcorrect the signal and create physically impossible negative ion currents.</p>
-          </article>
-        </div>
-
-        <div class="grid grid-cols-1 gap-3 md:grid-cols-5">
-          <article v-for="step in workflowSteps" :key="step[0]" class="min-h-[156px] rounded-[10px] border border-border bg-white p-[18px]">
-            <div class="mb-[18px] grid h-[30px] w-[30px] place-items-center rounded-full bg-accent-pale font-mono text-xs font-medium text-accent">{{ step[0] }}</div>
-            <h3 class="mb-2 text-sm font-bold text-ink">{{ step[1] }}</h3>
-            <p class="m-0 text-xs leading-[1.55] text-ink3">{{ step[2] }}</p>
+          <article class="rounded-[12px] border border-border bg-white p-[22px]">
+            <h3 class="text-[17px] font-bold text-ink">Why matching the setting matters</h3>
+            <p class="mb-0 mt-3 text-[15px] leading-[1.7] text-ink3">Subtracting too much background can leave a negative estimate of the sample's current. A background reading collected at one dwell time may not represent a sample channel collected at another.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]">
+    <section id="methodology" class="mx-auto w-[min(1120px,calc(100%_-_32px))] scroll-mt-[100px] py-14 xs:w-[min(1120px,calc(100%_-_48px))] md:py-[82px]" aria-labelledby="methodology-title">
       <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
         <div>
-          <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Measurement Problem</div>
-          <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">Mass spectrometry turns tiny currents into scientific evidence.</h2>
+          <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">How the Analysis Worked</div>
+          <h2 id="methodology-title" class="font-display text-[28px] font-bold leading-[1.06] text-ink xs:text-[34px] md:text-[48px]">From instrument files to a testable recommendation.</h2>
         </div>
-        <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">Gas mass spectrometry supports geochronology by measuring gaseous isotope abundances released from rock samples. Recorded currents are extremely small, so background noise can meaningfully affect recovered signal.</p>
+        <p class="m-0 text-[15px] leading-[1.76] text-ink3">Three Python notebooks document preparation, exploration, and modeling. The workflow preserves the measurement setting and source of each reading so the patterns can be checked.</p>
       </header>
-
-      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <article class="rounded-[12px] border border-border bg-white p-6">
-          <div class="font-mono text-[11px] uppercase text-ink4">Measurement model</div>
-          <strong class="mt-4 block text-[15px] text-ink">Raw measurements combine signal and noise.</strong>
-          <code class="my-3 block rounded-[10px] bg-cream px-4 py-4 font-mono text-[13px] leading-[1.6] text-accent">raw current = true ion signal + baseline noise</code>
-          <p class="m-0 text-[13px] leading-[1.6] text-ink3">A standard experimental channel measures the isotope signal of interest plus the instrument background present during acquisition.</p>
-        </article>
-        <article class="rounded-[12px] border border-border bg-white p-6">
-          <div class="font-mono text-[11px] uppercase text-ink4">BCA isolation logic</div>
-          <strong class="mt-4 block text-[15px] text-ink">BCA runs measure noise directly.</strong>
-          <code class="my-3 block rounded-[10px] bg-cream px-4 py-4 font-mono text-[13px] leading-[1.6] text-accent">BCA current = baseline noise</code>
-          <p class="m-0 text-[13px] leading-[1.6] text-ink3">A Baseline Characterization Analysis targets a mass where no real gas species is expected, so observed current approximates the noise process.</p>
-        </article>
-      </div>
-
-      <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-[1.06fr_0.94fr]">
-        <article class="rounded-[12px] border border-border bg-white p-6">
-          <div class="mb-4 flex items-baseline justify-between gap-4"><h3 class="text-[15px] font-bold text-ink">BCA run</h3><span class="font-mono text-[11px] text-ink4">noise-only data</span></div>
-          <p class="text-[13px] leading-[1.6] text-ink3">All six dwell-time channels measure baseline mass settings, so BCA files support a direct test of whether the noise distribution changes with dwell time.</p>
-          <div class="mt-[18px] grid gap-3"><div class="rounded-[10px] bg-cream p-4"><strong class="block text-sm text-ink">Channels</strong><span class="mt-1 block text-xs leading-[1.55] text-ink3">0.128, 0.256, 0.512, 1.024, 2.048, and 4.096 seconds.</span></div><div class="rounded-[10px] bg-cream p-4"><strong class="block text-sm text-ink">Object</strong><span class="mt-1 block text-xs leading-[1.55] text-ink3">Baseline-noise location, spread, skewness, and tail behavior.</span></div></div>
-        </article>
-        <article class="rounded-[12px] border border-border bg-white p-6">
-          <div class="mb-4 flex items-baseline justify-between gap-4"><h3 class="text-[15px] font-bold text-ink">Standard experiment</h3><span class="font-mono text-[11px] text-ink4">signal + noise data</span></div>
-          <p class="text-[13px] leading-[1.6] text-ink3">Experimental channels target real isotope species, while the live baseline channel is fixed at 5.5 amu and 0.512 seconds.</p>
-          <div class="mt-[18px] grid gap-3"><div class="rounded-[10px] bg-cream p-4"><strong class="block text-sm text-ink">Risk</strong><span class="mt-1 block text-xs leading-[1.55] text-ink3">A mismatched estimate can overcorrect the signal and create negative ion currents.</span></div><div class="rounded-[10px] bg-cream p-4"><strong class="block text-sm text-ink">Goal</strong><span class="mt-1 block text-xs leading-[1.55] text-ink3">Use the BCA noise distribution that matches each channel's dwell time.</span></div></div>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <article v-for="step in workflowSteps" :key="step.number" class="rounded-[12px] border border-border bg-white p-[22px]">
+          <div class="mb-5 grid h-8 w-8 place-items-center rounded-full bg-accent-pale font-mono text-xs font-medium text-accent">{{ step.number }}</div>
+          <h3 class="text-[15px] font-bold text-ink">{{ step.title }}</h3>
+          <p class="mb-0 mt-3 text-[14px] leading-[1.7] text-ink3">{{ step.body }}</p>
         </article>
       </div>
     </section>
 
-    <section class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]">
-      <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
-        <div><div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Exploratory Findings</div><h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The cleaned BCA data show strong dwell-time dependence.</h2></div>
-        <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">The analysis used 492,000 cleaned BCA observations, exactly 82,000 at each Prisma Pro dwell time. Three zero-valued observations were excluded from log-scale analysis.</p>
-      </header>
-
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-[1.06fr_0.94fr]">
-        <article class="overflow-hidden rounded-[12px] border border-border bg-white p-6">
-          <div class="mb-4 flex items-baseline justify-between gap-4"><h3 class="text-[15px] font-bold text-ink">Observed baseline-current summaries</h3><span class="font-mono text-[11px] text-ink4">amperes</span></div>
-          <div class="overflow-x-auto"><table class="min-w-[560px] w-full border-collapse text-left text-xs"><thead class="text-ink3"><tr class="border-b border-border"><th class="p-2.5">Dwell time</th><th class="p-2.5">n</th><th class="p-2.5">Median A</th><th class="p-2.5">Mean A</th><th class="p-2.5">SD A</th></tr></thead><tbody class="text-ink3"><tr v-for="row in [['0.128','82,000','2.986e-14','3.928e-14','3.487e-14'],['0.256','82,000','1.956e-14','2.490e-14','2.139e-14'],['0.512','82,000','1.266e-14','1.565e-14','1.292e-14'],['1.024','82,000','8.607e-15','1.025e-14','7.973e-15'],['2.048','82,000','6.363e-15','7.162e-15','5.128e-15'],['4.096','82,000','5.256e-15','5.642e-15','3.703e-15']]" :key="row[0]" class="border-b border-cream3 last:border-b-0"><td v-for="cell in row" :key="cell" class="p-2.5">{{ cell }}</td></tr></tbody></table></div>
-          <p class="mt-4 text-[13px] leading-[1.6] text-ink3">Longer dwell times reduce both the center and spread of measured baseline current, making dwell time a primary modeling feature.</p>
-        </article>
-        <article class="rounded-[12px] border border-border bg-white p-6">
-          <div class="mb-4 flex items-baseline justify-between gap-4"><h3 class="text-[15px] font-bold text-ink">Assumption checks from EDA</h3><span class="font-mono text-[11px] text-ink4">02-assumptions.ipynb</span></div>
-          <div class="grid grid-cols-2 gap-2.5"><div v-for="item in [['Raw scale','Compressed near zero with long right tails.'],['Log10 scale','Histograms make dwell-time shifts easier to compare.'],['Q-Q plots','Tail departures mean log-normal is too rigid.'],['0.007','Mean off-diagonal Spearman correlation.'],['Lab/batch','Dwell time remains dominant.'],['5 amu vs 9 amu','Little evidence of AMU shifts.']]" :key="item[0]" class="rounded-lg bg-cream p-3"><strong class="block font-mono text-[13px] text-ink">{{ item[0] }}</strong><span class="mt-1 block text-[11px] leading-[1.35] text-ink3">{{ item[1] }}</span></div></div>
-          <p class="mt-4 text-[13px] leading-[1.6] text-ink3">Tail behavior matters for correction risk, and the EDA supports dwell-time-specific modeling rather than one pooled baseline correction.</p>
-        </article>
-      </div>
-
-      <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-        <article v-for="figure in exploratoryFigures" :key="figure.title" class="rounded-[12px] border border-border bg-white p-[22px]">
-          <div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">Notebook visual</div>
-          <strong class="block text-[15px] text-ink">{{ figure.title }}</strong>
-          <ProjectScreenshotLightbox :src="figure.image" :alt="figure.alt" :title="figure.title" type="Exploratory notebook figure" trigger-class="group mt-3 block w-full overflow-hidden rounded-[10px] border border-border bg-white max-md:pointer-events-none max-md:cursor-default" image-class="transition-transform duration-200 group-hover:scale-[1.01]" />
-          <p class="mb-0 mt-3 text-[13px] leading-[1.55] text-ink3">{{ figure.body }}</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="results" class="bg-cream2 py-[82px]">
+    <section id="findings" class="scroll-mt-[100px] bg-cream2 py-14 md:py-[82px]" aria-labelledby="findings-title">
       <div class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
-        <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14"><div><div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Modeling Output</div><h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The selected model supports dwell-time-specific correction.</h2></div><p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">Maximum likelihood fitting used 491,997 positive BCA observations. KDE remains a diagnostic benchmark; the structured log-skew-t model is the selected option after comparing simpler correction choices.</p></header>
+        <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
+          <div>
+            <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Supporting Findings</div>
+            <h2 id="findings-title" class="font-display text-[28px] font-bold leading-[1.06] text-ink xs:text-[34px] md:text-[48px]">See how the background changes.</h2>
+          </div>
+          <p class="m-0 text-[15px] leading-[1.76] text-ink3">Each setting has 82,000 readings. The chart and table include the three zero readings and describe background noise, rather than corrected sample signals.</p>
+        </header>
 
-        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <article class="rounded-[12px] border border-green-800/30 bg-[#f4fbf7] p-5"><span class="inline-block rounded-full bg-[#e9f8ef] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[1px] text-[#147a4d]">Selected framework</span><h3 class="mt-4 text-[15px] font-bold text-ink">Reparameterized log-skew-t</h3><p class="text-[13px] leading-[1.6] text-ink3">Location, scale, and tail-heaviness vary smoothly with dwell time, while shared skewness pools information across the six dwell groups.</p><div class="mt-[18px] grid grid-cols-2 gap-2.5"><div class="rounded-lg bg-cream p-3"><strong class="block font-mono text-[17px] text-ink">1,351,186</strong><span class="text-[11px] text-ink3">AIC from fitted model</span></div><div class="rounded-lg bg-cream p-3"><strong class="block font-mono text-[17px] text-ink">1,351,264</strong><span class="text-[11px] text-ink3">BIC from fitted model</span></div></div></article>
-          <article class="rounded-[12px] border border-border bg-white p-5"><span class="inline-block rounded-full bg-accent-pale px-2.5 py-1 text-[10px] font-bold uppercase tracking-[1px] text-accent">Diagnostic benchmark</span><h3 class="mt-4 text-[15px] font-bold text-ink">KDE and cross-dwell checks</h3><p class="text-[13px] leading-[1.6] text-ink3">KDE is a nonparametric diagnostic benchmark rather than the selected correction model. Density overlays, CDF plots, and Spearman correlations check shape, tails, and cycle-level dependence.</p><div class="mt-[18px] grid grid-cols-2 gap-2.5"><div class="rounded-lg bg-cream p-3"><strong class="block font-mono text-[17px] text-ink">0.215</strong><span class="text-[11px] text-ink3">max density gap</span></div><div class="rounded-lg bg-cream p-3"><strong class="block font-mono text-[17px] text-ink">0.007</strong><span class="text-[11px] text-ink3">mean Spearman correlation</span></div></div></article>
-        </div>
+        <figure class="m-0 rounded-[12px] border border-border bg-white p-5 md:p-7">
+          <h3 class="text-[17px] font-bold text-ink">Longer measurement times had lower, less variable background.</h3>
+          <ProjectScreenshotLightbox
+            :src="backgroundFigure"
+            alt="Box plots of background current at six dwell times, with median values decreasing from 29.86 to 5.26 femtoamperes as measurement time increases."
+            title="Background noise by measurement time"
+            trigger-class="group mt-5 block w-full overflow-hidden rounded-[10px] border border-border bg-white"
+            image-class="transition-transform duration-200 group-hover:scale-[1.01]"
+          />
+          <figcaption class="mt-4 text-[13px] leading-[1.7] text-ink3">
+            Boxes contain the middle half of the readings; the dark lines mark the medians. Whiskers extend to the most extreme readings within 1.5 box heights of each box. Outlier points are hidden for readability but remain in the calculations. Current is measured in femtoamperes (fA), a tiny unit of electrical current: 1 fA = 10<sup>−15</sup> amperes. Select the chart to enlarge it.
+          </figcaption>
+        </figure>
 
-        <article class="mt-6 overflow-hidden rounded-[12px] border border-border bg-white p-6">
-          <div class="mb-4 flex items-baseline justify-between gap-4"><h3 class="text-[15px] font-bold text-ink">Model-selection logic</h3><span class="font-mono text-[11px] text-ink4">correction options</span></div>
-          <div class="overflow-x-auto">
-            <table class="w-full min-w-[700px] border-collapse text-left text-xs">
-              <thead class="text-ink3">
+        <article class="mt-6 rounded-[12px] border border-border bg-white p-5 md:p-7" aria-labelledby="statistics-title">
+          <h3 id="statistics-title" class="text-[17px] font-bold text-ink">The measurements behind the finding</h3>
+          <p class="mt-2 text-[14px] leading-[1.7] text-ink3">All current values below are in femtoamperes. Smaller values mean less background.</p>
+          <div class="mt-4 overflow-x-auto rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent" tabindex="0" role="region" aria-label="Background measurements table; scroll horizontally on small screens">
+            <table class="w-full min-w-[640px] border-collapse text-left text-[13px] tabular-nums">
+              <caption class="sr-only">Background noise by dwell time, with 82,000 readings per setting.</caption>
+              <thead class="text-ink">
                 <tr class="border-b border-border">
-                  <th class="p-2.5">Option</th>
-                  <th class="p-2.5">What it does</th>
-                  <th class="p-2.5">Analyst decision</th>
+                  <th scope="col" class="p-3">Dwell time (s)</th>
+                  <th scope="col" class="p-3">Median (fA)</th>
+                  <th scope="col" class="p-3">Mean (fA)</th>
+                  <th scope="col" class="p-3">Std. deviation (fA)</th>
+                  <th scope="col" class="p-3">95th percentile (fA)</th>
                 </tr>
               </thead>
               <tbody class="text-ink3">
-                <tr v-for="row in modelSelectionRows" :key="row[0]" class="border-b border-cream3 last:border-b-0">
-                  <td v-for="cell in row" :key="cell" class="p-2.5">{{ cell }}</td>
+                <tr v-for="(row, index) in noiseSummaries" :key="row.dwell" class="border-b border-cream3 last:border-b-0" :class="{ 'bg-accent-pale': index === 0 || index === noiseSummaries.length - 1 }">
+                  <th scope="row" class="p-3 font-semibold text-ink">{{ row.dwell }}</th>
+                  <td class="p-3">{{ row.median }}</td>
+                  <td class="p-3">{{ row.mean }}</td>
+                  <td class="p-3">{{ row.spread }}</td>
+                  <td class="p-3">{{ row.p95 }}</td>
                 </tr>
               </tbody>
             </table>
           </div>
+          <dl class="mt-5 grid gap-4 text-[13px] leading-[1.65] sm:grid-cols-2 lg:grid-cols-4">
+            <div><dt class="font-semibold text-ink">Median</dt><dd class="m-0 mt-1 text-ink3">The middle reading when values are ordered.</dd></div>
+            <div><dt class="font-semibold text-ink">Mean</dt><dd class="m-0 mt-1 text-ink3">The arithmetic average, influenced by large readings.</dd></div>
+            <div><dt class="font-semibold text-ink">Standard deviation</dt><dd class="m-0 mt-1 text-ink3">A measure of spread. Smaller values mean less variation.</dd></div>
+            <div><dt class="font-semibold text-ink">95th percentile</dt><dd class="m-0 mt-1 text-ink3">About 95% of background readings fall below this value. It is not a validated sample detection limit.</dd></div>
+          </dl>
+          <p class="mb-0 mt-5 text-xs leading-[1.6] text-ink3">Values are rounded. Differences across settings do not measure an improvement in sample accuracy.</p>
         </article>
 
-        <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3"><article class="rounded-[12px] border border-border bg-white p-[22px]"><div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">Model parameters</div><strong class="block text-[15px] text-ink">What the log-skew-t controls</strong><p class="mt-2 text-[13px] leading-[1.55] text-ink3">Location captures center, scale captures spread, skewness captures asymmetry, and degrees of freedom captures tail heaviness.</p></article><article class="rounded-[12px] border border-border bg-white p-[22px]"><div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">Dwell-time structure</div><strong class="block text-[15px] text-ink">Most parameters vary with dwell time</strong><p class="mt-2 text-[13px] leading-[1.55] text-ink3">Location, scale, and degrees of freedom are dwell-time functions; skewness is shared to reduce instability.</p></article><article class="rounded-[12px] border border-border bg-white p-[22px]"><div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">Tail interpretation</div><strong class="block text-[15px] text-ink">Heavier fitted tails at longer dwell times</strong><p class="mt-2 text-[13px] leading-[1.55] text-ink3">Degrees of freedom decrease from about 10.29 at 0.128 seconds to 4.53 at 4.096 seconds.</p></article></div>
-
-        <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2"><article v-for="figure in modelFigures" :key="figure.title" class="rounded-[12px] border border-border bg-white p-[22px]"><div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">Notebook visual</div><strong class="block text-[15px] text-ink">{{ figure.title }}</strong><ProjectScreenshotLightbox :src="figure.image" :alt="figure.alt" :title="figure.title" type="Modeling notebook figure" trigger-class="group mt-3 block w-full overflow-hidden rounded-[10px] border border-border bg-white max-md:pointer-events-none max-md:cursor-default" image-class="transition-transform duration-200 group-hover:scale-[1.01]" /><p class="mb-0 mt-3 text-[13px] leading-[1.55] text-ink3">{{ figure.body }}</p></article></div>
+        <figure class="m-0 mt-6 grid items-center gap-6 rounded-[12px] border border-border bg-white p-5 md:grid-cols-[0.8fr_1fr] md:gap-10 md:p-7">
+            <figcaption>
+              <h3 class="text-[20px] font-bold leading-snug text-ink">Do the channels rise and fall together?</h3>
+              <p class="mt-3 text-[15px] leading-[1.75] text-ink3">Values near zero indicate little tendency for two channels to rank high or low together in the same cycle. The average pairwise correlation was <strong class="font-semibold text-ink">0.0073</strong>, with individual pairs ranging from −0.0948 to 0.1335.</p>
+              <p class="mt-3 text-[14px] leading-[1.7] text-ink3">This supports testing any transfer of a live background reading between channels. It does not prove that the channels are independent or rule out relationships within individual runs and laboratories.</p>
+              <p class="mb-0 mt-4 text-xs leading-[1.6] text-ink3">Based on 82,000 aligned measurement cycles. Labels are dwell times in seconds. Each diagonal is 1 because a channel is compared with itself. Select the chart to enlarge it.</p>
+            </figcaption>
+            <ProjectScreenshotLightbox
+              :src="correlationFigure"
+              alt="Correlation matrix comparing the six dwell-time channels. Off-diagonal correlations are close to zero, ranging from minus 0.0948 to 0.1335."
+              title="How background channels relate"
+              trigger-class="group block w-full overflow-hidden rounded-[10px] border border-border bg-white"
+              image-class="transition-transform duration-200 group-hover:scale-[1.01]"
+            />
+        </figure>
       </div>
     </section>
 
-    <section class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]">
-      <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14"><div><div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Deliverables</div><h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">Deliverables document the analysis at multiple levels of technical detail.</h2></div><p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">The deliverables include notebooks, source materials, presentation files, and a final report for technical review.</p></header>
-      <div class="grid grid-cols-1 gap-4 md:grid-cols-3"><article class="rounded-[12px] border border-border bg-white p-[22px]"><div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">Notebook pipeline</div><strong class="block text-[15px] text-ink">01-preprocessing, 02-assumptions, 03-modeling</strong><p class="mt-2 text-[13px] leading-[1.55] text-ink3">Three notebooks cover source parsing, assumption checks, EDA, and log-skew-t fitting.</p></article><article class="rounded-[12px] border border-border bg-white p-[22px]"><div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">Statistical report</div><strong class="block text-[15px] text-ink">Baseline Noise Distribution Report.pdf</strong><p class="mt-2 text-[13px] leading-[1.55] text-ink3">A 38-page capstone report with summary, methods, diagnostics, conclusions, and correction findings.</p></article><article class="rounded-[12px] border border-border bg-white p-[22px]"><div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">Source archive + deck</div><strong class="block text-[15px] text-ink">data.zip, presentation.pptx, project-background.docx</strong><p class="mt-2 text-[13px] leading-[1.55] text-ink3">Source and presentation materials connect the analysis to its scientific measurement context.</p></article></div>
-      <a class="mt-6 inline-flex min-h-[58px] w-full items-center justify-center rounded-[12px] bg-ink px-6 text-base font-semibold text-white no-underline transition-colors hover:bg-accent" :href="githubRepoUrl" target="_blank" rel="noreferrer">View GitHub repo</a>
+    <section id="technical-details" class="mx-auto w-[min(1120px,calc(100%_-_32px))] scroll-mt-[100px] py-14 xs:w-[min(1120px,calc(100%_-_48px))] md:py-[82px]" aria-labelledby="technical-title">
+      <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
+        <div>
+          <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Technical Details &amp; Limitations</div>
+          <h2 id="technical-title" class="font-display text-[28px] font-bold leading-[1.06] text-ink xs:text-[34px] md:text-[48px]">A model to test, with clear limits.</h2>
+        </div>
+        <p class="m-0 text-[15px] leading-[1.76] text-ink3">The model describes observed background noise. Independent blank and known-signal runs are still needed to find out whether it improves correction of real samples.</p>
+      </header>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        <article class="rounded-[12px] border border-border bg-white p-[22px]">
+          <h3 class="text-[17px] font-bold text-ink">What was fitted</h3>
+          <p class="mt-3 text-[14px] leading-[1.75] text-ink3">A seven-parameter log-skew-t model was fitted to natural-log current. Its center, spread, and tail behavior depend on log dwell time, with one shared skewness parameter. The fit used 491,997 positive readings.</p>
+          <p class="mb-0 mt-3 text-[14px] leading-[1.75] text-ink3">A smoothed view of the measured data, called kernel density estimation (KDE), provides a visual comparison. Only one fitted statistical model is reported, so it has not been established as the best available choice.</p>
+        </article>
+        <article class="rounded-[12px] border border-border bg-white p-[22px]">
+          <h3 class="text-[17px] font-bold text-ink">How to interpret the fit</h3>
+          <p class="mt-3 text-[14px] leading-[1.75] text-ink3">The best of six fitting starts reported convergence; several others stopped after one iteration at poorer fits. A global optimum has not been established.</p>
+          <p class="mb-0 mt-3 text-[14px] leading-[1.75] text-ink3">The rerun reports AIC 1,351,186.11 and BIC 1,351,263.86. These are scores for comparing models fitted on comparable data and likelihood scales, rather than accuracy percentages or pass marks.</p>
+        </article>
+      </div>
+
+      <figure class="m-0 mt-6 rounded-[12px] border border-border bg-white p-5 md:p-7">
+        <h3 class="text-[17px] font-bold text-ink">Where the model follows the data, and where it differs</h3>
+        <ProjectScreenshotLightbox
+          :src="modelFigure"
+          alt="Six panels comparing observed background readings, smoothed observations, and the fitted model. Curves follow the broad patterns with visible differences at some peaks and tails."
+          title="Observed background and the fitted model"
+          trigger-class="group mt-5 block w-full overflow-hidden rounded-[10px] border border-border bg-white"
+          image-class="transition-transform duration-200 group-hover:scale-[1.01]"
+        />
+        <figcaption class="mt-4 text-[13px] leading-[1.7] text-ink3">
+          Gray bars show the observed readings, teal curves smooth them, and rust curves show the model. The horizontal axes use log10 current in amperes: one unit represents ten times the current. Each panel shows the 0.1st to 99.9th percentile range of positive readings, leaving the most extreme tails outside view. Density describes relative concentration, not a count of readings. These are the same data used to fit the model, so visual agreement does not establish better sample correction. Select the chart to enlarge it.
+        </figcaption>
+      </figure>
+
+      <div class="mt-6 grid gap-4 lg:grid-cols-3">
+        <article class="rounded-[12px] border border-border bg-white p-[22px]">
+          <h3 class="text-[16px] font-bold text-ink">The data cover specific conditions</h3>
+          <p class="mb-0 mt-3 text-[14px] leading-[1.75] text-ink3">The study covers three Prisma Pro instruments at Glasgow, Salzburg, and Wuhan. Nineamu is a separate Salzburg batch, not a fourth laboratory. Laboratory and batch differences remain relevant and are not explicitly adjusted for in the model. Transfer to other settings or periods needs checking.</p>
+        </article>
+        <article class="rounded-[12px] border border-border bg-white p-[22px]">
+          <h3 class="text-[16px] font-bold text-ink">Cleaning required assumptions</h3>
+          <p class="mb-0 mt-3 text-[14px] leading-[1.75] text-ink3">The parser used a 1.024-second reference to reverse suspected automatic subtraction and kept the final segment after timestamp resets. One file with an incomplete header was excluded. Three zeros remain in descriptive summaries and were excluded only from logarithmic modeling.</p>
+        </article>
+        <article class="rounded-[12px] border border-border bg-white p-[22px]">
+          <h3 class="text-[16px] font-bold text-ink">Many readings came from the same runs</h3>
+          <p class="mb-0 mt-3 text-[14px] leading-[1.75] text-ink3">The observation count alone does not establish independence or long-term stability. The original file-selection rule excluded the nested duplicate data and the separate nosem folder. The proposed correction still needs checks on runs excluded from fitting.</p>
+        </article>
+      </div>
+
+      <article class="mt-8 rounded-[14px] bg-ink p-6 text-white md:p-9" aria-labelledby="next-steps-title">
+        <div class="mb-3 text-[10px] font-bold uppercase tracking-[2px] text-white/70">Recommended Next Steps</div>
+        <h3 id="next-steps-title" class="font-display text-[26px] font-bold leading-tight md:text-[32px]">Test the correction before relying on it.</h3>
+        <ol class="mb-0 mt-5 list-decimal space-y-3 pl-5 text-[15px] leading-[1.75] text-white/80 marker:font-semibold marker:text-white">
+          <li v-for="step in nextSteps" :key="step" class="pl-1">{{ step }}</li>
+        </ol>
+        <p class="mb-0 mt-5 text-xs leading-[1.6] text-white/70">These are recommendations for validation. The practical benefits remain to be measured.</p>
+      </article>
     </section>
 
-    <section class="bg-cream2 py-[82px]"><div class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]"><header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14"><div><div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Correction Implication</div><h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The recommendation is a dwell-time-matched correction strategy.</h2></div><p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">The report estimates the baseline-noise behavior that matches each measurement channel's dwell time before applying a correction.</p></header><div class="grid grid-cols-1 gap-4 md:grid-cols-3"><article class="rounded-[12px] border border-border bg-white p-[22px]"><div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">Initial correction summary</div><strong class="block text-[15px] text-ink">Median baseline noise by dwell time.</strong><p class="mt-2 text-[13px] leading-[1.55] text-ink3">The median is less sensitive to heavy upper tails than the mean and provides a stable correction summary.</p></article><article class="rounded-[12px] border border-border bg-white p-[22px]"><div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">Model-based correction</div><strong class="block text-[15px] text-ink">Correction source from the BCA model.</strong><p class="mt-2 text-[13px] leading-[1.55] text-ink3">The dwell-time-specific BCA distribution provides a channel-matched correction source instead of one live baseline value for every channel.</p></article><article class="rounded-[12px] border border-border bg-white p-[22px]"><div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">Correction effect</div><strong class="block text-[15px] text-ink">Reduced overcorrection risk.</strong><p class="mt-2 text-[13px] leading-[1.55] text-ink3">Matching correction to dwell time reduces negative signals and clarifies downstream uncertainty.</p></article></div></div></section>
-
-    <section class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]"><div class="relative overflow-hidden rounded-[14px] bg-ink p-8 text-white md:p-11"><div class="pointer-events-none absolute right-[-170px] top-[-170px] h-[500px] w-[500px] rounded-full border border-white/[0.05]" aria-hidden="true"></div><div class="relative z-[1] mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-white/65 before:h-0.5 before:w-[26px] before:bg-white/65 before:content-['']">Final Conclusions</div><h2 class="relative z-[1] max-w-[760px] font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-white md:text-[48px]">Baseline noise is modeled by dwell time before correction.</h2><h3 class="relative z-[1] mt-[26px] text-[15px] font-bold text-white">Project conclusion</h3><p class="relative z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">The cleaned Prisma Pro BCA data show that baseline noise is positive-valued, right-skewed, heavy-tailed, and strongly dependent on dwell time. A single pooled baseline value or one live baseline channel does not support every experimental signal channel.</p><h3 class="relative z-[1] mt-[26px] text-[15px] font-bold text-white">Correction conclusion</h3><p class="relative z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">Median baseline noise by dwell time is the initial correction summary. Model-based correction requires validation on unknown experimental samples and additional BCA measurements at more dwell settings before production use.</p></div></section>
+    <section id="reports" class="scroll-mt-[100px] bg-cream2 py-14 md:py-[82px]" aria-labelledby="reports-title">
+      <div class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
+        <header class="mb-[34px]">
+          <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Reports &amp; Credits</div>
+          <h2 id="reports-title" class="font-display text-[28px] font-bold leading-[1.06] text-ink xs:text-[34px] md:text-[48px]">Read the work behind the findings.</h2>
+        </header>
+        <div class="grid gap-4 md:grid-cols-2">
+          <article class="flex flex-col rounded-[12px] border border-border bg-white p-[22px]">
+            <h3 class="mt-3 text-[20px] font-bold text-ink">Client project report</h3>
+            <p class="mb-6 mt-3 text-[15px] leading-[1.7] text-ink3">Seven pages explaining the question, current findings, recommendations, and limitations. This is the source for the results and charts on this page.</p>
+            <ProjectPdfReportModal
+              :src="clientReportPdf"
+              title="Baseline Noise Client Project Report — September 24, 2026 rerun"
+              button-label="Read client report"
+              trigger-class="mt-auto inline-flex min-h-[60px] w-full items-center justify-center self-start rounded-[10px] bg-ink px-8 py-4 text-base font-semibold text-white transition-colors hover:bg-accent sm:w-auto"
+            />
+          </article>
+          <article class="flex flex-col rounded-[12px] border border-border bg-white p-[22px]">
+            <h3 class="mt-3 text-[20px] font-bold text-ink">Technical project report</h3>
+            <p class="mb-6 mt-3 text-[15px] leading-[1.7] text-ink3">The 38-page report documents instrument context, cleaning methods, equations, diagnostics, and historical model results.</p>
+            <ProjectPdfReportModal
+              :src="technicalReportPdf"
+              title="Baseline Noise Technical Project Report — May 19, 2026"
+              button-label="Read technical report"
+              trigger-class="mt-auto inline-flex min-h-[60px] w-full items-center justify-center self-start rounded-[10px] border border-accent2 bg-accent-pale px-8 py-4 text-base font-semibold text-accent transition-colors hover:bg-accent hover:text-white sm:w-auto"
+            />
+          </article>
+        </div>
+        <div class="mt-8 grid items-start gap-6 border-t border-border pt-7 md:grid-cols-[1fr_auto]">
+          <div class="text-[14px] leading-[1.8] text-ink3">
+            <p class="m-0"><strong class="font-semibold text-ink">Prepared by Austin Melendez and Harmen Hundal</strong> for Thermochron Systems LLC and Adam Goldsmith.</p>
+            <p class="mb-0 mt-1">STAT 192 Statistics Capstone Project · Original analysis: May 19, 2026.</p>
+          </div>
+          <a class="inline-flex min-h-[60px] items-center justify-center rounded-[10px] border border-border2 px-8 py-4 text-center text-base font-semibold text-ink no-underline transition-colors hover:border-accent2 hover:text-accent2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent" :href="githubRepoUrl" target="_blank" rel="noreferrer">View project repository</a>
+        </div>
+      </div>
+    </section>
   </main>
 </template>

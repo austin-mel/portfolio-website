@@ -54,22 +54,8 @@ export const projects: ProjectRegistryEntry[] = [
     component: defineAsyncComponent(() => import('@/components/projects/ProjectPage/BaselineNoiseProjectPage.vue')),
   },
   {
-    slug: 'pharmatrial',
-    num: '02',
-    title: 'Pharmaceutical Clinical Trial Portal',
-    short: 'Fictional full-stack Vue and Express demo for role-specific trial workflow state.',
-    category: 'Full-Stack Workflow Demo',
-    filters: ['full-stack', 'product'],
-    tags: ['full-stack', 'liveDemo', 'product'],
-    stack: ['Vue', 'TypeScript', 'Express', 'Prisma', 'PostgreSQL'],
-    sourceMockup: 'src/reference/pharmatrial-project-mockup.html',
-    summary:
-      'Show a fictional role-aware trial workflow demo with live database-backed actions, seeded fallback data, patient masking, and blinded assignment state.',
-    component: defineAsyncComponent(() => import('@/components/projects/ProjectPage/PharmatrialProjectPage.vue')),
-  },
-  {
     slug: 'science-communication-empathy',
-    num: '03',
+    num: '02',
     title: 'Empathy in Scientific Communication',
     short: 'Pre/post analysis of empathy scores across Jefferson and Toronto instruments.',
     category: 'Applied Statistical Analysis',
@@ -82,6 +68,20 @@ export const projects: ProjectRegistryEntry[] = [
     component: defineAsyncComponent(
       () => import('@/components/projects/ProjectPage/ScienceCommunicationEmpathyProjectPage.vue')
     ),
+  },
+  {
+    slug: 'pharmatrial',
+    num: '03',
+    title: 'Pharmaceutical Clinical Trial Portal',
+    short: 'Fictional full-stack Vue and Express demo for role-specific trial workflow state.',
+    category: 'Full-Stack Workflow Demo',
+    filters: ['full-stack', 'product'],
+    tags: ['full-stack', 'liveDemo', 'product'],
+    stack: ['Vue', 'TypeScript', 'Express', 'Prisma', 'PostgreSQL'],
+    sourceMockup: 'src/reference/pharmatrial-project-mockup.html',
+    summary:
+      'Show a fictional role-aware trial workflow demo with live database-backed actions, seeded fallback data, patient masking, and blinded assignment state.',
+    component: defineAsyncComponent(() => import('@/components/projects/ProjectPage/PharmatrialProjectPage.vue')),
   },
   {
     slug: 'sirs-simulation',
@@ -97,7 +97,7 @@ export const projects: ProjectRegistryEntry[] = [
       'Present an R package that exposes tested SIR, SIS, and SIRS grid-simulation functions, repeated-run summaries, and full cell logs.',
     component: defineAsyncComponent(() => import('@/components/projects/ProjectPage/SirsSimulationProjectPage.vue')),
   },
-  {
+  /* {
     slug: 'sirs-survival-analysis',
     num: '05',
     title: 'Reproducible Baseline SIRS Survival Analysis',
@@ -112,7 +112,7 @@ export const projects: ProjectRegistryEntry[] = [
     component: defineAsyncComponent(
       () => import('@/components/projects/ProjectPage/SirsSurvivalAnalysisProjectPage.vue')
     ),
-  },
+  }, */
 ];
 
 export const getProjectBySlug = (slug: string) =>
