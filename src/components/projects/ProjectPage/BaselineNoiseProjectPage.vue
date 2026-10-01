@@ -5,8 +5,12 @@ import ProjectScreenshotLightbox from '@/components/projects/ProjectPage/Project
 import clientReportPdf from '@/assets/projects/baseline/Baseline Noise Client Project Report.pdf';
 import technicalReportPdf from '@/assets/projects/baseline/Baseline Noise Technical Project Report.pdf';
 import backgroundFigure from '@/assets/projects/baseline/client-background-distributions.png';
-import modelFigure from '@/assets/projects/baseline/client-model-fit.png';
-import correlationFigure from '@/assets/projects/baseline/client-channel-correlations.png';
+import modelFigure from '@/assets/projects/baseline/model-fit-kde-log-skew-t.png';
+import correlationFigure from '@/assets/projects/baseline/eda-spearman-heatmap.png';
+import histogramFigure from '@/assets/projects/baseline/eda-log10-histograms.png';
+import qqFigure from '@/assets/projects/baseline/eda-qq-plots.png';
+import cdfFigure from '@/assets/projects/baseline/model-cdf-comparison.png';
+import labFigure from '@/assets/projects/baseline/eda-lab-level-curves.png';
 
 const githubRepoUrl = 'https://github.com/austin-mel-edu/sacramento-state-university/tree/master/STAT192%20-%20Senior%20Capstone%20Project/Adam%20G%20-%20Thermochron%20Systems%20LLC';
 
@@ -59,6 +63,38 @@ const noiseSummaries = [
   { dwell: '4.096', median: '5.26', mean: '5.64', spread: '3.70', p95: '12.25' },
 ];
 
+// Unmodified notebook outputs: assumptions cells 19, 23, 14 and modeling cell 20 (1-based).
+const diagnosticFigures = [
+  {
+    image: histogramFigure,
+    title: 'Histograms of background noise across six measurement times',
+    alt: 'Six histograms of positive log10 background current, one per dwell time. Distributions shift toward lower values and narrow at longer dwell times, with long left tails on this logarithmic scale.',
+    body: 'Each bar counts readings within a range of values. Longer dwell times shift the cluster toward lower current and reduce its spread, but the shapes remain asymmetric even after taking logarithms.',
+    guide: 'The horizontal axis is log10 current in amperes: one step represents a tenfold change. Only positive readings can appear on this scale, so the three zeros are absent here but remain in the descriptive summaries above.',
+  },
+  {
+    image: qqFigure,
+    title: 'Q-Q plots comparing log-transformed background noise with a normal distribution',
+    alt: 'Normal Q-Q plots for positive log10 background current at six dwell times. Points curve away from the straight reference lines, especially at the ends.',
+    body: 'A Q-Q plot compares ordered readings with the values expected from a bell-shaped normal distribution. A close match would follow the straight line. The curved ends show that even the log-transformed readings depart from that pattern.',
+    guide: 'Each panel compares one dwell time with a normal reference; it does not test the fitted log-skew-t model. These departures help explain the choice to explore a more flexible distribution, without establishing it as the best model.',
+  },
+  {
+    image: cdfFigure,
+    title: 'Cumulative background distributions: observed readings versus model predictions',
+    alt: 'Six panels comparing gray empirical cumulative curves with red fitted log-skew-t curves. The curves broadly track one another with visible gaps at some settings.',
+    body: 'A cumulative distribution function (CDF) shows the share of readings at or below a given value. For example, a height of 0.5 marks the halfway point. The gray data curves and red model curves broadly agree, with visible differences at some settings.',
+    guide: 'The horizontal axes use log10 current in amperes. The display trims the lowest and highest 0.1% of positive readings, and the gray curves are calculated within that displayed range. This is a fit check on the training data, not validation of extreme predictions or sample correction.',
+  },
+  {
+    image: labFigure,
+    title: 'Background noise levels and variability by laboratory and measurement time',
+    alt: 'Four panels showing median current, interquartile range, and 95th and 99th percentiles by dwell time for Glasgow, Salzburg, Wuhan, and the separate Nineamu Salzburg batch. Levels generally decline with longer readings but differ across sources.',
+    body: 'The downward pattern appears across the laboratory and batch groups, but their noise levels and spreads differ. This supports checking a proposed correction separately for each instrument and laboratory.',
+    guide: 'IQR is the spread of the middle half of readings; the 95th and 99th percentiles describe the upper end. Current is in amperes on a logarithmic scale (10⁻¹⁴ A = 10 fA). The horizontal scale doubles at each step. Nineamu is a separate Salzburg batch, not a fourth laboratory.',
+  },
+];
+
 const nextSteps = [
   'Compare the current correction, a median correction matched to dwell time, and the fitted model on independent blanks and samples with known signals.',
   'Measure how closely known signals are recovered, the remaining error, and uncertainty. Check results separately by instrument and laboratory, especially for weak signals.',
@@ -75,7 +111,7 @@ const nextSteps = [
       <header class="mb-8">
         <div class="mb-4 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Executive Summary</div>
         <h1 id="project-title" class="max-w-[850px] font-display text-[34px] font-bold leading-[1.08] tracking-normal text-ink xs:text-[42px] md:text-[56px]">
-          Understanding <em class="text-accent">background noise</em> in scientific measurements.
+          Identifying and quantifying <em class="text-accent">background noise</em> in scientific measurements.
         </h1>
         <p class="mt-4 text-[15px] leading-[1.7] text-ink3">A statistics capstone project for Thermochron Systems.</p>
       </header>
@@ -90,7 +126,7 @@ const nextSteps = [
         <div class="grid gap-3 border-b border-border p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7">
           <dt class="text-[15px] font-bold text-ink">The Data &amp; Tools</dt>
           <dd class="m-0 text-[15px] leading-[1.75] text-ink3">
-            <strong class="font-semibold text-ink">492,000 background readings from 73 Prisma Pro instrument runs</strong>, collected at three laboratories across six measurement durations. These Baseline Characterization Analysis (BCA) readings measure the instrument's background. The analysis used Python with pandas, NumPy, SciPy, and Matplotlib.
+            <strong class="font-semibold text-ink">492,000 background readings from 73 Prisma Pro instrument runs</strong>, collected at three laboratories across six measurement durations. These Baseline Characterization Analysis (BCA) readings measure the instrument's background. The analysis used Python with Pandas, NumPy, SciPy, and Matplotlib.
           </dd>
         </div>
         <div class="grid gap-3 border-b border-border p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7">
@@ -109,7 +145,7 @@ const nextSteps = [
             </ol>
           </dd>
         </div>
-        <div class="grid gap-3 bg-ink p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7">
+        <div class="grid gap-3 bg-accent p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7">
           <dt class="text-[15px] font-bold text-white">Business Impact</dt>
           <dd class="m-0 text-[15px] leading-[1.75] text-white/80">
             The project gives Thermochron a basis for <strong class="font-semibold text-white">testing corrections matched to each channel's measurement time</strong>. Start with the observed median and compare the fitted model on independent samples. Improved accuracy for real samples or the rock ages calculated from them has not yet been demonstrated.
@@ -188,11 +224,11 @@ const nextSteps = [
         </header>
 
         <figure class="m-0 rounded-[12px] border border-border bg-white p-5 md:p-7">
-          <h3 class="text-[17px] font-bold text-ink">Longer measurement times had lower, less variable background.</h3>
+          <h3 class="text-[17px] font-bold text-ink">Background noise levels and spread across six measurement times</h3>
           <ProjectScreenshotLightbox
             :src="backgroundFigure"
             alt="Box plots of background current at six dwell times, with median values decreasing from 29.86 to 5.26 femtoamperes as measurement time increases."
-            title="Background noise by measurement time"
+            title="Background noise levels and spread across six measurement times"
             trigger-class="group mt-5 block w-full overflow-hidden rounded-[10px] border border-border bg-white"
             image-class="transition-transform duration-200 group-hover:scale-[1.01]"
           />
@@ -238,7 +274,7 @@ const nextSteps = [
 
         <figure class="m-0 mt-6 grid items-center gap-6 rounded-[12px] border border-border bg-white p-5 md:grid-cols-[0.8fr_1fr] md:gap-10 md:p-7">
             <figcaption>
-              <h3 class="text-[20px] font-bold leading-snug text-ink">Do the channels rise and fall together?</h3>
+              <h3 class="text-[20px] font-bold leading-snug text-ink">How closely background readings move together across measurement times</h3>
               <p class="mt-3 text-[15px] leading-[1.75] text-ink3">Values near zero indicate little tendency for two channels to rank high or low together in the same cycle. The average pairwise correlation was <strong class="font-semibold text-ink">0.0073</strong>, with individual pairs ranging from −0.0948 to 0.1335.</p>
               <p class="mt-3 text-[14px] leading-[1.7] text-ink3">This supports testing any transfer of a live background reading between channels. It does not prove that the channels are independent or rule out relationships within individual runs and laboratories.</p>
               <p class="mb-0 mt-4 text-xs leading-[1.6] text-ink3">Based on 82,000 aligned measurement cycles. Labels are dwell times in seconds. Each diagonal is 1 because a channel is compared with itself. Select the chart to enlarge it.</p>
@@ -246,7 +282,7 @@ const nextSteps = [
             <ProjectScreenshotLightbox
               :src="correlationFigure"
               alt="Correlation matrix comparing the six dwell-time channels. Off-diagonal correlations are close to zero, ranging from minus 0.0948 to 0.1335."
-              title="How background channels relate"
+              title="How closely background readings move together across measurement times"
               trigger-class="group block w-full overflow-hidden rounded-[10px] border border-border bg-white"
               image-class="transition-transform duration-200 group-hover:scale-[1.01]"
             />
@@ -277,33 +313,60 @@ const nextSteps = [
       </div>
 
       <figure class="m-0 mt-6 rounded-[12px] border border-border bg-white p-5 md:p-7">
-        <h3 class="text-[17px] font-bold text-ink">Where the model follows the data, and where it differs</h3>
+        <h3 class="text-[17px] font-bold text-ink">Measured background noise compared with the fitted model at each measurement time</h3>
         <ProjectScreenshotLightbox
           :src="modelFigure"
           alt="Six panels comparing observed background readings, smoothed observations, and the fitted model. Curves follow the broad patterns with visible differences at some peaks and tails."
-          title="Observed background and the fitted model"
+          title="Measured background noise compared with the fitted model at each measurement time"
           trigger-class="group mt-5 block w-full overflow-hidden rounded-[10px] border border-border bg-white"
           image-class="transition-transform duration-200 group-hover:scale-[1.01]"
         />
         <figcaption class="mt-4 text-[13px] leading-[1.7] text-ink3">
-          Gray bars show the observed readings, teal curves smooth them, and rust curves show the model. The horizontal axes use log10 current in amperes: one unit represents ten times the current. Each panel shows the 0.1st to 99.9th percentile range of positive readings, leaving the most extreme tails outside view. Density describes relative concentration, not a count of readings. These are the same data used to fit the model, so visual agreement does not establish better sample correction. Select the chart to enlarge it.
+          Gray bars show the observed readings, blue curves smooth them, and red curves show the model. The horizontal axes use log10 current in amperes: one unit represents ten times the current. Each panel shows the 0.1st to 99.9th percentile range of positive readings, leaving the most extreme tails outside view. Density describes relative concentration, not a count of readings. These are the same data used to fit the model, so visual agreement does not establish better sample correction. Select the chart to enlarge it.
         </figcaption>
       </figure>
 
-      <div class="mt-6 grid gap-4 lg:grid-cols-3">
+      <section class="mt-10" aria-labelledby="diagnostics-title">
+        <h3 id="diagnostics-title" class="font-display text-[26px] font-bold leading-tight text-ink md:text-[32px]">A closer look at the distributions</h3>
+        <p class="mt-3 text-[15px] leading-[1.75] text-ink3">These checks look beyond a single average: where readings cluster, how unusual values behave, and whether the patterns hold across laboratories.</p>
+        <div class="mt-6 grid gap-6">
+          <figure v-for="figure in diagnosticFigures" :key="figure.title" class="m-0 rounded-[12px] border border-border bg-white p-5 md:p-7">
+            <h4 class="text-[17px] font-bold text-ink">{{ figure.title }}</h4>
+            <ProjectScreenshotLightbox
+              :src="figure.image"
+              :alt="figure.alt"
+              :title="figure.title"
+              trigger-class="group mt-5 block w-full overflow-hidden rounded-[10px] border border-border bg-white"
+              image-class="transition-transform duration-200 group-hover:scale-[1.01]"
+            />
+            <figcaption class="mt-4 text-[13px] leading-[1.7] text-ink3">
+              <p class="m-0">{{ figure.body }}</p>
+              <p class="mb-0 mt-2">{{ figure.guide }} Select the chart to enlarge it.</p>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <h3 id="limitations-title" class="mt-10 font-display text-[26px] font-bold leading-tight text-ink md:text-[32px]">Limitations</h3>
+      <div class="mt-6 grid gap-4 lg:grid-cols-3" role="group" aria-labelledby="limitations-title">
         <article class="rounded-[12px] border border-border bg-white p-[22px]">
-          <h3 class="text-[16px] font-bold text-ink">The data cover specific conditions</h3>
+          <h4 class="text-[16px] font-bold text-ink">The data cover specific conditions</h4>
           <p class="mb-0 mt-3 text-[14px] leading-[1.75] text-ink3">The study covers three Prisma Pro instruments at Glasgow, Salzburg, and Wuhan. Nineamu is a separate Salzburg batch, not a fourth laboratory. Laboratory and batch differences remain relevant and are not explicitly adjusted for in the model. Transfer to other settings or periods needs checking.</p>
         </article>
         <article class="rounded-[12px] border border-border bg-white p-[22px]">
-          <h3 class="text-[16px] font-bold text-ink">Cleaning required assumptions</h3>
+          <h4 class="text-[16px] font-bold text-ink">Cleaning required assumptions</h4>
           <p class="mb-0 mt-3 text-[14px] leading-[1.75] text-ink3">The parser used a 1.024-second reference to reverse suspected automatic subtraction and kept the final segment after timestamp resets. One file with an incomplete header was excluded. Three zeros remain in descriptive summaries and were excluded only from logarithmic modeling.</p>
         </article>
         <article class="rounded-[12px] border border-border bg-white p-[22px]">
-          <h3 class="text-[16px] font-bold text-ink">Many readings came from the same runs</h3>
+          <h4 class="text-[16px] font-bold text-ink">Many readings came from the same runs</h4>
           <p class="mb-0 mt-3 text-[14px] leading-[1.75] text-ink3">The observation count alone does not establish independence or long-term stability. The original file-selection rule excluded the nested duplicate data and the separate nosem folder. The proposed correction still needs checks on runs excluded from fitting.</p>
         </article>
       </div>
+
+      <article class="mt-8 rounded-[12px] border border-accent bg-accent p-6 text-white md:p-9" aria-labelledby="conclusions-title">
+        <h3 id="conclusions-title" class="font-display text-[26px] font-bold leading-tight text-white md:text-[32px]">Final Conclusions</h3>
+        <p class="mb-0 mt-4 text-[15px] leading-[1.75] text-white/80">Background noise depended on measurement time: longer readings had lower typical noise and less variation, at the cost of more time per reading. Occasional large values and weak relationships between channels make one average or one live reading an incomplete basis for correction. The findings support testing a median correction matched to dwell time alongside the fitted model, with checks for laboratory and batch differences. The model describes much of the observed pattern, but improved sample accuracy or rock-age estimates has not yet been demonstrated.</p>
+      </article>
 
       <article class="mt-8 rounded-[14px] bg-ink p-6 text-white md:p-9" aria-labelledby="next-steps-title">
         <div class="mb-3 text-[10px] font-bold uppercase tracking-[2px] text-white/70">Recommended Next Steps</div>
@@ -324,7 +387,7 @@ const nextSteps = [
         <div class="grid gap-4 md:grid-cols-2">
           <article class="flex flex-col rounded-[12px] border border-border bg-white p-[22px]">
             <h3 class="mt-3 text-[20px] font-bold text-ink">Client project report</h3>
-            <p class="mb-6 mt-3 text-[15px] leading-[1.7] text-ink3">Seven pages explaining the question, current findings, recommendations, and limitations. This is the source for the results and charts on this page.</p>
+            <p class="mb-6 mt-3 text-[15px] leading-[1.7] text-ink3">Seven pages explaining the question, current findings, recommendations, and limitations.</p>
             <ProjectPdfReportModal
               :src="clientReportPdf"
               title="Baseline Noise Client Project Report — September 24, 2026 rerun"
@@ -346,7 +409,7 @@ const nextSteps = [
         <div class="mt-8 grid items-start gap-6 border-t border-border pt-7 md:grid-cols-[1fr_auto]">
           <div class="text-[14px] leading-[1.8] text-ink3">
             <p class="m-0"><strong class="font-semibold text-ink">Prepared by Austin Melendez and Harmen Hundal</strong> for Thermochron Systems LLC and Adam Goldsmith.</p>
-            <p class="mb-0 mt-1">STAT 192 Statistics Capstone Project · Original analysis: May 19, 2026.</p>
+            <p class="mb-0 mt-1">STAT 192 Statistics Capstone Project</p>
           </div>
           <a class="inline-flex min-h-[60px] items-center justify-center rounded-[10px] border border-border2 px-8 py-4 text-center text-base font-semibold text-ink no-underline transition-colors hover:border-accent2 hover:text-accent2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent" :href="githubRepoUrl" target="_blank" rel="noreferrer">View project repository</a>
         </div>

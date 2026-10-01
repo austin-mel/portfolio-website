@@ -4,8 +4,14 @@ import ProjectScreenshotLightbox from '@/components/projects/ProjectPage/Project
 
 import clientReportPdf from '@/assets/projects/scicomm/Science Communication Empathy Client Report.pdf';
 import technicalReportPdf from '@/assets/projects/scicomm/SciComm Empathy Technical Project Report.pdf';
-import jeffersonChangesFigure from '@/assets/projects/scicomm/client-jefferson-score-changes.png';
-import torontoChangesFigure from '@/assets/projects/scicomm/client-toronto-score-changes.png';
+import jeffersonChangesFigure from '@/assets/projects/scicomm/eda-jefferson-change-boxplots.png';
+import torontoChangesFigure from '@/assets/projects/scicomm/eda-toronto-change-boxplots.png';
+import jeffersonHistogramFigure from '@/assets/projects/scicomm/eda-jefferson-change-histograms.png';
+import torontoHistogramFigure from '@/assets/projects/scicomm/eda-toronto-change-histograms.png';
+import jeffersonStartingScoreFigure from '@/assets/projects/scicomm/model-jefferson-ceiling-effect.png';
+import torontoStartingScoreFigure from '@/assets/projects/scicomm/model-toronto-ceiling-effect.png';
+import jeffersonQqFigure from '@/assets/projects/scicomm/model-jefferson-change-qq.png';
+import torontoQqFigure from '@/assets/projects/scicomm/model-toronto-change-qq.png';
 
 const githubRepoUrl = 'https://github.com/austin-mel-edu/sacramento-state-university/tree/master/STAT192%20-%20Senior%20Capstone%20Project/Shelby%20C%20-%20CSUS%20Biological%20Sciences%20Dept';
 
@@ -59,19 +65,80 @@ const scoreSummaries = [
   { measure: '95% confidence interval for that difference', jefferson: '−0.92 to +2.90', toronto: '−1.51 to +0.72', highlight: false },
 ];
 
-// These are the unmodified image objects on client report p. 3.
+// Unmodified change-score boxplots from 02-assumptions.ipynb, cell 12 (1-based).
 const changeFigures = [
   {
     image: jeffersonChangesFigure,
-    title: 'Jefferson: individual changes varied in both groups.',
-    alt: 'Jefferson score-change box plots for control and training groups, split into Biology or Biological Sciences and other majors. Values include gains and declines in each group.',
-    body: 'Positive values mean a higher Jefferson score after the study; negative values mean a lower score. The chart shows variation within each group, including a few large changes.',
+    title: 'Jefferson scores rose and fell within both study groups and major categories.',
+    alt: 'The Jefferson box plots show gains and declines in the control and training groups, with separate boxes for Biology or Biological Sciences and other majors.',
+    body: 'Positive values mean a higher Jefferson score after the study, while negative values mean a lower score. Individual changes varied within each group, and a few students reported particularly large gains or declines.',
   },
   {
     image: torontoChangesFigure,
-    title: 'Modified Toronto: the group distributions overlap.',
-    alt: 'Modified Toronto score-change box plots for control and training groups, split by major category. Both groups include positive and negative changes.',
-    body: 'These changes use the modified Toronto questionnaire’s own score units. They should be read separately from Jefferson changes, even though both questionnaires concern empathy.',
+    title: 'Modified Toronto score changes overlapped across the training and control groups.',
+    alt: 'The modified Toronto box plots show overlapping score changes in the control and training groups, with gains and declines in both major categories.',
+    body: 'Both groups included students whose modified Toronto scores increased and students whose scores declined. These changes use the questionnaire’s own point scale and should be interpreted separately from Jefferson changes.',
+  },
+];
+
+// Unmodified 02-assumptions.ipynb outputs: cells 9, 18, and 14 (1-based).
+const diagnosticGroups = [
+  {
+    id: 'change-distributions-title',
+    title: 'Average gains do not describe every student’s change.',
+    introduction: 'Each bar counts students whose scores changed by a similar amount. Positive values show gains, while negative values show declines. Panels separate the control and training groups (labeled “Intervention”) and the project’s two major categories. Bar heights show counts of students, so differences in group size matter when comparing panels.',
+    figures: [
+      {
+        image: jeffersonHistogramFigure,
+        title: 'The Jefferson histograms show varied gains and declines within each subgroup.',
+        alt: 'The Jefferson histograms show gains and declines across study groups and major categories, including an unusually large decline in the control group.',
+        body: 'Jefferson changes vary within each subgroup. The spread and isolated large changes show why an average gain does not describe every student’s experience.',
+      },
+      {
+        image: torontoHistogramFigure,
+        title: 'The modified Toronto histograms show gains and declines across study and major groups.',
+        alt: 'The modified Toronto histograms show observations on both sides of zero across study groups and major categories, with a few unusually large declines.',
+        body: 'Modified Toronto changes also include both gains and declines. These use a different point scale from Jefferson and should be interpreted separately.',
+      },
+    ],
+  },
+  {
+    id: 'starting-scores-title',
+    title: 'Students with higher starting scores tended to show smaller gains.',
+    introduction: 'Each point represents a student. The horizontal axis shows their starting score and the vertical axis shows their change. Colors distinguish study groups, shapes distinguish major categories, and the sloping lines summarize trends within those subgroups. The dashed line marks no change.',
+    figures: [
+      {
+        image: jeffersonStartingScoreFigure,
+        title: 'Higher Jefferson starting scores were associated with smaller gains.',
+        alt: 'The Jefferson scatter plot shows downward trends between starting scores and changes across study and major groups, with substantial variation among students.',
+        body: 'Students with higher Jefferson starting scores tended to have smaller gains. That pattern motivated a comparison that accounted for starting scores. It does not establish that the questionnaire’s upper limit caused the pattern.',
+      },
+      {
+        image: torontoStartingScoreFigure,
+        title: 'Higher modified Toronto starting scores were also associated with smaller gains.',
+        alt: 'The modified Toronto scatter plot shows downward trends between starting scores and changes, with students reporting both gains and declines.',
+        body: 'The same negative relationship appears for modified Toronto scores. Accounting for starting scores still did not establish an added training benefit, and this relationship alone does not prove a ceiling effect.',
+      },
+    ],
+  },
+  {
+    id: 'model-checks-title',
+    title: 'Q-Q plots reveal departures from the models’ normality assumption.',
+    introduction: 'A residual is the difference between a student’s observed change and the change predicted by the model. These Q-Q plots compare ordered residuals with a bell-shaped normal reference. Points close to the diagonal support that assumption. Departures at the ends highlight unusually large differences.',
+    figures: [
+      {
+        image: jeffersonQqFigure,
+        title: 'The Jefferson Q-Q plot shows small departures from the normal reference at the extremes.',
+        alt: 'The Jefferson Q-Q plot shows central model residuals following the normal reference line, with small departures in the tails and one particularly large negative residual.',
+        body: 'The central values roughly follow the line, but the tails slightly depart, especially the largest negative residual. This supports checking how sensitive the results are to unusual changes. We found the departures are small enough that we can keep our normality assumption.',
+      },
+      {
+        image: torontoQqFigure,
+        title: 'The modified Toronto Q-Q plot shows small departures from the normal reference in both tails.',
+        alt: 'The modified Toronto Q-Q plot shows model residuals slightly departing from the normal reference line in both tails.',
+        body: 'Departures at both ends of the distribution could also indicate limits to the modified Toronto model’s normality assumption. This supports checking how sensitive the results are to unusual changes. We found the departures are small enough that we can keep our normality assumption.',
+      },
+    ],
   },
 ];
 
@@ -128,7 +195,7 @@ const nextSteps = [
       <header class="mb-8">
         <div class="mb-4 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Executive Summary</div>
         <h1 id="project-title" class="max-w-[850px] font-display text-[34px] font-bold leading-[1.08] tracking-normal text-ink xs:text-[42px] md:text-[56px]">
-          Understanding <em class="text-accent">empathy</em> in science communication.
+          Evaluating <em class="text-accent">measured empathy</em> in science communication after training intervention.
         </h1>
         <p class="mt-4 text-[15px] leading-[1.7] text-ink3">A statistics capstone project for a graduate student from the CSUS Biological Sciences department.</p>
       </header>
@@ -162,7 +229,7 @@ const nextSteps = [
             </ol>
           </dd>
         </div>
-        <div class="grid gap-3 bg-ink p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7">
+        <div class="grid gap-3 bg-accent p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7">
           <dt class="text-[15px] font-bold text-white">Business Impact</dt>
           <dd class="m-0 text-[15px] leading-[1.75] text-white/80">
             The findings give the program team a basis for <strong class="font-semibold text-white">planning a more consistent evaluation before using this study to support wider adoption</strong>. Standardize participation and survey timing, compare similar classes, and measure communication skills alongside survey responses. The current study does not establish an added training benefit.
@@ -268,7 +335,7 @@ const nextSteps = [
           <p class="mb-0 mt-4 text-xs leading-[1.6] text-ink3">Values are rounded. Changes and group differences were calculated before rounding, so subtracting the displayed values can give a slightly different result.</p>
         </article>
 
-        <div class="mt-6 grid gap-6">
+        <div class="mt-6 grid gap-6 lg:grid-cols-2">
           <figure v-for="figure in changeFigures" :key="figure.title" class="m-0 rounded-[12px] border border-border bg-white p-5 md:p-7">
             <h3 class="text-[17px] font-bold text-ink">{{ figure.title }}</h3>
             <ProjectScreenshotLightbox
@@ -280,7 +347,7 @@ const nextSteps = [
             />
             <figcaption class="mt-4 text-[13px] leading-[1.7] text-ink3">
               <p class="m-0">{{ figure.body }}</p>
-              <p class="mb-0 mt-2">Boxes contain the middle half of students’ changes; the line inside marks the median. Dots mark unusually large changes, and the dashed line marks no change. Colors distinguish Biology or Biological Sciences from other majors. Select the chart to enlarge it.</p>
+              <p class="mb-0 mt-2">Each box contains the middle half of students’ changes, with the median marked by the line inside. Dots mark unusually large changes, and the dashed line marks no change. “Intervention” means the training group. “STEM” means Biology or Biological Sciences, while “Non-STEM” means other majors. Select the chart to enlarge it.</p>
             </figcaption>
           </figure>
         </div>
@@ -341,12 +408,36 @@ const nextSteps = [
         <p class="mb-0 mt-4 text-[13px] leading-[1.7] text-ink3">A p-value does not tell us the probability that the training works or whether a change matters in practice. Values above the threshold indicate insufficient evidence of a difference, not proof of equivalence. The notebooks also include nonparametric checks, and the reported departures from normality and influential changes make sensitivity checks useful.</p>
       </article>
 
-      <div class="mt-6 grid gap-4 md:grid-cols-2">
+      <section v-for="group in diagnosticGroups" :key="group.id" class="mt-10" :aria-labelledby="group.id">
+        <h3 :id="group.id" class="font-display text-[26px] font-bold leading-tight text-ink md:text-[32px]">{{ group.title }}</h3>
+        <p class="mt-3 text-[15px] leading-[1.75] text-ink3">{{ group.introduction }}</p>
+        <div class="mt-6 grid gap-6 lg:grid-cols-2">
+          <figure v-for="figure in group.figures" :key="figure.title" class="m-0 rounded-[12px] border border-border bg-white p-5 md:p-7">
+            <h4 class="text-[17px] font-bold text-ink">{{ figure.title }}</h4>
+            <ProjectScreenshotLightbox
+              :src="figure.image"
+              :alt="figure.alt"
+              :title="figure.title"
+              trigger-class="group mt-5 block w-full overflow-hidden rounded-[10px] border border-border bg-white"
+              image-class="transition-transform duration-200 group-hover:scale-[1.01]"
+            />
+            <figcaption class="mt-4 text-[13px] leading-[1.7] text-ink3">{{ figure.body }} Select the chart to enlarge it.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <h3 id="limitations-title" class="mt-10 font-display text-[26px] font-bold leading-tight text-ink md:text-[32px]">Limitations</h3>
+      <div class="mt-6 grid gap-4 md:grid-cols-2" role="group" aria-labelledby="limitations-title">
         <article v-for="limit in limitations" :key="limit.title" class="rounded-[12px] border border-border bg-white p-[22px]">
-          <h3 class="text-[16px] font-bold text-ink">{{ limit.title }}</h3>
+          <h4 class="text-[16px] font-bold text-ink">{{ limit.title }}</h4>
           <p class="mb-0 mt-3 text-[14px] leading-[1.75] text-ink3">{{ limit.body }}</p>
         </article>
       </div>
+
+      <article class="mt-8 rounded-[12px] border border-accent bg-accent p-6 text-white md:p-9" aria-labelledby="conclusions-title">
+        <h3 id="conclusions-title" class="font-display text-[26px] font-bold leading-tight text-white md:text-[32px]">Final Conclusions</h3>
+        <p class="mb-0 mt-4 text-[15px] leading-[1.75] text-white/80">Across 222 matched students, average self-reported empathy rose on both questionnaires, but the training group did not clearly improve more than the control group. Individual changes varied, major categories did not clearly distinguish the results, and higher starting scores were associated with smaller gains. Adjusting for starting scores did not establish an added training benefit. These findings leave the benefit uncertain rather than proving no effect. They support a more consistent evaluation before wider adoption, including direct measures of communication and follow-up to assess whether any changes last.</p>
+      </article>
 
       <article class="mt-8 rounded-[14px] bg-ink p-6 text-white md:p-9" aria-labelledby="next-steps-title">
         <div class="mb-3 text-[10px] font-bold uppercase tracking-[2px] text-white/70">Recommended Next Steps</div>
@@ -366,7 +457,6 @@ const nextSteps = [
         </header>
         <div class="grid gap-4 md:grid-cols-2">
           <article class="flex flex-col rounded-[12px] border border-border bg-white p-[22px]">
-            <div class="text-[10px] font-bold uppercase tracking-[1.5px] text-accent">September 24, 2026</div>
             <h3 class="mt-3 text-[20px] font-bold text-ink">Client project report</h3>
             <p class="mb-6 mt-3 text-[15px] leading-[1.7] text-ink3">Six pages covering the complete before-and-after findings, updated charts, practical recommendations, and limits on interpretation.</p>
             <ProjectPdfReportModal
@@ -377,7 +467,6 @@ const nextSteps = [
             />
           </article>
           <article class="flex flex-col rounded-[12px] border border-border bg-white p-[22px]">
-            <div class="text-[10px] font-bold uppercase tracking-[1.5px] text-accent">Revised March 3, 2026 · Pre-survey analysis</div>
             <h3 class="mt-3 text-[20px] font-bold text-ink">Technical project report</h3>
             <p class="mb-6 mt-3 text-[15px] leading-[1.7] text-ink3">The supplied 11-page technical report documents initial survey preparation, scoring, and comparisons of students’ starting scores.</p>
             <ProjectPdfReportModal
@@ -390,7 +479,7 @@ const nextSteps = [
         </div>
         <div class="mt-8 grid items-start gap-6 border-t border-border pt-7 md:grid-cols-[1fr_auto]">
           <div class="text-[14px] leading-[1.8] text-ink3">
-            <p class="m-0"><strong class="font-semibold text-ink">Project analysis by Austin Melendez and Sara Bruggman</strong> for Shelby Chandar, CSUS Biological Sciences.</p>
+            <p class="m-0"><strong class="font-semibold text-ink">Prepared by Austin Melendez and Sara Bruggman</strong> for Shelby Chandar, CSUS Biological Sciences.</p>
             <p class="mb-0 mt-1">STAT 192 Statistics Capstone Project.</p>
           </div>
           <a class="inline-flex min-h-[60px] items-center justify-center rounded-[10px] border border-border2 px-8 py-4 text-center text-base font-semibold text-ink no-underline transition-colors hover:border-accent2 hover:text-accent2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent" :href="githubRepoUrl" target="_blank" rel="noreferrer">View project repository</a>
