@@ -362,15 +362,8 @@ const nextSteps = [
         </div>
         <p class="m-0 text-[15px] leading-[1.76] text-ink3">The primary question concerns additional improvement beyond the control group. Checks of overall change, academic-major categories, starting scores, and model assumptions help qualify that result.</p>
       </header>
-      <div class="grid gap-4 md:grid-cols-2">
-        <article v-for="method in analysisMethods" :key="method.title" class="rounded-[12px] border border-border bg-white p-[22px]">
-          <h3 class="text-[17px] font-bold text-ink">{{ method.title }}</h3>
-          <p class="mt-2 text-[13px] font-semibold text-accent">{{ method.method }}</p>
-          <p class="mb-0 mt-3 text-[14px] leading-[1.75] text-ink3">{{ method.body }}</p>
-        </article>
-      </div>
 
-      <div class="mt-6 grid gap-4 md:grid-cols-2">
+      <div class="mb-6 grid gap-4 md:grid-cols-2">
         <article class="rounded-[12px] border border-border bg-white p-[22px]">
           <h3 class="text-[17px] font-bold text-ink">Scoring and data checks</h3>
           <p class="mt-3 text-[14px] leading-[1.75] text-ink3">Jefferson uses 14 items scored from 1 to 7, giving a possible total of 14–98. The modified Toronto measure uses 16 items scored from 0 to 4, giving a total of 0–64. Negatively worded items were reverse-coded before summing.</p>
@@ -383,9 +376,17 @@ const nextSteps = [
         </article>
       </div>
 
+      <div class="grid gap-4 md:grid-cols-2">
+        <article v-for="method in analysisMethods" :key="method.title" class="rounded-[12px] border border-border bg-white p-[22px]">
+          <h3 class="text-[17px] font-bold text-ink">{{ method.title }}</h3>
+          <p class="mt-2 text-[13px] font-semibold text-accent">{{ method.method }}</p>
+          <p class="mb-0 mt-3 text-[14px] leading-[1.75] text-ink3">{{ method.body }}</p>
+        </article>
+      </div>
+
       <article class="mt-6 rounded-[12px] border border-border bg-white p-5 md:p-7" aria-labelledby="tests-title">
         <h3 id="tests-title" class="text-[17px] font-bold text-ink">Statistical comparisons</h3>
-        <p class="mt-2 text-[14px] leading-[1.7] text-ink3">The project used a p-value threshold of 0.05. The overall before-and-after increases were statistically clear; the training and major comparisons were not.</p>
+        <p class="mt-2 text-[14px] leading-[1.7] text-ink3">The project used a p-value threshold of 0.05. <strong class="font-bold">The overall before-and-after increases were statistically significant</strong>, but the training and major comparisons were not.</p>
         <div class="mt-4 overflow-x-auto rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent" tabindex="0" role="region" aria-label="Statistical comparison p-values; scroll horizontally on small screens">
           <table class="w-full min-w-[580px] border-collapse text-left text-[13px] tabular-nums">
             <caption class="sr-only">P-values for overall changes and comparisons between study groups and major categories.</caption>
@@ -397,15 +398,15 @@ const nextSteps = [
               </tr>
             </thead>
             <tbody class="text-ink3">
-              <tr v-for="row in statisticalChecks" :key="row.comparison" class="border-b border-cream3 last:border-b-0">
-                <th scope="row" class="p-3 font-semibold text-ink">{{ row.comparison }}</th>
+              <tr v-for="(row, index) in statisticalChecks" :key="row.comparison" class="border-b border-cream3 last:border-b-0" :class="{ 'bg-accent-pale font-bold': index === 0 }">
+                <th scope="row" class="p-3 text-ink" :class="index === 0 ? 'font-bold' : 'font-semibold'">{{ row.comparison }}</th>
                 <td class="whitespace-nowrap p-3">{{ row.jefferson }}</td>
                 <td class="whitespace-nowrap p-3">{{ row.toronto }}</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p class="mb-0 mt-4 text-[13px] leading-[1.7] text-ink3">A p-value does not tell us the probability that the training works or whether a change matters in practice. Values above the threshold indicate insufficient evidence of a difference, not proof of equivalence. The notebooks also include nonparametric checks, and the reported departures from normality and influential changes make sensitivity checks useful.</p>
+        <p class="mb-0 mt-4 text-[13px] leading-[1.7] text-ink3">A p-value does not tell us the probability that the training works or whether a change matters in practice. Values above the threshold indicate insufficient evidence of a difference, not proof of equivalence.</p>
       </article>
 
       <section v-for="group in diagnosticGroups" :key="group.id" class="mt-10" :aria-labelledby="group.id">

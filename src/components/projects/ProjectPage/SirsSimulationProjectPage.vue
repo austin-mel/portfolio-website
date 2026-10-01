@@ -1,636 +1,295 @@
 <script setup lang="ts">
 import ProjectScreenshotLightbox from '@/components/projects/ProjectPage/ProjectScreenshotLightbox.vue';
 
-import infectionHeatmapFigure from '@/assets/projects/sirs/infection-heatmap.png';
+import sirHistoryFigure from '@/assets/projects/sirs/sir-history.png';
 import initialMatrixFigure from '@/assets/projects/sirs/initial-matrix.png';
+import sirFinalMatrixFigure from '@/assets/projects/sirs/sir-final-matrix.png';
 import probabilitySweepFigure from '@/assets/projects/sirs/probability-sweep.png';
-import finalMatrixFigure from '@/assets/projects/sirs/sir-final-matrix.png';
-import historyFigure from '@/assets/projects/sirs/sir-history.png';
-
-const githubRepoUrl = 'https://github.com/austin-mel/sirmodelsimulation';
-
-const techStack = ['R', 'Package', 'Simulation', 'Visualization'];
-
-const overviewStats = [
-  ['3', 'supported model modes: SIR, SIS, and SIRS'],
-  ['4', 'cell states encoded directly in each simulation matrix'],
-  ['8', 'public functions for setup, simulation, sweeps, and heatmaps'],
-  ['step 0', 'full-log output includes the initial state before transitions'],
-];
-
-const projectNumbers = [
-  ['8', '', 'infected starting cells in the generated 10 x 10 example run'],
-  ['9', '', 'SIR transition steps before no infected cells remained'],
-  ['58', '', 'cells recovered by the end of the generated SIR simulation'],
-  ['1,000', '', 'cell-step rows preserved in the full-log output'],
-];
-
-const engineeringSummary = [
-  ['Problem', 'Build a small R package that exposes SIR, SIS, and SIRS grid simulations through documented functions rather than one-off scripts.'],
-  ['My role', 'Implemented matrix constructors, neighbor exposure logic, transition rules, repeated-run summaries, probability sweeps, heatmaps, full-log output, tests, README examples, and package metadata.'],
-  ['Implementation', 'Simulation state is stored in numeric matrices; public functions create initial conditions, run synchronous transitions, summarize repeated stochastic runs, and optionally return one row per cell per step.'],
-  ['Validation', 'The testthat suite checks exact infected counts, reproducible seeds, invalid inputs, model transitions, mortality edge cases, summary outputs, and full-log schema.'],
-  ['Result', 'The package exposes eight public functions with MIT package metadata, README usage examples, vignette coverage, manual pages, and survival-ready full logs.'],
-  ['Limitation', 'This is a stochastic transition simulator, not a calibrated epidemiological forecasting model; conclusions depend on seed, grid size, transition assumptions, and synchronous neighborhood rules.'],
-];
-
-const contextCards = [
-  {
-    type: 'Object of study',
-    title: 'Disease spread on a two-dimensional matrix',
-    body:
-      'Cells are treated as population units. A susceptible cell can become infected when nearby cells are infected, using a probability formula driven by infected-neighbor count.',
-  },
-  {
-    type: 'Scope',
-    title: 'Simulation mechanics, not real-world prediction',
-    body:
-      'The project focuses on controllable SIR-family transition rules, reproducible random seeds, and interpretable outputs rather than fitting a disease to observed population data.',
-  },
-  {
-    type: 'Meaning',
-    title: 'Model choices become visible as matrix outcomes',
-    body:
-      'SIR, SIS, SIRS, immunity probability, and optional mortality each change what happens after infection, making assumptions visible at the cell level.',
-  },
-];
-
-const workflowSteps = [
-  ['01', 'Create Population', 'Use random, exact-count, corner-seeded, center-seeded, or custom matrices as the initial state.'],
-  ['02', 'Choose Model', 'Select SIR, SIS, or SIRS and set infection, immunity, and mortality probabilities.'],
-  ['03', 'Run Steps', 'Iterate until no infected cells remain, optionally plotting each matrix state.'],
-  ['04', 'Capture Outputs', 'Return steps, infection proportion, final matrix, history, and optional full cell log.'],
-  ['05', 'Summarize Patterns', 'Average repeated runs, sweep infection probabilities, or count cells infected at least once in heatmaps.'],
-];
-
-const stateCards = [
-  {
-    type: 'State encoding',
-    title: 'Numeric cell values carry the whole model state.',
-    body:
-      '0 = susceptible, 1 = infected, 2 = recovered, and 3 = deceased. Initial matrices usually start with susceptible and infected cells; recovered and deceased states emerge through simulation transitions.',
-  },
-  {
-    type: 'Infection probability',
-    title: 'More infected neighbors increase exposure probability.',
-    body:
-      'infection_probability = 1 - (1 - prob_infect)^infected_neighbors. A susceptible cell checks its eight-cell neighborhood before each transition.',
-  },
-];
-
-const transitionCards = [
-  ['SIR', 'Infected cells become recovered unless optional mortality occurs first.'],
-  ['SIS', 'Infected cells return to susceptible, allowing future reinfection.'],
-  ['SIRS', 'imm_prob decides whether infected cells recover; otherwise they return to susceptible.'],
-  ['Mortality', 'allow_death lets infected cells become deceased with probability fat_prob before the normal model transition.'],
-];
-
-const simulationExamples = [
-  {
-    title: 'SIR run',
-    body: 'Use SIR when infected cells should move into recovered state after exposure resolves.',
-    code: `simulate_sir(
-  prob_infect = 0.25,
-  input_matrix = initial,
-  model = "SIR",
-  seed = 94128
-)`,
-  },
-  {
-    title: 'SIS run',
-    body: 'Use SIS when infected cells should return to susceptible state and remain eligible for reinfection.',
-    code: `simulate_sir(
-  prob_infect = 0.25,
-  input_matrix = initial,
-  model = "SIS",
-  seed = 94128
-)`,
-  },
-  {
-    title: 'SIRS run',
-    body: 'Use SIRS when infected cells may recover with immunity or return to susceptible based on imm_prob.',
-    code: `simulate_sir(
-  prob_infect = 0.25,
-  input_matrix = initial,
-  model = "SIRS",
-  imm_prob = 0.70,
-  seed = 94128
-)`,
-  },
-  {
-    title: 'SIR with mortality',
-    body: 'Mortality is checked before the normal SIR recovery transition.',
-    code: `simulate_sir(
-  prob_infect = 0.25,
-  input_matrix = initial,
-  model = "SIR",
-  allow_death = TRUE,
-  fat_prob = 0.15,
-  seed = 94128
-)`,
-  },
-  {
-    title: 'SIS with mortality',
-    body: 'Mortality can be enabled even when surviving infected cells return to susceptible state.',
-    code: `simulate_sir(
-  prob_infect = 0.25,
-  input_matrix = initial,
-  model = "SIS",
-  allow_death = TRUE,
-  fat_prob = 0.15,
-  seed = 94128
-)`,
-  },
-  {
-    title: 'SIRS with mortality',
-    body: 'SIRS can combine mortality with immunity probability for surviving infected cells.',
-    code: `simulate_sir(
-  prob_infect = 0.25,
-  input_matrix = initial,
-  model = "SIRS",
-  imm_prob = 0.70,
-  allow_death = TRUE,
-  fat_prob = 0.15,
-  seed = 94128
-)`,
-  },
-];
-
-const apiCards = [
-  ['Matrix setup', 'create_random_matrix()', 'Create random matrices with an exact infected-cell count and optional seed.'],
-  ['Compatibility', 'create_matrix()', 'Backward-compatible wrapper around the newer random matrix generator.'],
-  ['Seed patterns', 'create_corner_matrix(), create_center_matrix()', 'Start infection in the four corners or in the center cell.'],
-  ['Single run', 'simulate_sir()', 'Run SIR, SIS, or SIRS until there are no infected cells left.'],
-  ['Repeated trials', 'simulate_many_runs()', 'Average total steps and infected proportion across repeated stochastic runs.'],
-  ['Sweeps and heatmaps', 'simulate_inf_seq(), multiple_run_heatmap()', 'Vary infection probability or count cells infected at least once across repeated runs.'],
-];
-
-const apiContractRows = [
-  ['Matrix constructors', 'create_random_matrix(), create_matrix(), create_corner_matrix(), create_center_matrix()', 'Create reproducible starting grids with exact infected counts or fixed corner/center patterns.'],
-  ['Single simulation', 'simulate_sir()', 'Run SIR, SIS, or SIRS transitions until no infected cells remain; return steps, infection proportion, final matrix, and history.'],
-  ['Full log', 'simulate_sir(full_log = TRUE)', 'Return one row per cell per step, including step 0, state indicators, model settings, and cell coordinates.'],
-  ['Repeated runs', 'simulate_many_runs()', 'Average total steps and infected proportion across stochastic reruns from the same starting matrix.'],
-  ['Probability sweep', 'simulate_inf_seq()', 'Run the same matrix across a sequence of infection probabilities and return comparable summary rows.'],
-  ['Heatmap summary', 'multiple_run_heatmap()', 'Count how often each cell is infected at least once across repeated simulations.'],
-];
-
-const outputCards = [
-  {
-    type: 'Generated SIR run',
-    title: 'One seeded 10 x 10 SIR simulation',
-    body:
-      'Using start_infected = 8, seed = 94128, prob_infect = 0.25, model = SIR, and full_log = TRUE, the run ended after 9 steps with infected proportion 0.58.',
-  },
-  {
-    type: 'Recorded output',
-    title: 'History and full-log scale',
-    body:
-      'With 100 cells and 10 recorded time points, the generated run produced 1,000 full-log rows and 10 per-step history rows.',
-  },
-  {
-    type: 'Repeated runs',
-    title: 'Ten SIR runs averaged 9.10 steps.',
-    body:
-      'simulate_many_runs() on the same starting matrix returned average infected proportion 0.71, showing how repeated stochastic runs differ from a single displayed run.',
-  },
-];
-
-const figures = [
-  {
-    image: initialMatrixFigure,
-    title: 'Initial 10 x 10 matrix',
-    body: 'The seeded matrix starts with 8 infected cells and 92 susceptible cells.',
-    alt: 'Generated initial 10 by 10 SIR simulation matrix with 8 infected cells',
-  },
-  {
-    image: finalMatrixFigure,
-    title: 'Final SIR matrix',
-    body: 'The displayed SIR run ended after 9 steps with 58 recovered cells and 42 susceptible cells.',
-    alt: 'Generated final SIR simulation matrix after 9 steps',
-  },
-  {
-    image: historyFigure,
-    title: 'Per-step SIR history',
-    body: 'Susceptible cells decline, infected cells peak, and recovered cells accumulate until infection disappears.',
-    alt: 'Generated SIR per-step history line chart for susceptible infected and recovered counts',
-  },
-  {
-    image: probabilitySweepFigure,
-    title: 'Probability sweep',
-    body: 'The sweep uses the same starting matrix and shows how higher prob_infect changes final infected proportion and total steps.',
-    alt: 'Generated probability sweep chart comparing infection probability with infected proportion and total steps',
-  },
-  {
-    image: infectionHeatmapFigure,
-    title: 'Infection heatmap across 100 SIR runs',
-    body: 'Darker red cells were infected more often across repeated runs, with counts ranging from 0 to 100.',
-    alt: 'Generated heatmap of cells infected at least once across 100 SIR runs',
-  },
-];
-
-const validationCards = [
-  {
-    type: 'Package metadata',
-    title: 'DESCRIPTION and NAMESPACE',
-    body: 'Define SIRSsim as an MIT-licensed R package and export the public simulation functions.',
-  },
-  {
-    type: 'Implementation',
-    title: 'R/simulation.R, R/matrices.R, R/neighbors.R',
-    body: 'Contain validation, matrix creation, neighbor counting, transition rules, summaries, and heatmap logic.',
-  },
-  {
-    type: 'Tests',
-    title: 'tests/testthat',
-    body: 'Check matrix creation, neighbor exposure, SIR/SIS/SIRS transitions, mortality, validation, outputs, and full-log schema.',
-  },
-  {
-    type: 'User guide',
-    title: 'README.md',
-    body: 'Explains public functions, state values, model behavior, full logs, repeated runs, probability sweeps, and heatmaps.',
-  },
-  {
-    type: 'Vignette',
-    title: 'vignettes/sirsimulation.Rmd',
-    body: 'Shows example calls for matrix construction, simulations, model variants, mortality, history, full logs, and heatmaps.',
-  },
-  {
-    type: 'Manual pages',
-    title: 'man/*.Rd',
-    body: 'Document function parameters and return values generated from the package Roxygen comments.',
-  },
-];
-
-const testCoverageRows = [
-  ['Matrix setup', 'Exact infected counts, zero infected cells, reproducible seeds, corner starts, center starts, and padding behavior.'],
-  ['Input validation', 'Invalid probabilities, invalid matrix objects, invalid state values, invalid model names, and non-whole infected counts.'],
-  ['Transition rules', 'SIR recovery, SIS return-to-susceptible behavior, SIRS immunity probability, and mortality edge cases.'],
-  ['Outputs', 'Summary fields, per-step history, optional full_log omission by default, full_log schema when requested, and repeated-run summaries.'],
-  ['Downstream use', 'Full logs contain enough cell-level information to derive infection, recovery, death, and censoring endpoints.'],
-];
-
-const limitationCards = [
-  ['Not calibrated', 'The package does not estimate parameters from observed disease data or forecast real populations.'],
-  ['Stochastic runs', 'Repeated runs can differ even with the same probability settings; seed control is part of reproducibility.'],
-  ['Grid assumptions', 'Results depend on synchronous updates, local neighborhood exposure, grid dimensions, and chosen transition probabilities.'],
-];
+import infectionHeatmapFigure from '@/assets/projects/sirs/infection-heatmap.png';
 </script>
 
 <template>
   <main class="relative overflow-hidden break-words bg-cream text-ink">
     <div class="pointer-events-none absolute right-[-180px] top-[-260px] h-[620px] w-[620px] rounded-full border border-accent2/[0.08]" aria-hidden="true"></div>
-    <div class="pointer-events-none absolute bottom-[360px] left-[-120px] h-[280px] w-[280px] rounded-full border border-accent2/[0.08]" aria-hidden="true"></div>
 
-    <section class="relative z-[1] mx-auto grid min-h-[680px] w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] grid-cols-1 items-center gap-10 py-14 pt-[76px] text-center lg:grid-cols-[minmax(0,1.04fr)_minmax(360px,0.76fr)] lg:gap-14 lg:text-left">
-      <div>
-        <div class="mb-7 inline-flex items-center gap-2.5 rounded-full border border-accent2/20 bg-accent-pale px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[1.5px] text-accent before:h-1.5 before:w-1.5 before:rounded-full before:bg-gold before:content-['']">
-          R Simulation Package
-        </div>
-
-        <h1 class="max-w-[760px] font-display text-[40px] font-black xxs:text-[46px] leading-[0.95] tracking-normal text-ink xs:text-[56px] md:text-[72px] lg:text-[88px]">
-          SIRS matrix-based epidemic <em class="text-accent">simulation.</em>
-        </h1>
-
-        <p class="mt-7 max-w-[620px] text-[18px] font-light leading-[1.72] text-ink3">
-          SIRSsim is an R package for running reproducible SIR, SIS, and SIRS grid simulations with documented functions, tests, repeated-run summaries, and optional full cell logs.
-        </p>
-
-        <div class="mt-9 flex flex-wrap justify-center gap-3 lg:justify-start">
-          <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] bg-ink px-[22px] text-sm font-semibold text-white no-underline transition-colors hover:bg-accent" :href="githubRepoUrl" target="_blank" rel="noreferrer">View GitHub repo</a>
-          <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] border border-border2 px-[22px] text-sm font-semibold text-ink no-underline transition-colors hover:border-accent2 hover:text-accent2" href="#overview">See project description</a>
-        </div>
-      </div>
-
-      <aside class="relative" aria-label="SIRSsim project overview">
-        <div class="mb-4 flex flex-nowrap gap-2 overflow-x-auto pb-1 md:justify-center" aria-label="Technology stack used">
-          <span
-            v-for="item in techStack"
-            :key="item"
-            class="shrink-0 rounded-full border border-accent2/15 bg-white/80 px-3 py-1.5 text-[11px] font-semibold text-ink3 shadow-[0_3px_12px_rgb(13_17_23_/_5%)]"
-          >
-            {{ item }}
-          </span>
-        </div>
-
-        <div class="rounded-[14px] border border-border bg-white/85 p-[22px] text-left shadow-[0_16px_48px_rgb(13_17_23_/_9%)]">
-          <div class="mb-[18px] grid grid-cols-1 gap-3 xs:grid-cols-2">
-            <div v-for="stat in overviewStats" :key="stat[0]" class="min-h-[108px] rounded-[10px] border border-border bg-cream p-4">
-              <strong class="mb-2 block font-display text-[28px] leading-none text-ink">{{ stat[0] }}</strong>
-              <span class="text-[13px] leading-[1.55] text-ink3">{{ stat[1] }}</span>
-            </div>
-          </div>
-
-          <div class="rounded-[10px] bg-accent p-[18px] text-white">
-            <div class="mb-2 text-[10px] font-bold uppercase tracking-[1.4px] text-white/70">Project Object</div>
-            <strong class="block text-[22px] leading-tight tracking-normal">A reproducible grid simulator for epidemic-transition logic.</strong>
-            <p class="mt-2.5 text-[13px] leading-[1.6] text-white/75">
-              The package is not a forecasting model. It is a compact tool for studying how local spread rules and stochastic outcomes change population-state trajectories.
-            </p>
-          </div>
-        </div>
-      </aside>
-    </section>
-
-    <section class="relative overflow-hidden bg-ink py-24 text-white" aria-label="Core simulation surface">
-      <div class="pointer-events-none absolute right-[-40px] top-1/2 h-[400px] w-[400px] -translate-y-1/2 rounded-full border border-white/[0.04]" aria-hidden="true"></div>
-      <div class="pointer-events-none absolute right-[-140px] top-1/2 h-[600px] w-[600px] -translate-y-1/2 rounded-full border border-white/[0.03]" aria-hidden="true"></div>
-
-      <div class="relative mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
-        <div class="mb-11 text-[10px] font-bold uppercase tracking-[2px] text-white/35">Core simulation surface</div>
-
-        <div class="grid grid-cols-1 md:grid-cols-4">
-          <div v-for="(stat, index) in projectNumbers" :key="stat[0]" class="min-h-40 border-white/[0.08] py-8 md:border-r md:px-8" :class="{ 'md:border-r-0': index === projectNumbers.length - 1, 'border-b md:border-b-0': index !== projectNumbers.length - 1 }">
-            <strong class="block font-display text-[44px] font-black xs:text-[54px] leading-none tracking-normal text-white">{{ stat[0] }}<span class="text-accent2">{{ stat[1] }}</span></strong>
-            <p id="overview" class="mt-2.5 max-w-[190px] text-[13px] font-light leading-[1.45] text-white/45">{{ stat[2] }}</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]">
-      <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
-        <div>
-          <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Engineering Summary</div>
-          <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The package exposes documented simulation functions and tested outputs.</h2>
-        </div>
-        <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-          The package includes exported functions, validation checks, test coverage, documentation, and modeling boundaries for grid-based transition experiments.
-        </p>
+    <section id="executive-summary" aria-labelledby="project-title" class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] relative pb-14 pt-6 md:pb-20 md:pt-10 scroll-mt-[100px]">
+      <header class="mb-8">
+        <div class="mb-4 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Executive Summary</div>
+        <h1 id="project-title" class="max-w-[850px] font-display text-[34px] font-bold leading-[1.08] tracking-normal text-ink xs:text-[42px] md:text-[56px]">Exploring epidemic models with a <em class="text-accent">reusable R package.</em></h1>
+        <p class="mb-0 mt-4 text-[15px] leading-[1.7] text-ink3">SIRSsim: matrix-based SIR, SIS, and SIRS simulations with reproducible inputs and inspectable outputs.</p>
       </header>
-
-      <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
-        <article v-for="item in engineeringSummary" :key="item[0]" class="rounded-[12px] border border-border bg-white p-[22px]">
-          <div class="mb-3 font-mono text-[11px] uppercase text-ink4">{{ item[0] }}</div>
-          <p class="m-0 text-[13px] leading-[1.6] text-ink3">{{ item[1] }}</p>
-        </article>
+      <dl class="m-0 overflow-hidden rounded-[14px] border border-border bg-white shadow-[0_8px_24px_rgb(13_17_23_/_4%)]">
+        <div class="grid gap-3 p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7 border-b border-border">
+          <dt class="text-[15px] font-bold text-ink">The Problem</dt>
+          <dd class="m-0 text-[15px] leading-[1.75] text-ink3">Exploring simulation rules through one-off scripts makes setup, comparisons, and reuse harder. A small package can bring population creation, model transitions, and output capture into one documented interface.</dd>
+        </div>
+        <div class="grid gap-3 p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7 border-b border-border">
+          <dt class="text-[15px] font-bold text-ink">The Product &amp; Tools</dt>
+          <dd class="m-0 text-[15px] leading-[1.75] text-ink3"><strong class="font-semibold text-ink">An R package with eight public functions for matrix setup, simulation, repeated runs, probability sweeps, and heatmaps.</strong> Documentation, examples, and a testthat suite support reuse.</dd>
+        </div>
+        <div class="grid gap-3 p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7 border-b border-border">
+          <dt class="text-[15px] font-bold text-ink">The Approach</dt>
+          <dd class="m-0 text-[15px] leading-[1.75] text-ink3">Represent populations as numeric matrices, apply synchronous neighborhood-based transitions, and return structured results. Seed control makes examples reproducible, while optional full logs preserve each cell at every step for full survival analysis.</dd>
+        </div>
+        <div class="grid gap-3 p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7 border-b border-border">
+          <dt class="text-[15px] font-bold text-ink">Key Capabilities</dt>
+          <dd class="m-0 text-[15px] leading-[1.75] text-ink3">
+            <ol class="m-0 list-decimal space-y-3 pl-5 text-[15px] leading-[1.75] text-ink3 marker:font-semibold marker:text-accent">
+              <li class="pl-1"><strong class="font-semibold text-ink">Three model modes.</strong> Choose SIR, SIS, or SIRS and configure infection, immunity, and optional mortality settings.</li>
+              <li class="pl-1"><strong class="font-semibold text-ink">Reusable experiment tools.</strong> Create starting grids, compare repeated runs, vary infection probability, and inspect heatmaps.</li>
+              <li class="pl-1"><strong class="font-semibold text-ink">Transparent outputs.</strong> Read per-step history, final matrices, and optional cell-level logs that include the initial state.</li>
+            </ol>
+          </dd>
+        </div>
+        <div class="grid gap-3 p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7 bg-accent text-white">
+          <dt class="text-[15px] font-bold text-white">Product Value</dt>
+          <dd class="m-0 text-[15px] leading-[1.75] text-white/80">The package turns model mechanics into <strong class="font-semibold text-white">a repeatable workflow that users can configure, inspect, and extend.</strong> It is a stochastic grid simulator; it does not estimate disease parameters from observed data or forecast real populations.</dd>
+        </div>
+      </dl>
+      <div role="group" aria-label="Project resources" class="mt-8 grid gap-3 md:grid-cols-3">
+        <a href="https://github.com/austin-mel/sirmodelsimulation" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center rounded-[10px] text-center font-semibold no-underline transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent min-h-[60px] px-8 py-4 text-base bg-ink text-white hover:bg-accent">View package repository</a>
+        <a href="https://github.com/austin-mel/sirmodelsimulation#readme" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center rounded-[10px] text-center font-semibold no-underline transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent min-h-[60px] px-8 py-4 text-base border border-accent2 bg-accent-pale text-accent hover:bg-accent hover:text-white">Read package guide</a>
+        <a href="#showcase" class="inline-flex items-center justify-center rounded-[10px] text-center font-semibold no-underline transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent min-h-[60px] px-8 py-4 text-base border border-accent2 bg-accent-pale text-accent hover:bg-accent hover:text-white">Explore example outputs</a>
       </div>
+      <nav aria-label="Explore this project" class="mx-auto mt-12 grid max-w-[1000px] grid-cols-1 gap-5 md:mt-16 md:grid-cols-2">
+        <a href="#showcase" class="inline-flex items-center justify-center rounded-[10px] text-center font-semibold no-underline transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent min-h-[88px] w-full px-10 py-6 text-lg bg-ink text-white hover:bg-accent">Explore the package</a>
+        <a href="#technical-details" class="inline-flex items-center justify-center rounded-[10px] text-center font-semibold no-underline transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent min-h-[88px] w-full px-10 py-6 text-lg border border-border2 text-ink hover:border-accent2 hover:text-accent2">Jump to technical details</a>
+      </nav>
     </section>
 
-    <section class="bg-cream2 py-[82px]">
+    <section id="context" aria-labelledby="context-title" class="scroll-mt-[100px] py-14 md:py-[82px] bg-cream2">
       <div class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
         <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
           <div>
-            <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Project Overview</div>
-          <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The package turns a population grid into a reproducible transition process.</h2>
+            <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Why the Package Matters</div>
+            <h2 id="context-title" class="font-display text-[28px] font-bold leading-[1.06] text-ink xs:text-[34px] md:text-[48px]">Make simulation rules easy to explore.</h2>
           </div>
-          <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-            The project workflow creates a matrix, applies transition assumptions, runs the model, records state history, and summarizes repeated stochastic behavior.
-          </p>
+          <p class="m-0 text-[15px] leading-[1.76] text-ink3">The package exposes model choices through a consistent interface, so attention can stay on the behavior of the simulated system.</p>
         </header>
-
-        <div class="mb-7 grid grid-cols-1 gap-4 md:grid-cols-3">
-          <article v-for="card in contextCards" :key="card.title" class="min-h-[168px] rounded-[12px] border border-border bg-white p-[22px]">
-            <div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">{{ card.type }}</div>
-            <strong class="block text-[15px] text-ink">{{ card.title }}</strong>
-            <p class="mt-2 text-[13px] leading-[1.55] text-ink3">{{ card.body }}</p>
+        <div class="grid gap-4 md:grid-cols-2">
+          <article class="min-w-0 rounded-[12px] border border-border bg-white p-[22px]">
+            <h3 class="text-[17px] font-bold text-ink">A configurable starting point</h3>
+            <p class="mb-0 mt-3 text-[15px] leading-[1.7] text-ink3">Random, exact-count, corner-seeded, center-seeded, or custom matrices define the initial population. Numeric states keep each cell’s condition visible.</p>
           </article>
-        </div>
-
-        <div class="grid grid-cols-1 gap-3 md:grid-cols-5">
-          <article v-for="step in workflowSteps" :key="step[0]" class="min-h-[156px] rounded-[10px] border border-border bg-white p-[18px]">
-            <div class="mb-[18px] grid h-[30px] w-[30px] place-items-center rounded-full bg-accent-pale font-mono text-xs font-medium text-accent">{{ step[0] }}</div>
-            <h3 class="mb-2 text-sm font-bold text-ink">{{ step[1] }}</h3>
-            <p class="m-0 text-xs leading-[1.55] text-ink3">{{ step[2] }}</p>
+          <article class="min-w-0 rounded-[12px] border border-border bg-white p-[22px]">
+            <h3 class="text-[17px] font-bold text-ink">An inspectable result</h3>
+            <p class="mb-0 mt-3 text-[15px] leading-[1.7] text-ink3">History tables, final matrices, and full cell logs show how a run unfolded. Repeated-run summaries and heatmaps help compare stochastic behavior.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]">
-      <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
-        <div>
-          <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">State System</div>
-          <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">Every simulation is built from four interpretable cell states.</h2>
-        </div>
-        <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-          The state encoding uses compact numeric values so the simulation can update, summarize, plot, and log population status without requiring a separate object model.
-        </p>
-      </header>
-
-      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <article v-for="card in stateCards" :key="card.title" class="rounded-[12px] border border-border bg-white p-6">
-          <div class="font-mono text-[11px] uppercase text-ink4">{{ card.type }}</div>
-          <strong class="mt-4 block text-[15px] text-ink">{{ card.title }}</strong>
-          <p class="mt-3 text-[13px] leading-[1.6] text-ink3">{{ card.body }}</p>
-        </article>
-      </div>
-
-      <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-[1.06fr_0.94fr]">
-        <article class="rounded-[12px] border border-border bg-white p-6">
-          <div class="mb-4 flex items-baseline justify-between gap-4">
-            <h3 class="text-[15px] font-bold text-ink">Neighborhood test case</h3>
-            <span class="font-mono text-[11px] text-ink4">prob_infect = 1</span>
-          </div>
-          <p class="text-[13px] leading-[1.6] text-ink3">
-            A single infected center can infect all eight neighboring susceptible cells, while the original infected cell becomes recovered under SIR.
-          </p>
-          <div class="mt-[18px] grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
-            <div class="grid grid-cols-3 gap-1.5 justify-self-center">
-              <span v-for="index in 9" :key="index" class="grid h-9 w-9 place-items-center rounded-[8px] border border-border2 bg-white font-mono text-xs text-ink" :class="{ 'border-[#9d2727] bg-[#c73535] text-white': index === 5 }">{{ index === 5 ? 1 : 0 }}</span>
-            </div>
-            <div class="text-center font-mono text-[11px] font-medium uppercase tracking-[1px] text-accent">SIR step</div>
-            <div class="grid grid-cols-3 gap-1.5 justify-self-center">
-              <span v-for="index in 9" :key="index" class="grid h-9 w-9 place-items-center rounded-[8px] border font-mono text-xs text-white" :class="index === 5 ? 'border-[#6f7683] bg-ink4' : 'border-[#9d2727] bg-[#c73535]'">{{ index === 5 ? 2 : 1 }}</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="rounded-[12px] border border-border bg-white p-6">
-          <div class="mb-4 flex items-baseline justify-between gap-4">
-            <h3 class="text-[15px] font-bold text-ink">Model transitions</h3>
-            <span class="font-mono text-[11px] text-ink4">post-infection state</span>
-          </div>
-          <div class="grid gap-3">
-            <div v-for="item in transitionCards" :key="item[0]" class="rounded-[10px] bg-cream p-4">
-              <strong class="block text-sm text-ink">{{ item[0] }}</strong>
-              <span class="mt-1 block text-xs leading-[1.55] text-ink3">{{ item[1] }}</span>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="bg-cream2 py-[82px]">
+    <section id="workflow" aria-labelledby="workflow-title" class="scroll-mt-[100px] py-14 md:py-[82px]">
       <div class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
         <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
           <div>
-            <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Simulation Examples</div>
-            <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The examples cover every model mode and mortality branch.</h2>
+            <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">How the Package Works</div>
+            <h2 id="workflow-title" class="font-display text-[28px] font-bold leading-[1.06] text-ink xs:text-[34px] md:text-[48px]">From a starting grid to reusable outputs.</h2>
           </div>
-          <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-            These examples mirror the package API: the same <code>simulate_sir()</code> function runs SIR, SIS, SIRS, and mortality-enabled variants by changing explicit arguments.
-          </p>
+          <p class="m-0 text-[15px] leading-[1.76] text-ink3">A small set of documented functions covers the main steps of building and exploring a simulation.</p>
         </header>
-
-        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <article v-for="example in simulationExamples" :key="example.title" class="rounded-[12px] border border-border bg-white p-[22px]">
-            <div class="mb-[18px] font-mono text-[11px] uppercase text-ink4">Example</div>
-            <strong class="block text-[15px] text-ink">{{ example.title }}</strong>
-            <p class="mt-2 text-[13px] leading-[1.55] text-ink3">{{ example.body }}</p>
-            <pre class="mt-4 overflow-x-auto rounded-[10px] bg-cream px-4 py-4 text-left"><code class="whitespace-pre text-[12px] leading-[1.6] text-accent">{{ example.code }}</code></pre>
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <article class="min-w-0 rounded-[12px] border border-border bg-white p-[22px]">
+            <div class="mb-5 grid h-8 w-8 place-items-center rounded-full bg-accent-pale font-mono text-xs font-medium text-accent">01</div>
+            <h3 class="text-[15px] font-bold text-ink">Create a population</h3>
+            <p class="mb-0 mt-3 text-[14px] leading-[1.7] text-ink3">Construct a starting matrix with the desired grid dimensions and infection pattern.</p>
+          </article>
+          <article class="min-w-0 rounded-[12px] border border-border bg-white p-[22px]">
+            <div class="mb-5 grid h-8 w-8 place-items-center rounded-full bg-accent-pale font-mono text-xs font-medium text-accent">02</div>
+            <h3 class="text-[15px] font-bold text-ink">Choose the rules</h3>
+            <p class="mb-0 mt-3 text-[14px] leading-[1.7] text-ink3">Select SIR, SIS, or SIRS and set infection, immunity, and optional mortality probabilities.</p>
+          </article>
+          <article class="min-w-0 rounded-[12px] border border-border bg-white p-[22px]">
+            <div class="mb-5 grid h-8 w-8 place-items-center rounded-full bg-accent-pale font-mono text-xs font-medium text-accent">03</div>
+            <h3 class="text-[15px] font-bold text-ink">Run &amp; inspect</h3>
+            <p class="mb-0 mt-3 text-[14px] leading-[1.7] text-ink3">Use seed control for reproducibility. Inspect step history, the final matrix, and optional full logs.</p>
+          </article>
+          <article class="min-w-0 rounded-[12px] border border-border bg-white p-[22px]">
+            <div class="mb-5 grid h-8 w-8 place-items-center rounded-full bg-accent-pale font-mono text-xs font-medium text-accent">04</div>
+            <h3 class="text-[15px] font-bold text-ink">Repeat &amp; compare</h3>
+            <p class="mb-0 mt-3 text-[14px] leading-[1.7] text-ink3">Summarize repeated runs, sweep infection probabilities, and visualize infection frequency by cell.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="api" class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]">
-      <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
-        <div>
-          <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Public API</div>
-          <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The package separates setup, single runs, and simulation summaries.</h2>
+    <section id="showcase" aria-labelledby="showcase-title" class="scroll-mt-[100px] py-14 md:py-[82px] bg-cream2">
+      <div class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
+        <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
+          <div>
+            <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Package Showcase</div>
+            <h2 id="showcase-title" class="font-display text-[28px] font-bold leading-[1.06] text-ink xs:text-[34px] md:text-[48px]">See what the package produces.</h2>
+          </div>
+          <p class="m-0 text-[15px] leading-[1.76] text-ink3">These existing generated figures illustrate the package’s output types. They describe example simulations, with outcomes determined by the chosen model settings and seed.</p>
+        </header>
+        <figure class="m-0 rounded-[12px] border border-border bg-white p-5 md:p-7">
+          <h3 class="text-[17px] font-bold text-ink">A simulation history you can inspect</h3>
+          <ProjectScreenshotLightbox
+            :src="sirHistoryFigure"
+            alt="Line chart showing susceptible, infected, and recovered cell counts over a generated SIR run."
+            title="A simulation history you can inspect"
+            trigger-class="group mt-5 block w-full overflow-hidden rounded-[10px] border border-border bg-white"
+            image-class="transition-transform duration-200 motion-safe:group-hover:scale-[1.01] motion-reduce:transition-none"
+          />
+          <figcaption class="mt-4 text-[13px] leading-[1.7] text-ink3">Per-step history tracks the changing numbers of susceptible, infected, and recovered cells. Select the image to view it at full size.</figcaption>
+        </figure>
+        <div class="grid gap-4 lg:grid-cols-2 mt-6">
+          <figure class="m-0 rounded-[12px] border border-border bg-white p-5 md:p-7">
+            <h3 class="text-[17px] font-bold text-ink">Starting population</h3>
+            <ProjectScreenshotLightbox
+              :src="initialMatrixFigure"
+              alt="Initial population matrix for a generated simulation."
+              title="Starting population"
+              trigger-class="group mt-5 block w-full overflow-hidden rounded-[10px] border border-border bg-white"
+              image-class="transition-transform duration-200 motion-safe:group-hover:scale-[1.01] motion-reduce:transition-none"
+            />
+            <figcaption class="mt-4 text-[13px] leading-[1.7] text-ink3">The starting matrix makes the initial infection pattern visible. Select the image to view it at full size.</figcaption>
+          </figure>
+          <figure class="m-0 rounded-[12px] border border-border bg-white p-5 md:p-7">
+            <h3 class="text-[17px] font-bold text-ink">Final population</h3>
+            <ProjectScreenshotLightbox
+              :src="sirFinalMatrixFigure"
+              alt="Final cell-state matrix after a generated SIR run."
+              title="Final population"
+              trigger-class="group mt-5 block w-full overflow-hidden rounded-[10px] border border-border bg-white"
+              image-class="transition-transform duration-200 motion-safe:group-hover:scale-[1.01] motion-reduce:transition-none"
+            />
+            <figcaption class="mt-4 text-[13px] leading-[1.7] text-ink3">The returned matrix preserves each cell’s state at the end of the run. Select the image to view it at full size.</figcaption>
+          </figure>
         </div>
-        <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-          The public API lets a user create starting matrices, run simulations, repeat stochastic trials, sweep infection probabilities, and summarize where infection reaches across repeated runs.
-        </p>
-      </header>
+        <div class="grid gap-4 lg:grid-cols-2 mt-6">
+          <figure class="m-0 rounded-[12px] border border-border bg-white p-5 md:p-7">
+            <h3 class="text-[17px] font-bold text-ink">Compare infection probabilities</h3>
+            <ProjectScreenshotLightbox
+              :src="probabilitySweepFigure"
+              alt="Probability sweep comparing infection probability with infected proportion and simulation duration."
+              title="Compare infection probabilities"
+              trigger-class="group mt-5 block w-full overflow-hidden rounded-[10px] border border-border bg-white"
+              image-class="transition-transform duration-200 motion-safe:group-hover:scale-[1.01] motion-reduce:transition-none"
+            />
+            <figcaption class="mt-4 text-[13px] leading-[1.7] text-ink3">A probability sweep runs the same starting matrix across different infection settings. Select the image to view it at full size.</figcaption>
+          </figure>
+          <figure class="m-0 rounded-[12px] border border-border bg-white p-5 md:p-7">
+            <h3 class="text-[17px] font-bold text-ink">Summarize repeated runs</h3>
+            <ProjectScreenshotLightbox
+              :src="infectionHeatmapFigure"
+              alt="Heatmap of cells infected at least once across 100 SIR simulations."
+              title="Summarize repeated runs"
+              trigger-class="group mt-5 block w-full overflow-hidden rounded-[10px] border border-border bg-white"
+              image-class="transition-transform duration-200 motion-safe:group-hover:scale-[1.01] motion-reduce:transition-none"
+            />
+            <figcaption class="mt-4 text-[13px] leading-[1.7] text-ink3">Cell counts show how often each location was infected at least once across 100 runs. Select the image to view it at full size.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
 
-      <article class="mb-6 overflow-hidden rounded-[12px] border border-border bg-white p-6">
-        <div class="mb-4 flex items-baseline justify-between gap-4">
-          <h3 class="text-[15px] font-bold text-ink">Public API contract</h3>
-          <span class="font-mono text-[11px] text-ink4">8 exported functions</span>
+    <section id="technical-details" aria-labelledby="technical-details-title" class="scroll-mt-[100px] py-14 md:py-[82px]">
+      <div class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
+        <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
+          <div>
+            <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Technical Details &amp; Limitations</div>
+            <h2 id="technical-details-title" class="font-display text-[28px] font-bold leading-[1.06] text-ink xs:text-[34px] md:text-[48px]">A compact interface with explicit model rules.</h2>
+          </div>
+          <p class="m-0 text-[15px] leading-[1.76] text-ink3">Numeric matrices carry the simulation state. Synchronous updates use local infected-neighbor exposure to determine the next step.</p>
+        </header>
+        <div class="grid gap-4 md:grid-cols-2">
+          <article class="min-w-0 rounded-[12px] border border-border bg-white p-[22px]">
+            <h3 class="text-[17px] font-bold text-ink">State representation</h3>
+            <p class="mb-0 mt-3 text-[14px] leading-[1.75] text-ink3">Cells use four values: <code class="font-mono text-[0.88em]">0</code> susceptible, <code class="font-mono text-[0.88em]">1</code> infected, <code class="font-mono text-[0.88em]">2</code> recovered, and <code class="font-mono text-[0.88em]">3</code> deceased. Optional full logs retain one row per cell per step, including step 0.</p>
+          </article>
+          <article class="min-w-0 rounded-[12px] border border-border bg-white p-[22px]">
+            <h3 class="text-[17px] font-bold text-ink">Neighborhood exposure</h3>
+            <p class="mb-0 mt-3 text-[14px] leading-[1.75] text-ink3">A susceptible cell checks its eight-cell neighborhood. Exposure follows <code class="font-mono text-[0.88em]">1 - (1 - prob_infect)^infected_neighbors</code>, with model-specific transitions for infected cells.</p>
+          </article>
         </div>
-        <div class="overflow-x-auto">
-          <table class="w-full min-w-[760px] border-collapse text-left text-xs">
-            <thead class="text-ink3">
-              <tr class="border-b border-border">
-                <th class="p-2.5">Group</th>
-                <th class="p-2.5">Functions</th>
-                <th class="p-2.5">Contract</th>
+        <div tabindex="0" role="region" aria-label="Public interface" class="mt-6 overflow-x-auto rounded-[12px] border border-border bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">
+          <table class="w-full border-collapse text-left text-[13px]">
+            <caption class="p-5 text-left text-[17px] font-bold text-ink">Public interface</caption>
+            <thead>
+              <tr>
+                <th scope="col" class="border-t border-border p-3 align-top text-ink">Task</th>
+                <th scope="col" class="border-t border-border p-3 align-top text-ink">Functions &amp; outputs</th>
               </tr>
             </thead>
-            <tbody class="text-ink3">
-              <tr v-for="row in apiContractRows" :key="row[0]" class="border-b border-cream3 last:border-b-0">
-                <td v-for="cell in row" :key="cell" class="p-2.5">{{ cell }}</td>
+            <tbody>
+              <tr>
+                <th scope="row" class="border-t border-border p-3 align-top text-ink font-semibold">Population setup</th>
+                <td class="border-t border-border p-3 align-top text-ink3"><code class="font-mono text-[0.88em]">create_random_matrix()</code>, <code class="font-mono text-[0.88em]">create_matrix()</code>, <code class="font-mono text-[0.88em]">create_corner_matrix()</code>, and <code class="font-mono text-[0.88em]">create_center_matrix()</code> construct starting grids.</td>
+              </tr>
+              <tr>
+                <th scope="row" class="border-t border-border p-3 align-top text-ink font-semibold">Single simulation</th>
+                <td class="border-t border-border p-3 align-top text-ink3"><code class="font-mono text-[0.88em]">simulate_sir()</code> returns steps, infection proportion, final matrix, and history; <code class="font-mono text-[0.88em]">full_log = TRUE</code> also returns cell-level records.</td>
+              </tr>
+              <tr>
+                <th scope="row" class="border-t border-border p-3 align-top text-ink font-semibold">Repeated runs</th>
+                <td class="border-t border-border p-3 align-top text-ink3"><code class="font-mono text-[0.88em]">simulate_many_runs()</code> summarizes total steps and infected proportion across repeated simulations.</td>
+              </tr>
+              <tr>
+                <th scope="row" class="border-t border-border p-3 align-top text-ink font-semibold">Probability sweep</th>
+                <td class="border-t border-border p-3 align-top text-ink3"><code class="font-mono text-[0.88em]">simulate_inf_seq()</code> compares outcomes across infection probability settings.</td>
+              </tr>
+              <tr>
+                <th scope="row" class="border-t border-border p-3 align-top text-ink font-semibold">Infection heatmap</th>
+                <td class="border-t border-border p-3 align-top text-ink3"><code class="font-mono text-[0.88em]">multiple_run_heatmap()</code> counts how often each cell is infected at least once across runs.</td>
               </tr>
             </tbody>
           </table>
         </div>
-      </article>
-
-      <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <article v-for="card in apiCards" :key="card[1]" class="rounded-[12px] border border-border bg-white p-[22px]">
-          <div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">{{ card[0] }}</div>
-          <strong class="block text-[15px] text-ink">{{ card[1] }}</strong>
-          <p class="mt-2 text-[13px] leading-[1.55] text-ink3">{{ card[2] }}</p>
+        <article class="min-w-0 rounded-[12px] border border-border bg-white p-[22px] mt-6">
+          <h3 class="text-[17px] font-bold text-ink">A single-run example</h3>
+          <p class="mb-0 mt-3 text-[14px] leading-[1.75] text-ink3">With the package loaded and an initial population matrix assigned to <code class="font-mono text-[0.88em]">initial</code>, request a seeded run and its full cell log.</p>
+          <pre class="mt-5 overflow-x-auto rounded-[10px] bg-ink p-6 text-[#e6edf3]"><code class="font-mono text-[13px] leading-[1.8]">result &lt;- simulate_sir(
+  prob_infect = 0.25,
+  input_matrix = initial,
+  model = &quot;SIR&quot;,
+  seed = 94128,
+  full_log = TRUE
+)</code></pre>
+        </article>
+        <div class="mt-6">
+          <div class="grid gap-4 md:grid-cols-2">
+            <article class="min-w-0 rounded-[12px] border border-border bg-white p-[22px]">
+              <h3 class="text-[17px] font-bold text-ink">Documented &amp; tested</h3>
+              <p class="mb-0 mt-3 text-[14px] leading-[1.75] text-ink3">The existing testthat suite covers matrix construction, seed reproducibility, invalid inputs, transition rules, mortality edge cases, summary outputs, and full-log schema. README examples, a vignette, and manual pages explain usage.</p>
+            </article>
+            <article class="min-w-0 rounded-[12px] border border-border bg-white p-[22px]">
+              <h3 class="text-[17px] font-bold text-ink">Model assumptions</h3>
+              <p class="mb-0 mt-3 text-[14px] leading-[1.75] text-ink3">Results depend on grid dimensions, local exposure, synchronous updates, transition settings, and random seeds. The figures demonstrate package behavior rather than calibrated predictions.</p>
+            </article>
+          </div>
+        </div>
+        <article aria-labelledby="conclusions-title" class="bg-accent text-white mt-8 p-6 md:p-9 rounded-[12px] border border-accent">
+          <h3 id="conclusions-title" class="font-display text-[26px] font-bold leading-tight md:text-[32px] text-white">Final Conclusions</h3>
+          <p class="mb-0 mt-4 text-[15px] leading-[1.75] text-white/80">SIRSsim packages population setup, SIR-family transitions, repeated experiments, and structured outputs into a reusable R interface. Seeded examples, documentation, and tests support inspection of the simulation mechanics, while history tables and optional full logs preserve how each run unfolds. Outcomes depend on the chosen grid, transition rules, settings, and seed. The package demonstrates stochastic simulation behavior rather than calibrated disease forecasts.</p>
         </article>
       </div>
     </section>
 
-    <section id="outputs" class="bg-cream2 py-[82px]">
+    <section id="resources" aria-labelledby="resources-title" class="scroll-mt-[100px] py-14 md:py-[82px] bg-cream2">
       <div class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
-        <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
+        <header class="mb-[34px]">
           <div>
-            <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Outputs</div>
-            <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">Simulation outputs support summary statistics and event-level analysis.</h2>
+            <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Package Resources</div>
+            <h2 id="resources-title" class="font-display text-[28px] font-bold leading-[1.06] text-ink xs:text-[34px] md:text-[48px]">Explore the code and learn the interface.</h2>
           </div>
-          <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-            The package returns compact result fields by default, then expands to a long-format per-cell log when survival-style analysis is needed.
-          </p>
+          <p class="mt-4 text-[15px] leading-[1.76] text-ink3">The repository brings the implementation, examples, documentation, and tests together.</p>
         </header>
-
-        <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-          <article v-for="card in outputCards" :key="card.title" class="rounded-[12px] border border-border bg-white p-[22px]">
-            <div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">{{ card.type }}</div>
-            <strong class="block text-[15px] text-ink">{{ card.title }}</strong>
-            <p class="mt-2 text-[13px] leading-[1.55] text-ink3">{{ card.body }}</p>
+        <div class="grid gap-4 md:grid-cols-2">
+          <article class="min-w-0 rounded-[12px] border border-border bg-white p-[22px] flex flex-col">
+            <h3 class="mt-3 text-[20px] font-bold text-ink">Package repository</h3>
+            <p class="mb-6 mt-3 text-[15px] leading-[1.7] text-ink3">Review the R implementation, package metadata, and tests for the simulation interface.</p>
+            <a href="https://github.com/austin-mel/sirmodelsimulation" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center rounded-[10px] text-center font-semibold no-underline transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent min-h-[60px] px-8 py-4 text-base bg-ink text-white hover:bg-accent mt-auto w-full self-start sm:w-auto">View package repository</a>
+          </article>
+          <article class="min-w-0 rounded-[12px] border border-border bg-white p-[22px] flex flex-col">
+            <h3 class="mt-3 text-[20px] font-bold text-ink">Usage guide &amp; examples</h3>
+            <p class="mb-6 mt-3 text-[15px] leading-[1.7] text-ink3">Start with the README, then explore the vignette and function documentation in the repository.</p>
+            <a href="https://github.com/austin-mel/sirmodelsimulation#readme" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center rounded-[10px] text-center font-semibold no-underline transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent min-h-[60px] px-8 py-4 text-base border border-accent2 bg-accent-pale text-accent hover:bg-accent hover:text-white mt-auto w-full self-start sm:w-auto">Read package guide</a>
           </article>
         </div>
-
-        <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-          <article v-for="figure in figures" :key="figure.title" class="rounded-[12px] border border-border bg-white p-[22px]">
-            <div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">Generated output</div>
-            <strong class="block text-[15px] text-ink">{{ figure.title }}</strong>
-            <ProjectScreenshotLightbox :src="figure.image" :alt="figure.alt" :title="figure.title" type="Generated simulation figure" trigger-class="group mt-3 block w-full overflow-hidden rounded-[10px] border border-border bg-white max-md:pointer-events-none max-md:cursor-default" image-class="transition-transform duration-200 group-hover:scale-[1.01]" />
-            <p class="mb-0 mt-3 text-[13px] leading-[1.55] text-ink3">{{ figure.body }}</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))] py-[82px]">
-      <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
-        <div>
-          <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Validation and Documentation</div>
-          <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The project includes tests, documentation, examples, and package metadata.</h2>
-        </div>
-        <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-          The package structure includes documented functions, vignette examples, test cases, and a README that explains state encoding, model options, mortality, full logs, and summary tools.
-        </p>
-      </header>
-
-      <article class="mb-6 overflow-hidden rounded-[12px] border border-border bg-white p-6">
-        <div class="mb-4 flex items-baseline justify-between gap-4">
-          <h3 class="text-[15px] font-bold text-ink">Test coverage evidence</h3>
-          <span class="font-mono text-[11px] text-ink4">tests/testthat</span>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full min-w-[700px] border-collapse text-left text-xs">
-            <thead class="text-ink3">
-              <tr class="border-b border-border">
-                <th class="p-2.5">Area</th>
-                <th class="p-2.5">Behaviors checked</th>
-              </tr>
-            </thead>
-            <tbody class="text-ink3">
-              <tr v-for="row in testCoverageRows" :key="row[0]" class="border-b border-cream3 last:border-b-0">
-                <td v-for="cell in row" :key="cell" class="p-2.5">{{ cell }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </article>
-
-      <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <article v-for="card in validationCards" :key="card.title" class="rounded-[12px] border border-border bg-white p-[22px]">
-          <div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">{{ card.type }}</div>
-          <strong class="block text-[15px] text-ink">{{ card.title }}</strong>
-          <p class="mt-2 text-[13px] leading-[1.55] text-ink3">{{ card.body }}</p>
-        </article>
-      </div>
-
-      <a class="mt-6 inline-flex min-h-[58px] w-full items-center justify-center rounded-[12px] bg-ink px-6 text-base font-semibold text-white no-underline transition-colors hover:bg-accent" :href="githubRepoUrl" target="_blank" rel="noreferrer">View GitHub repo</a>
-    </section>
-
-    <section class="bg-cream2 py-[82px]">
-      <div class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
-        <header class="mb-[34px] grid grid-cols-1 items-end gap-6 md:grid-cols-[0.85fr_1fr] md:gap-14">
-          <div>
-            <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Modeling Boundaries</div>
-            <h2 class="font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] text-ink md:text-[48px]">The simulator stores model assumptions in function arguments and output logs.</h2>
-          </div>
-          <p class="m-0 text-[15px] font-light leading-[1.76] text-ink3">
-            SIRSsim supports controlled transition experiments. It is not calibrated to surveillance data and should not be presented as a real-world forecast.
-          </p>
-        </header>
-
-        <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-          <article v-for="item in limitationCards" :key="item[0]" class="rounded-[12px] border border-border bg-white p-[22px]">
-            <div class="mb-[22px] font-mono text-[11px] uppercase text-ink4">Limit</div>
-            <strong class="block text-[15px] text-ink">{{ item[0] }}</strong>
-            <p class="mt-2 text-[13px] leading-[1.55] text-ink3">{{ item[1] }}</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="bg-cream2 py-[82px]">
-      <div class="mx-auto w-[min(1120px,calc(100%_-_32px))] xs:w-[min(1120px,calc(100%_-_48px))]">
-        <div class="relative overflow-hidden rounded-[14px] bg-ink p-8 text-white md:p-11">
-          <div class="pointer-events-none absolute right-[-170px] top-[-170px] h-[500px] w-[500px] rounded-full border border-white/[0.05]" aria-hidden="true"></div>
-          <div class="relative z-[1] mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-white/65 before:h-0.5 before:w-[26px] before:bg-white/65 before:content-['']">Final Conclusions</div>
-          <h2 class="relative z-[1] max-w-[760px] font-display text-[28px] font-bold xs:text-[34px] leading-[1.06] tracking-normal text-white md:text-[48px]">SIRSsim stores grid-simulation assumptions in functions, tests, and logs.</h2>
-          <h3 class="relative z-[1] mt-[26px] text-[15px] font-bold text-white">Project conclusion</h3>
-          <p class="relative z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">
-            SIRSsim gives users a compact R package for exploring SIR-family transition rules on a grid. Its core contribution is making assumptions explicit: who is susceptible, who is infected, what happens after infection, whether mortality is possible, and how repeated stochastic runs change the observed outcome.
-          </p>
-          <p class="relative z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">
-            The package supports single-run inspection, repeated-run summaries, infection-probability sweeps, recovered-cell heatmaps, and full per-cell logs for survival-style endpoints. The implementation is a package API for controlled model experiments, not a calibrated forecasting tool.
-          </p>
-          <h3 class="relative z-[1] mt-[26px] text-[15px] font-bold text-white">Implementation conclusion</h3>
-          <p class="relative z-[1] max-w-[740px] text-base leading-[1.72] text-white/70">
-            The package provides a reproducible simulation surface based on clear matrix states, explicit transition assumptions, single-run and repeated-run inspection, and full_log output for cell-level event timing.
-          </p>
-        </div>
+        <footer class="mt-8 flex flex-col items-start justify-between gap-6 border-t border-border pt-7 text-[14px] leading-[1.8] md:flex-row">
+          <p class="m-0 text-ink3"><strong class="font-semibold text-ink">Austin Melendez</strong><br />SIRSsim · R simulation package</p>
+        </footer>
       </div>
     </section>
   </main>
