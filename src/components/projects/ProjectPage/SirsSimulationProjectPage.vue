@@ -277,14 +277,14 @@ import infectionHeatmapFigure from '@/assets/projects/sirs/infection-heatmap.png
         </header>
         <div class="grid gap-4 md:grid-cols-2">
           <article class="min-w-0 rounded-[12px] border border-border bg-white p-[22px] flex flex-col">
-            <h3 class="mt-3 text-[20px] font-bold text-ink">Package repository</h3>
-            <p class="mb-6 mt-3 text-[15px] leading-[1.7] text-ink3">Review the R implementation, package metadata, and tests for the simulation interface.</p>
-            <a href="https://github.com/austin-mel/sirmodelsimulation" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center rounded-[10px] text-center font-semibold no-underline transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent min-h-[60px] px-8 py-4 text-base bg-ink text-white hover:bg-accent mt-auto w-full self-start sm:w-auto">View package repository</a>
-          </article>
-          <article class="min-w-0 rounded-[12px] border border-border bg-white p-[22px] flex flex-col">
             <h3 class="mt-3 text-[20px] font-bold text-ink">Usage guide &amp; examples</h3>
             <p class="mb-6 mt-3 text-[15px] leading-[1.7] text-ink3">Start with the README, then explore the vignette and function documentation in the repository.</p>
             <a href="https://github.com/austin-mel/sirmodelsimulation#readme" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center rounded-[10px] text-center font-semibold no-underline transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent min-h-[60px] px-8 py-4 text-base border border-accent2 bg-accent-pale text-accent hover:bg-accent hover:text-white mt-auto w-full self-start sm:w-auto">Read package guide</a>
+          </article>
+          <article class="min-w-0 rounded-[12px] border border-border bg-white p-[22px] flex flex-col">
+            <h3 class="mt-3 text-[20px] font-bold text-ink">Package repository</h3>
+            <p class="mb-6 mt-3 text-[15px] leading-[1.7] text-ink3">Review the R implementation, package metadata, and tests for the simulation interface.</p>
+            <a href="https://github.com/austin-mel/sirmodelsimulation" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center rounded-[10px] text-center font-semibold no-underline transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent min-h-[60px] px-8 py-4 text-base bg-ink text-white hover:bg-accent mt-auto w-full self-start sm:w-auto">View package repository</a>
           </article>
         </div>
         <footer class="mt-8 flex flex-col items-start justify-between gap-6 border-t border-border pt-7 text-[14px] leading-[1.8] md:flex-row">

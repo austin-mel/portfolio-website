@@ -14,6 +14,7 @@ import jeffersonQqFigure from '@/assets/projects/scicomm/model-jefferson-change-
 import torontoQqFigure from '@/assets/projects/scicomm/model-toronto-change-qq.png';
 
 const githubRepoUrl = 'https://github.com/austin-mel-edu/sacramento-state-university/tree/master/STAT192%20-%20Senior%20Capstone%20Project/Shelby%20C%20-%20CSUS%20Biological%20Sciences%20Dept';
+const technicalReportTitle = 'SciComm Empathy Technical Project Report — May 19, 2026';
 
 const keyFindings = [
   {
@@ -30,7 +31,7 @@ const keyFindings = [
   },
 ];
 
-// Client report p. 6, supplied technical report pp. 1–2, and the three R notebooks.
+// Client report p. 6, technical report §2.6, and the three R notebooks.
 const workflowSteps = [
   {
     number: '01',
@@ -247,7 +248,7 @@ const nextSteps = [
         />
         <ProjectPdfReportModal
           :src="technicalReportPdf"
-          title="SciComm Empathy Technical Project Report — March 3, 2026 pre-survey analysis"
+          :title="technicalReportTitle"
           button-label="Read technical report"
           trigger-class="inline-flex min-h-[60px] items-center justify-center rounded-[10px] border border-accent2 bg-accent-pale px-8 py-4 text-base font-semibold text-accent transition-colors hover:bg-accent hover:text-white"
         />
@@ -469,10 +470,10 @@ const nextSteps = [
           </article>
           <article class="flex flex-col rounded-[12px] border border-border bg-white p-[22px]">
             <h3 class="mt-3 text-[20px] font-bold text-ink">Technical project report</h3>
-            <p class="mb-6 mt-3 text-[15px] leading-[1.7] text-ink3">The supplied 11-page technical report documents initial survey preparation, scoring, and comparisons of students’ starting scores.</p>
+            <p class="mb-6 mt-3 text-[15px] leading-[1.7] text-ink3">The 40-page technical report documents survey preparation and scoring, before-and-after comparisons, diagnostic checks, change-score models, baseline-adjusted analyses, and study limitations.</p>
             <ProjectPdfReportModal
               :src="technicalReportPdf"
-              title="SciComm Empathy Technical Project Report — March 3, 2026 pre-survey analysis"
+              :title="technicalReportTitle"
               button-label="Read technical report"
               trigger-class="mt-auto inline-flex min-h-[60px] w-full items-center justify-center self-start rounded-[10px] border border-accent2 bg-accent-pale px-8 py-4 text-base font-semibold text-accent transition-colors hover:bg-accent hover:text-white sm:w-auto"
             />
