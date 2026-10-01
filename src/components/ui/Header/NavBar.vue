@@ -24,16 +24,16 @@ const isActive = (path: string) => {
 
 <template>
 <header
-  class="fixed top-0 left-0 right-0 z-[100] grid grid-cols-3 items-center h-[75px] px-4 sm:px-8 lg:px-12 bg-[rgba(250,248,244,0.88)] backdrop-blur-[20px] border-b border-border"
+  class="fixed top-0 left-0 right-0 z-[100] grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center min-h-[75px] px-4 py-2 sm:px-8 lg:px-12 bg-[rgba(250,248,244,0.88)] backdrop-blur-[20px] border-b border-border"
 >
   <HeaderLogo class="hidden sm:flex justify-self-start" />
 
-  <nav class="col-span-3 flex max-w-full justify-self-stretch justify-start gap-[2px] overflow-x-auto no-scrollbar sm:col-span-1 sm:justify-self-center sm:justify-center">
+  <nav aria-label="Main navigation" class="flex min-w-0 max-w-full flex-wrap justify-self-center justify-center gap-[2px]">
     <button
       v-for="item in items"
       :key="item.id"
       @click="router.push(item.path)"
-      class="whitespace-nowrap rounded-[8px] px-2 py-[7px] font-sans text-[12px] font-normal transition-colors duration-150 xxs:px-3 xxs:text-[13px] sm:px-4"
+      class="min-w-0 max-w-full break-words rounded-[8px] px-2 py-[7px] font-sans text-[12px] font-normal transition-colors duration-150 xxs:px-3 xxs:text-[13px] sm:px-4"
       :class="[
         isActive(item.path)
           ? 'bg-accent-pale text-accent font-medium'
