@@ -66,35 +66,7 @@ From evaluating evidence to building tools people can use. Browse the [projects 
 
 ---
 
-### 03 · Exploring disease spread through simulation
-
-*R · Simulation · Reusable package*
-
-**The question** — How do assumptions about infection, recovery, and immunity change simulated disease spread?
-
-**My approach** — I built a tested R package that models disease spread across a grid, compares repeated runs, and produces charts and heatmaps.
-
-> **What it delivers:** Eight public functions for reproducing scenarios and inspecting how changing assumptions affects outcomes. The package demonstrates simulation methods; it is not calibrated to forecast a real epidemic.
-
-**[View project ↗](https://austinmelendez.com/projects/sirs-simulation)** &nbsp;·&nbsp; [GitHub repository](https://github.com/austin-mel/sirmodelsimulation)
-
----
-
-### 04 · Measuring when events happen in a simulation
-
-*R · Survival analysis · Reproducible workflow*
-
-**The question** — How can simulation logs reveal when infection, recovery, or death occurs, including cases where an event is not observed before the run ends?
-
-**My approach** — I converted one fixed simulation of **100 population units** into a dataset for analyzing time until an event, then created survival curves in R.
-
-> **What it delivers:** A reproducible workflow that preserves both observed events and incomplete observations, making its assumptions visible. This is a methods demonstration based on one simulated run.
-
-**[View project ↗](https://austinmelendez.com/projects/sirs-survival-analysis)** &nbsp;·&nbsp; [GitHub repository](https://github.com/austin-mel/sirsurvivalanalysis)
-
----
-
-### 05 · Making a complex clinical-trial workflow easier to follow
+### 03 · Making a complex clinical-trial workflow easier to follow
 
 *Vue · TypeScript · Express · PostgreSQL*
 
@@ -105,6 +77,20 @@ From evaluating evidence to building tools people can use. Browse the [projects 
 > **What it delivers:** An interface connected to the rules and data behind it, showing how I translate process requirements into working software. It uses synthetic data and is a demonstration, not a production clinical system.
 
 **[View project ↗](https://austinmelendez.com/projects/pharmatrial)** &nbsp;·&nbsp; [Try the demo](https://austin-mel.github.io/csc131-mock-pharmatrial-portal/) &nbsp;·&nbsp; [GitHub repository](https://github.com/austin-mel/csc131-mock-pharmatrial-portal)
+
+---
+
+### 04 · Exploring disease spread through simulation
+
+*R · Simulation · Reusable package*
+
+**The question** — How do assumptions about infection, recovery, and immunity change simulated disease spread?
+
+**My approach** — I built a tested R package that models disease spread across a grid, compares repeated runs, and produces charts and heatmaps.
+
+> **What it delivers:** Eight public functions for reproducing scenarios and inspecting how changing assumptions affects outcomes. The package demonstrates simulation methods; it is not calibrated to forecast a real epidemic.
+
+**[View project ↗](https://austinmelendez.com/projects/sirs-simulation)** &nbsp;·&nbsp; [GitHub repository](https://github.com/austin-mel/sirmodelsimulation)
 
 ---
 
