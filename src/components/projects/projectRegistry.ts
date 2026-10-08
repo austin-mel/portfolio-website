@@ -48,7 +48,6 @@ export const projects: ProjectRegistryEntry[] = [
     filters: ['modeling', 'analysis'],
     tags: ['modeling', 'analysis', 'report'],
     stack: ['Python', 'Statistical Modeling', 'EDA', 'Scientific Reporting'],
-    sourceMockup: 'src/reference/baseline-noise-project-mockup.html',
     summary:
       'Model Prisma Pro mass spectrometer baseline noise and explain why dwell-time-specific correction is required.',
     component: defineAsyncComponent(() => import('@/components/projects/ProjectPage/BaselineNoiseProjectPage.vue')),
@@ -61,8 +60,7 @@ export const projects: ProjectRegistryEntry[] = [
     category: 'Applied Statistical Analysis',
     filters: ['modeling', 'analysis'],
     tags: ['modeling', 'analysis', 'report'],
-    stack: ['R', 'Regression', 'EDA', 'Survey Data'],
-    sourceMockup: 'src/reference/scicomm-project-mockup.html',
+    stack: ['R', 'Regression', 'EDA', 'Survey Analysis', 'Scientific Reporting'],
     summary:
       'Explain whether a science communication intervention changed self-reported empathy across two survey instruments.',
     component: defineAsyncComponent(
@@ -78,7 +76,6 @@ export const projects: ProjectRegistryEntry[] = [
     filters: ['full-stack', 'product'],
     tags: ['full-stack', 'liveDemo', 'product'],
     stack: ['Vue', 'TypeScript', 'Express', 'Prisma', 'PostgreSQL'],
-    sourceMockup: 'src/reference/pharmatrial-project-mockup.html',
     summary:
       'Show a fictional role-aware trial workflow demo with live database-backed actions, seeded fallback data, patient masking, and blinded assignment state.',
     component: defineAsyncComponent(() => import('@/components/projects/ProjectPage/PharmatrialProjectPage.vue')),
@@ -92,27 +89,10 @@ export const projects: ProjectRegistryEntry[] = [
     filters: ['modeling', 'analysis', 'product'],
     tags: ['modeling', 'analysis', 'product'],
     stack: ['R', 'Package', 'Simulation', 'Visualization'],
-    sourceMockup: 'src/reference/sirs-simulation-project-mockup.html',
     summary:
       'Present an R package that exposes tested SIR, SIS, and SIRS grid-simulation functions, repeated-run summaries, and full cell logs.',
     component: defineAsyncComponent(() => import('@/components/projects/ProjectPage/SirsSimulationProjectPage.vue')),
-  },
-  /* {
-    slug: 'sirs-survival-analysis',
-    num: '05',
-    title: 'Reproducible Baseline SIRS Survival Analysis',
-    short: 'Cell-level survival endpoints derived from a mortality-enabled SIRS run.',
-    category: 'Censored Event-Time Analysis',
-    filters: ['modeling', 'analysis'],
-    tags: ['modeling', 'analysis', 'report'],
-    stack: ['R', 'Survival', 'Kaplan-Meier', 'Simulation'],
-    sourceMockup: 'src/reference/survival-analysis-project-mockup.html',
-    summary:
-      'Turn a mortality-enabled SIRS simulation into cell-level infection, recovery, and death survival endpoints.',
-    component: defineAsyncComponent(
-      () => import('@/components/projects/ProjectPage/SirsSurvivalAnalysisProjectPage.vue')
-    ),
-  }, */
+  }
 ];
 
 export const getProjectBySlug = (slug: string) =>
