@@ -24,7 +24,7 @@ import bavariaReportFigure from '@/assets/projects/pharmatrial/bavaria-report.pn
       <dl class="m-0 overflow-hidden rounded-[14px] border border-border bg-white shadow-[0_8px_24px_rgb(13_17_23_/_4%)]">
         <div class="grid gap-3 p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7 border-b border-border">
           <dt class="text-[15px] font-bold text-ink">The Problem</dt>
-          <dd class="m-0 text-[15px] leading-[1.75] text-ink3">A trial moves through many hands. Each team needs a clear view of its responsibilities, available actions, and the information it can access as the workflow progresses.</dd>
+          <dd class="m-0 text-[15px] leading-[1.75] text-ink3">A clinical trial moves through many hands. Each team needs a clear view of its responsibilities, available actions, and the information it can access as the workflow progresses.</dd>
         </div>
         <div class="grid gap-3 p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7 border-b border-border">
           <dt class="text-[15px] font-bold text-ink">The Product &amp; Tools</dt>

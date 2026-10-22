@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
 import { GeoLayer } from '@/components/ui';
 import { useScrollObserver } from '@/composables/useScrollObserver';
 import SVGIcons from '@/assets/SVGIcons.vue';
 import { ProjectTags } from '@/components/projects/ProjectTags';
 import { projects as projectRegistryProjects } from '@/components/projects/projectRegistry';
+import baselinePreview from '@/assets/projects/baseline/model-fit-kde-log-skew-t.png';
+import pharmaPreview from '@/assets/projects/pharmatrial/bavaria-dash.png';
+import empathyPreview from '@/assets/projects/scicomm/model-jefferson-ceiling-effect.png';
 
 const router = useRouter();
 
@@ -34,13 +37,29 @@ const getFeaturedProject = (slug: FeaturedProjectSlug) => {
   };
 };
 
-const featuredHero = getFeaturedProject('baseline-noise');
-const featuredProduct = getFeaturedProject('pharmatrial');
-const featuredAnalysis = getFeaturedProject('science-communication-empathy');
-
-const openProject = (slug: string) => {
-  router.push(`/projects/${slug}`);
-};
+const featuredProjects = [
+  {
+    ...getFeaturedProject('baseline-noise'),
+    image: baselinePreview,
+    imageAlt: 'Baseline noise distributions with fitted curves across six dwell times.',
+    previewLabel: 'From measured noise to a statistical model',
+    theme: 'noise',
+  },
+  {
+    ...getFeaturedProject('pharmatrial'),
+    image: pharmaPreview,
+    imageAlt: 'Clinical trial portal showing a trial overview and approval workflow.',
+    previewLabel: 'Inside the clinical trial workspace',
+    theme: 'portal',
+  },
+  {
+    ...getFeaturedProject('science-communication-empathy'),
+    image: empathyPreview,
+    imageAlt: 'Paired pre- and post-intervention Toronto empathy scores by study group.',
+    previewLabel: 'A closer look at surveyed empathy',
+    theme: 'empathy',
+  },
+];
 
 useScrollObserver('.anim-up,.feat-card');
 </script>
@@ -61,52 +80,106 @@ useScrollObserver('.anim-up,.feat-card');
           <SVGIcons name="arrowForward" class="h-3.5 w-3.5" />
         </button>
       </div>
-
-      <div class="grid gap-4 xs:gap-5 lg:grid-cols-[1.3fr_1fr] lg:gap-6">
-        <button
-          class="feat-card flex w-full cursor-pointer flex-col overflow-hidden rounded-xl border border-border bg-cream2 text-left opacity-0 translate-y-4 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-accent2 hover:shadow-[0_16px_48px_rgba(13,17,23,0.15)] focus:outline-none focus:ring-2 focus:ring-accent2/40 sm:rounded-2xl [&.vis]:translate-y-0 [&.vis]:opacity-100"
-          type="button"
-          @click="openProject(featuredHero.slug)"
+      <div class="grid gap-5 lg:grid-cols-3 lg:gap-6">
+        <RouterLink
+          v-for="(project, index) in featuredProjects"
+          :key="project.slug"
+          :to="'/projects/' + project.slug"
+          class="feat-card group grid min-w-0 overflow-hidden rounded-2xl border border-border bg-white text-left text-ink opacity-0 translate-y-4 transition-all duration-500 ease-out hover:border-accent2/40 hover:shadow-[0_16px_40px_rgba(13,17,23,0.10)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent2 focus-visible:ring-offset-4 sm:grid-cols-2 lg:flex lg:flex-col [&.vis]:translate-y-0 [&.vis]:opacity-100"
+          :aria-labelledby="'featured-' + project.slug"
         >
-          <div class="h-[160px] overflow-hidden bg-cream2 xs:h-[180px] sm:h-[200px]" aria-hidden="true"></div>
-          <div class="flex-1 bg-white p-4 xs:p-5 sm:p-6">
-            <ProjectTags :tags="featuredHero.tags" size="sm" class="mb-2.5" />
-            <div class="mb-1.5 font-display text-[17px] font-bold leading-snug text-ink xs:text-lg">{{ featuredHero.title }}</div>
-            <div class="text-[13px] font-light leading-relaxed text-ink3">{{ featuredHero.short }}</div>
-            <div class="mt-3 flex max-w-full flex-nowrap gap-1.5 overflow-x-auto pb-1">
-              <span v-for="t in featuredHero.stack.slice(0, 4)" :key="t" class="shrink-0 rounded border border-border bg-cream2 px-2 py-[2px] text-[10px] text-ink3">{{ t }}</span>
+          <div class="project-preview" :class="'project-preview--' + project.theme">
+            <div class="mb-4 flex items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-[1.4px]">
+              <span>{{ project.category }}</span>
+              <span class="opacity-60">0{{ index + 1 }}</span>
+            </div>
+            <div class="preview-frame">
+              <img
+                :src="project.image"
+                :alt="project.imageAlt"
+                class="preview-image"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <p class="mt-3 text-[11px] font-medium tracking-wide">{{ project.previewLabel }}</p>
+          </div>
+          <div class="flex min-w-0 flex-1 flex-col p-5 sm:p-6">
+            <ProjectTags :tags="project.tags" size="sm" class="mb-3" />
+            <h3 :id="'featured-' + project.slug" class="font-display text-xl font-bold leading-snug transition-colors group-hover:text-accent2">
+              {{ project.title }}
+            </h3>
+            <p class="mt-2 text-[13px] font-light leading-relaxed text-ink3">{{ project.short }}</p>
+            <div class="mt-4 flex flex-wrap gap-1.5">
+              <span v-for="item in project.stack.slice(0, 3)" :key="item" class="rounded border border-border bg-cream px-2 py-1 text-[10px] text-ink3">{{ item }}</span>
+            </div>
+            <div class="mt-auto pt-5">
+              <div class="flex items-center justify-between border-t border-border pt-4 text-xs font-medium text-accent">
+                <span>View project</span>
+                <SVGIcons name="arrowForward" class="h-4 w-4 transition-transform group-hover:translate-x-1 group-focus-visible:translate-x-1" />
+              </div>
             </div>
           </div>
-        </button>
-
-        <div class="flex flex-col gap-4 xs:gap-5 lg:gap-6">
-          <button
-            class="feat-card w-full cursor-pointer overflow-hidden rounded-xl border border-border bg-white text-left opacity-0 translate-y-4 delay-100 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-accent2 hover:shadow-[0_16px_48px_rgba(13,17,23,0.15)] focus:outline-none focus:ring-2 focus:ring-accent2/40 sm:rounded-2xl [&.vis]:translate-y-0 [&.vis]:opacity-100"
-            type="button"
-            @click="openProject(featuredProduct.slug)"
-          >
-            <div class="h-[110px] overflow-hidden bg-cream2 xs:h-[120px]" aria-hidden="true"></div>
-            <div class="p-4 xs:p-5 sm:p-6">
-              <ProjectTags :tags="featuredProduct.tags" size="sm" class="mb-2.5" />
-              <div class="mb-1.5 font-display text-[17px] font-bold leading-snug text-ink xs:text-lg">{{ featuredProduct.title }}</div>
-              <div class="text-[13px] font-light leading-relaxed text-ink3">{{ featuredProduct.short }}</div>
-            </div>
-          </button>
-
-          <button
-            class="feat-card w-full cursor-pointer overflow-hidden rounded-xl border border-border bg-white text-left opacity-0 translate-y-4 delay-200 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-accent2 hover:shadow-[0_16px_48px_rgba(13,17,23,0.15)] focus:outline-none focus:ring-2 focus:ring-accent2/40 sm:rounded-2xl [&.vis]:translate-y-0 [&.vis]:opacity-100"
-            type="button"
-            @click="openProject(featuredAnalysis.slug)"
-          >
-            <div class="h-[110px] overflow-hidden bg-cream2 xs:h-[120px]" aria-hidden="true"></div>
-            <div class="p-4 xs:p-5 sm:p-6">
-              <ProjectTags :tags="featuredAnalysis.tags" size="sm" class="mb-2.5" />
-              <div class="mb-1.5 font-display text-[17px] font-bold leading-snug text-ink xs:text-lg">{{ featuredAnalysis.title }}</div>
-              <div class="text-[13px] font-light leading-relaxed text-ink3">{{ featuredAnalysis.short }}</div>
-            </div>
-          </button>
-        </div>
+        </RouterLink>
       </div>
+
     </div>
   </section>
 </template>
+
+<style scoped>
+.project-preview {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  background: #e7edf7;
+  color: #102c57;
+}
+
+.project-preview--portal {
+  background: #ede8df;
+  color: #594635;
+}
+
+.project-preview--empathy {
+  background: #eee8f2;
+  color: #61456d;
+}
+
+.preview-frame {
+  height: 180px;
+  overflow: hidden;
+  border: 1px solid rgb(13 17 23 / 8%);
+  border-radius: 6px;
+  background: white;
+  box-shadow: 0 8px 18px rgb(13 17 23 / 8%);
+  transition: transform 350ms ease;
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.project-preview--portal .preview-image {
+  object-fit: cover;
+  object-position: left top;
+}
+
+.feat-card:hover .preview-frame,
+.feat-card:focus-visible .preview-frame {
+  transform: translateY(-3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feat-card,
+  .preview-frame,
+  .feat-card :deep(svg) {
+    transition: none;
+    transform: none;
+  }
+}
+</style>

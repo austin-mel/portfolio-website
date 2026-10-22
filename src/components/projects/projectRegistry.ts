@@ -44,7 +44,7 @@ export const projects: ProjectRegistryEntry[] = [
     num: '01',
     title: 'Identifying Baseline Noise Distribution',
     short: 'Dwell-time-specific statistical model for Prisma Pro mass spectrometer baseline noise.',
-    category: 'Measurement-Risk Analysis',
+    category: 'Applied Statistical Analysis',
     filters: ['modeling', 'analysis'],
     tags: ['modeling', 'analysis', 'report'],
     stack: ['Python', 'Statistical Modeling', 'EDA', 'Scientific Reporting'],
@@ -92,6 +92,19 @@ export const projects: ProjectRegistryEntry[] = [
     summary:
       'Present an R package that exposes tested SIR, SIS, and SIRS grid-simulation functions, repeated-run summaries, and full cell logs.',
     component: defineAsyncComponent(() => import('@/components/projects/ProjectPage/SirsSimulationProjectPage.vue')),
+  },
+  {
+    slug: 'dataguard',
+    num: '05',
+    title: 'Dataguard Dataset Management Platform',
+    short: 'Dataguard combines tabular data inspection, configurable validation rules, and flagged cell review.',
+    category: 'Full-Stack Workflow Demo',
+    filters: ['full-stack', 'analysis', 'product'],
+    tags: ['full-stack', 'liveDemo', 'product'],
+    stack: ['Vue', 'TypeScript', 'Python', 'FastAPI', 'SQLite'],
+    summary:
+      'Dataguard combines tabular data inspection, configurable validation rules, and flagged cell review. The backend preserves version history, while a separate sample mode demonstrates the workflow in browser memory.',
+    component: defineAsyncComponent(() => import('@/components/projects/ProjectPage/DataguardProjectPage.vue')),
   }
 ];
 
