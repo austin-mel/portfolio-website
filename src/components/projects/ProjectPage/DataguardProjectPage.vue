@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ProjectScreenshotLightbox from '@/components/projects/ProjectPage/ProjectScreenshotLightbox.vue';
 
-import overviewFigure from '@/assets/projects/dataguard/workspace-overview.jpg';
+import overviewFigure from '@/assets/projects/dataguard/workspace-overview.png';
 import rulesFigure from '@/assets/projects/dataguard/quality-rules.jpg';
 import cellReviewFigure from '@/assets/projects/dataguard/cell-review.jpg';
 

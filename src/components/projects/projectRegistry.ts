@@ -56,7 +56,7 @@ export const projects: ProjectRegistryEntry[] = [
     slug: 'science-communication-empathy',
     num: '02',
     title: 'Empathy in Scientific Communication',
-    short: 'Pre/post analysis of empathy scores across Jefferson and Toronto instruments.',
+    short: 'Pre/post analysis of empathy scores across Jefferson and Toronto survey instruments.',
     category: 'Applied Statistical Analysis',
     filters: ['modeling', 'analysis'],
     tags: ['modeling', 'analysis', 'report'],
@@ -67,9 +67,22 @@ export const projects: ProjectRegistryEntry[] = [
       () => import('@/components/projects/ProjectPage/ScienceCommunicationEmpathyProjectPage.vue')
     ),
   },
+    {
+    slug: 'dataguard',
+    num: '03',
+    title: 'Dataguard Dataset Management Platform',
+    short: 'Dataguard combines data inspection, configurable validation rules, and flagged cell review into one workspace to aid in cleaning datasets.',
+    category: 'Full-Stack Workflow Demo',
+    filters: ['full-stack', 'analysis', 'product'],
+    tags: ['full-stack', 'liveDemo', 'product'],
+    stack: ['Vue', 'TypeScript', 'Python', 'FastAPI', 'SQLite'],
+    summary:
+      'Dataguard combines tabular data inspection, configurable validation rules, and flagged cell review. The backend preserves version history, while a separate sample mode demonstrates the workflow in browser memory.',
+    component: defineAsyncComponent(() => import('@/components/projects/ProjectPage/DataguardProjectPage.vue')),
+  },
   {
     slug: 'pharmatrial',
-    num: '03',
+    num: '04',
     title: 'Pharmaceutical Clinical Trial Portal',
     short: 'Fictional full-stack Vue and Express demo for role-specific trial workflow state.',
     category: 'Full-Stack Workflow Demo',
@@ -82,7 +95,7 @@ export const projects: ProjectRegistryEntry[] = [
   },
   {
     slug: 'sirs-simulation',
-    num: '04',
+    num: '05',
     title: 'SIRS Matrix-Based Epidemic Simulation',
     short: 'R package for tested SIR, SIS, and SIRS transition simulations on two-dimensional grids.',
     category: 'R Simulation Package',
@@ -92,19 +105,6 @@ export const projects: ProjectRegistryEntry[] = [
     summary:
       'Present an R package that exposes tested SIR, SIS, and SIRS grid-simulation functions, repeated-run summaries, and full cell logs.',
     component: defineAsyncComponent(() => import('@/components/projects/ProjectPage/SirsSimulationProjectPage.vue')),
-  },
-  {
-    slug: 'dataguard',
-    num: '05',
-    title: 'Dataguard Dataset Management Platform',
-    short: 'Dataguard combines tabular data inspection, configurable validation rules, and flagged cell review.',
-    category: 'Full-Stack Workflow Demo',
-    filters: ['full-stack', 'analysis', 'product'],
-    tags: ['full-stack', 'liveDemo', 'product'],
-    stack: ['Vue', 'TypeScript', 'Python', 'FastAPI', 'SQLite'],
-    summary:
-      'Dataguard combines tabular data inspection, configurable validation rules, and flagged cell review. The backend preserves version history, while a separate sample mode demonstrates the workflow in browser memory.',
-    component: defineAsyncComponent(() => import('@/components/projects/ProjectPage/DataguardProjectPage.vue')),
   }
 ];
 

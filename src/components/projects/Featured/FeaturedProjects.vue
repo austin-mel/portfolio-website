@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { RouterLink, useRouter } from 'vue-router';
-import { GeoLayer } from '@/components/ui';
 import { useScrollObserver } from '@/composables/useScrollObserver';
 import SVGIcons from '@/assets/SVGIcons.vue';
 import { ProjectTags } from '@/components/projects/ProjectTags';
@@ -8,22 +7,18 @@ import { projects as projectRegistryProjects } from '@/components/projects/proje
 import baselinePreview from '@/assets/projects/baseline/model-fit-kde-log-skew-t.png';
 import pharmaPreview from '@/assets/projects/pharmatrial/bavaria-dash.png';
 import empathyPreview from '@/assets/projects/scicomm/model-jefferson-ceiling-effect.png';
+import dataguardPreview from '@/assets/projects/dataguard/workspace-overview.png';
 
 const router = useRouter();
 
 const featuredProjectSlugs = [
   'baseline-noise',
   'pharmatrial',
+  'dataguard',
   'science-communication-empathy',
 ] as const;
 
 type FeaturedProjectSlug = (typeof featuredProjectSlugs)[number];
-
-const featuredShapes = [
-  { type: 'ring' as const, style: { width: '400px', height: '400px', bottom: '-150px', right: '-100px', borderColor: 'rgba(29,78,216,0.07)' } },
-  { type: 'square' as const, style: { width: '70px', height: '70px', top: '15%', left: '3%', opacity: '.5' } },
-  { type: 'dotGrid' as const, style: { width: '140px', height: '100px', top: '80px', left: '60px', opacity: '.35' } },
-];
 
 const getFeaturedProject = (slug: FeaturedProjectSlug) => {
   const project = projectRegistryProjects.find((entry) => entry.slug === slug);
@@ -46,10 +41,10 @@ const featuredProjects = [
     theme: 'noise',
   },
   {
-    ...getFeaturedProject('pharmatrial'),
-    image: pharmaPreview,
-    imageAlt: 'Clinical trial portal showing a trial overview and approval workflow.',
-    previewLabel: 'Inside the clinical trial workspace',
+    ...getFeaturedProject('dataguard'),
+    image: dataguardPreview,
+    imageAlt: 'Dataset quality portal showing a custom created ruleset to identify data issues.',
+    previewLabel: 'Inside the dataguard workspace',
     theme: 'portal',
   },
   {
@@ -66,7 +61,6 @@ useScrollObserver('.anim-up,.feat-card');
 
 <template>
   <section class="relative overflow-hidden bg-cream px-4 py-20 xs:px-6 xs:py-24 md:px-12 md:py-32">
-    <GeoLayer :shapes="featuredShapes" />
 
     <div class="relative mx-auto max-w-[1100px]">
       <div class="mb-8 flex flex-col gap-3 xs:mb-10 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">

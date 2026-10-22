@@ -3,8 +3,6 @@ import { GeoLayer } from '@/components';
 import type { FactRow, Pillar } from '@/types/types';
 import SVGIcons from '@/assets/SVGIcons.vue';
 
-import { AMInitials } from "@/assets/index"
-
 const aboutShapes = [
   { type: 'circle' as const,  style: { width: '320px', height: '320px', top: '-80px',  right: '-100px', borderColor: 'rgba(29,78,216,0.08)' } },
   { type: 'square' as const,  style: { width: '60px',  height: '60px',  bottom: '10%', left: '48%',     borderColor: 'rgba(29,78,216,0.10)' } },
@@ -71,7 +69,7 @@ I am looking for an entry-level role where I can continue growing as an analyst 
       <!-- RIGHT COLUMN -->
       <div>
         <!-- FACTS TABLE -->
-        <div class=" mb-8 lg:mt-56 flex flex-col gap-px overflow-hidden rounded-xl border border-border bg-border">
+        <div class=" mb-36 lg:mt-64 flex flex-col gap-px overflow-hidden rounded-xl border border-border bg-border">
           <div
             v-for="f in facts"
             :key="f.key"
@@ -98,14 +96,6 @@ I am looking for an entry-level role where I can continue growing as an analyst 
             <div class="mb-1 text-xs font-semibold text-ink">{{ p.title }}</div>
             <div class="text-[11px] leading-normal text-ink4">{{ p.desc }}</div>
           </div>
-        </div>
-
-                <div class="flex h-auto w-full items-center justify-center rounded-full font-display text-white shadow-[0_0_0_1px_var(--border),0_8px_24px_rgba(13,17,23,0.08)]">
-            <img
-      :src="AMInitials"
-      alt="AM Initials"
-      class="h-auto"
-    />
         </div>
       </div>
     </div>
