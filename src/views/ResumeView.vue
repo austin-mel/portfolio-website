@@ -116,11 +116,20 @@ const industryProjects: ResumeRole[] = [
 
 const professionalExperience: ResumeRole[] = [
   {
+    organization: 'International Consulting Associates (INCA)',
+    title: 'Data Analysis Consultant',
+    date: 'June 2026 - Current',
+    bullets: [
+      'Developed Excel reporting tools with automated calculations, adjustable assumptions, and annual cost projections to quantify labor costs from meal-period violations, missed punches, and location-based timekeeping exceptions.',
+      'Created reusable analysis templates and documented methodologies to streamline future reviews and support cost-control recommendations.',
+      'Transformed payroll and timekeeping records into executive reports highlighting labor-cost exposure and compliance trends.',
+    ],
+  },
+  {
     organization: 'Flawless Boxing and Fitness',
     title: 'Youth Afterschool Program Coordinator',
     date: 'Oct 2024 - Current',
     bullets: [
-      'Manage group instruction, behavioral expectations, and daily program flow in high-energy youth environments.',
       'Manage program procedures, safety requirements, and day-to-day operational issues.',
       'Lead structured programming focused on skill-building, discipline, and confidence while maintaining organization, accountability, and effective communication with multiple sites across 3 districts.',
     ],
