@@ -76,22 +76,21 @@ From evaluating evidence to building tools people can use. Browse the [projects 
 
 > **What it delivers:** An interface connected to the rules and data behind it, showing how I translate process requirements into working software. It uses synthetic data and is a demonstration, not a production clinical system.
 
-**[View project ↗](https://austinmelendez.com/projects/pharmatrial)** &nbsp;·&nbsp; [Try the demo](https://austin-mel.github.io/csc131-mock-pharmatrial-portal/) &nbsp;·&nbsp; [GitHub repository](https://github.com/austin-mel/csc131-mock-pharmatrial-portal)
+**[View project ↗](https://austinmelendez.com/projects/pharmatrial)** &nbsp;·&nbsp; [Try the demo](https://austin-mel.github.io/pharmatrial-portal/) &nbsp;·&nbsp; [GitHub repository](https://github.com/austin-mel/pharmatrial-portal)
 
 ---
 
-### 04 · Exploring disease spread through simulation
+### 04 · Improving data quality through validation and transformation
 
-*R · Simulation · Reusable package*
+*Python · FastAPI · Vue.js*
 
-**The question** — How do assumptions about infection, recovery, and immunity change simulated disease spread?
+**The question** — How can inconsistent, incomplete, and unreliable datasets be identified, validated, and transformed into trustworthy data for analysis?
 
-**My approach** — I built a tested R package that models disease spread across a grid, compares repeated runs, and produces charts and heatmaps.
+**My approach** — I built DataGuard, a full-stack data quality application that profiles datasets, applies customizable validation rules, identifies errors, and supports correcting records through an interactive interface.
 
-> **What it delivers:** Eight public functions for reproducing scenarios and inspecting how changing assumptions affects outcomes. The package demonstrates simulation methods; it is not calibrated to forecast a real epidemic.
+> **What it delivers:** A complete data quality workspace supporting multiple file formats, automated validation, quality scores, data correction, version tracking, and persistent storage. The application demonstrates practical data engineering, database integration, and reliable data management workflows.
 
-**[View project ↗](https://austinmelendez.com/projects/sirs-simulation)** &nbsp;·&nbsp; [GitHub repository](https://github.com/austin-mel/sirmodelsimulation)
-
+**[View project ↗](https://austinmelendez.com/projects/dataguard)** &nbsp;·&nbsp; [Try the demo](https://austin-mel.github.io/dataguard/) &nbsp;·&nbsp; [GitHub repository](https://github.com/austin-mel/dataguard)
 ---
 
 ## Let's work together
@@ -106,7 +105,4 @@ Interested in applying data to a practical problem? I'm open to opportunities in
 Portfolio by **Austin Meléndez**. The consulting case studies document work with Thermochron Systems LLC and Sacramento State's Biological Sciences department; project reports and linked repositories provide the study context and supporting materials. Organization names and logos in the fictional clinical-trial demo are part of its demonstration content.
 
 The website is built with [Vue](https://vuejs.org/), [Vue Router](https://router.vuejs.org/), [Vite](https://vite.dev/), and [Tailwind CSS](https://tailwindcss.com/), and hosted on [GitHub Pages](https://pages.github.com/).
-
-This website repository does not currently include a `LICENSE` file. Refer to the linked project repositories for their own license information and credits.
-
 </details>

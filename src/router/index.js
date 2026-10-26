@@ -39,7 +39,11 @@ const router = createRouter({
     },
   ],
 
-  scrollBehavior() {
+  scrollBehavior(to) {
+    // Native section links already scroll to their targets and honor scroll margins.
+    // Resetting them to the top here overrides that behavior in Firefox and WebKit.
+    if (to.hash) return false;
+
     return { top: 0 };
   },
 });

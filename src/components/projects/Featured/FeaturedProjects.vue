@@ -79,19 +79,27 @@ useScrollObserver('.anim-up,.feat-card');
           v-for="(project, index) in featuredProjects"
           :key="project.slug"
           :to="'/projects/' + project.slug"
-          class="feat-card group grid min-w-0 overflow-hidden rounded-2xl border border-border bg-white text-left text-ink opacity-0 translate-y-4 transition-all duration-500 ease-out hover:border-accent2/40 hover:shadow-[0_16px_40px_rgba(13,17,23,0.10)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent2 focus-visible:ring-offset-4 sm:grid-cols-2 lg:flex lg:flex-col [&.vis]:translate-y-0 [&.vis]:opacity-100"
+          class="feat-card group grid min-w-0 overflow-hidden rounded-2xl border border-border bg-white text-left text-ink opacity-0 translate-y-4 transition-all duration-500 ease-out hover:border-accent2/40 hover:shadow-[0_16px_40px_rgba(13,17,23,0.10)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent2 focus-visible:ring-offset-4 sm:grid-cols-2 lg:flex lg:flex-col motion-reduce:!transform-none motion-reduce:transition-none motion-reduce:[&_svg]:!transform-none motion-reduce:[&_svg]:transition-none [&.vis]:translate-y-0 [&.vis]:opacity-100"
           :aria-labelledby="'featured-' + project.slug"
         >
-          <div class="project-preview" :class="'project-preview--' + project.theme">
+          <div
+            class="flex min-w-0 flex-col justify-center p-5"
+            :class="{
+              'bg-[#e7edf7] text-accent': project.theme === 'noise',
+              'bg-[#ede8df] text-[#594635]': project.theme === 'portal',
+              'bg-[#eee8f2] text-[#61456d]': project.theme === 'empathy',
+            }"
+          >
             <div class="mb-4 flex items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-[1.4px]">
               <span>{{ project.category }}</span>
               <span class="opacity-60">0{{ index + 1 }}</span>
             </div>
-            <div class="preview-frame">
+            <div class="h-[180px] overflow-hidden rounded-[6px] border border-ink/[0.08] bg-white shadow-[0_8px_18px_rgba(13,17,23,0.08)] transition-transform duration-[350ms] ease-[ease] motion-safe:group-hover:-translate-y-[3px] motion-safe:group-focus-visible:-translate-y-[3px] motion-reduce:transform-none motion-reduce:transition-none">
               <img
                 :src="project.image"
                 :alt="project.imageAlt"
-                class="preview-image"
+                class="h-full w-full"
+                :class="project.theme === 'portal' ? 'object-cover object-left-top' : 'object-contain'"
                 loading="lazy"
                 decoding="async"
               />
@@ -120,60 +128,3 @@ useScrollObserver('.anim-up,.feat-card');
     </div>
   </section>
 </template>
-
-<style scoped>
-.project-preview {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  justify-content: center;
-  padding: 20px;
-  background: #e7edf7;
-  color: #102c57;
-}
-
-.project-preview--portal {
-  background: #ede8df;
-  color: #594635;
-}
-
-.project-preview--empathy {
-  background: #eee8f2;
-  color: #61456d;
-}
-
-.preview-frame {
-  height: 180px;
-  overflow: hidden;
-  border: 1px solid rgb(13 17 23 / 8%);
-  border-radius: 6px;
-  background: white;
-  box-shadow: 0 8px 18px rgb(13 17 23 / 8%);
-  transition: transform 350ms ease;
-}
-
-.preview-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.project-preview--portal .preview-image {
-  object-fit: cover;
-  object-position: left top;
-}
-
-.feat-card:hover .preview-frame,
-.feat-card:focus-visible .preview-frame {
-  transform: translateY(-3px);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .feat-card,
-  .preview-frame,
-  .feat-card :deep(svg) {
-    transition: none;
-    transform: none;
-  }
-}
-</style>

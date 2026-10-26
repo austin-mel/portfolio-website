@@ -46,8 +46,8 @@ const education = {
 const skillGroups: SkillGroup[] = [
   {
     name: 'Programming',
-    skills: ['Python', 'R', 'C'],
-    highlightCount: 3,
+    skills: ['Python', 'R'],
+    highlightCount: 2,
   },
   {
     name: 'Data',
@@ -67,28 +67,7 @@ const skillGroups: SkillGroup[] = [
 ];
 
 const industryProjects: ResumeRole[] = [
-  {
-    organization: 'Vendia',
-    title: 'Pharmaceutical Clinical Trial Management Portal',
-    date: 'Jan 2023 - May 2023',
-    bullets: [
-      'Developed a clinical trial management platform with isolated portals for the FDA, physicians, and pharmaceutical manufacturers.',
-      'Implemented Vendia database ACLs to enforce role-based data access, protect patient information, and support double-blind trial requirements.',
-      'Collaborated on a six-person development team using Agile practices, biweekly sprints, Git, and Jira while implementing stakeholder feedback.',
-    ],
-  },
-  {
-    organization: 'WCP Solutions',
-    title: 'Client Relationship Management Platform',
-    date: 'Aug 2024 - May 2025',
-    bullets: [
-      'Developed an internal web application for WCP Solutions\' sales teams to manage client relationships and streamline daily workflows.',
-      'Built searchable client tables, geographic mapping, route directions, contact integration, and customer note-tracking functionality.',
-      'Collaborated on an eight-person development team using Agile practices, biweekly sprints, Git, and Jira.',
-      'Tested and refined application functionality based on stakeholder requirements and user workflows by maintaining regular meetings with company stakeholders and faculty advisors.',
-    ],
-  },
-  {
+    {
     organization: 'Thermochron Systems LLC',
     title: 'Mass Spectrometer Baseline Noise Analysis',
     date: 'Feb 2026 - May 2026',
@@ -100,7 +79,7 @@ const industryProjects: ResumeRole[] = [
       'Delivered client-facing findings and conclusions to support baseline correction strategy.',
     ],
   },
-  {
+    {
     organization: 'CSUS Department of Biological Sciences',
     title: 'SciComm Empathy Survey Analysis',
     date: 'Feb 2026 - May 2026',
@@ -110,6 +89,27 @@ const industryProjects: ResumeRole[] = [
       'Tested intervention effects using Welch\'s and paired t-tests, mixed ANOVA, and ANCOVA.',
       'Interpreted pre/post improvement results and identified no significant Intervention vs. Control effect.',
       'Communicated statistical methods, assumptions, limitations, and findings using client-facing written reports.',
+    ],
+  },
+    {
+    organization: 'WCP Solutions',
+    title: 'Client Relationship Management Platform',
+    date: 'Aug 2024 - May 2025',
+    bullets: [
+      'Developed an internal web application for WCP Solutions\' sales teams to manage client relationships and streamline daily workflows.',
+      'Built searchable client tables, geographic mapping, route directions, contact integration, and customer note-tracking functionality.',
+      'Collaborated on an eight-person development team using Agile practices, biweekly sprints, Git, and Jira.',
+      'Tested and refined application functionality based on stakeholder requirements and user workflows by maintaining regular meetings with company stakeholders and faculty advisors.',
+    ],
+  },
+  {
+    organization: 'Vendia',
+    title: 'Pharmaceutical Clinical Trial Management Portal',
+    date: 'Jan 2023 - May 2023',
+    bullets: [
+      'Developed a clinical trial management platform with isolated portals for the FDA, physicians, and pharmaceutical manufacturers.',
+      'Implemented Vendia database ACLs to enforce role-based data access, protect patient information, and support double-blind trial requirements.',
+      'Collaborated on a six-person development team using Agile practices, biweekly sprints, Git, and Jira while implementing stakeholder feedback.',
     ],
   },
 ];
@@ -127,11 +127,11 @@ const professionalExperience: ResumeRole[] = [
   },
   {
     organization: 'Flawless Boxing and Fitness',
-    title: 'Youth Afterschool Program Coordinator',
+    title: 'Afterschool Program Coordinator',
     date: 'Oct 2024 - Current',
     bullets: [
-      'Manage program procedures, safety requirements, and day-to-day operational issues.',
-      'Lead structured programming focused on skill-building, discipline, and confidence while maintaining organization, accountability, and effective communication with multiple sites across 3 districts.',
+      'Managed program procedures, safety requirements, and day-to-day operational issues.',
+      'Led structured programming focused on skill-building, discipline, and confidence while maintaining organization, accountability, and effective communication with multiple sites across 3 districts.',
     ],
   },
 ];

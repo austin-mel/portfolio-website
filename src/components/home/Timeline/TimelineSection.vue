@@ -9,13 +9,21 @@ const timelineShapes = [
 ];
 
 const industryProjects: TimelineItem[] = [
-  {
-    date: 'Jan 2023 - May 2023',
-    title: 'Pharmaceutical Clinical Trial Management Portal',
+    {
+    date: 'Feb 2026 - May 2026',
+    title: 'Mass Spectrometer Baseline Noise Analysis',
     subtitle: 'Industry Project Experience',
-    company: 'Vendia',
-    description: 'Developed a clinical trial management platform with isolated portals for the FDA, physicians, and pharmaceutical manufacturers. Implemented Vendia database ACLs to enforce role-based data access, protect patient information, and support double-blind trials. Collaborated on a six-person team using Agile practices, biweekly sprints, Git, and Jira while implementing stakeholder feedback.',
+    company: 'Thermochron Systems LLC',
+    description: 'Modeled 492,000+ instrument measurements across 6 dwell-time settings and 3 independent lab locations. Built cleaned long-format datasets in Python, quantified dwell-time effects, and evaluated noise distributions using KDE, Q-Q plots, and log-scale statistical modeling. Delivered client-facing findings to support baseline correction strategy.',
     delay: .12,
+  },
+    {
+    date: 'Feb 2026 - May 2026',
+    title: 'SciComm Empathy Survey Analysis',
+    subtitle: 'Industry Project Experience',
+    company: 'CSUS Department of Biological Sciences',
+    description: 'Analyzed matched pre/post survey data from 222 participants in R to assess whether scientific communication training improved empathy scores. Applied Welch’s and paired t-tests, mixed ANOVA, and ANCOVA. Interpreted pre/post improvements and found no significant Intervention vs. Control effect, communicating methods, assumptions, limitations, and findings in client-facing written reports.',
+    delay: .24,
   },
   {
     date: 'Aug 2024 - May 2025',
@@ -23,34 +31,34 @@ const industryProjects: TimelineItem[] = [
     subtitle: 'Industry Project Experience',
     company: 'WCP Solutions',
     description: 'Developed an internal web application for sales teams with searchable client tables, geographic mapping, route directions, contact integration, and customer note tracking. Collaborated on an eight-person team using Agile practices, biweekly sprints, Git, and Jira. Tested and refined functionality through regular meetings with company stakeholders and faculty advisors.',
-    delay: .24,
-  },
-  {
-    date: 'Feb 2026 - May 2026',
-    title: 'Mass Spectrometer Baseline Noise Analysis',
-    subtitle: 'Industry Project Experience',
-    company: 'Thermochron Systems LLC',
-    description: 'Modeled 492,000+ instrument measurements across 6 dwell-time settings and 3 independent lab locations. Built cleaned long-format datasets in Python, quantified dwell-time effects, and evaluated noise distributions using KDE, Q-Q plots, and log-scale statistical modeling. Delivered client-facing findings to support baseline correction strategy.',
     delay: .36,
   },
   {
-    date: 'Feb 2026 - May 2026',
-    title: 'SciComm Empathy Survey Analysis',
+    date: 'Jan 2023 - May 2023',
+    title: 'Pharmaceutical Clinical Trial Management Portal',
     subtitle: 'Industry Project Experience',
-    company: 'CSUS Department of Biological Sciences',
-    description: 'Analyzed matched pre/post survey data from 222 participants in R to assess whether scientific communication training improved empathy scores. Applied Welch’s and paired t-tests, mixed ANOVA, and ANCOVA. Interpreted pre/post improvements and found no significant Intervention vs. Control effect, communicating methods, assumptions, limitations, and findings in client-facing written reports.',
+    company: 'Vendia',
+    description: 'Developed a clinical trial management platform with isolated portals for the FDA, physicians, and pharmaceutical manufacturers. Implemented Vendia database ACLs to enforce role-based data access, protect patient information, and support double-blind trials. Collaborated on a six-person team using Agile practices, biweekly sprints, Git, and Jira while implementing stakeholder feedback.',
     delay: .48,
   },
 ];
 
 const professionalExperience: TimelineItem[] = [
   {
+    date: 'June 2026 - Current',
+    title: 'Data Analysis Consultant',
+    subtitle: 'Professional Experience',
+    company: 'International Consulting Associates (INCA)',
+    description: 'Developed Excel reporting tools with automated calculations, adjustable assumptions, and annual cost projections to quantify labor costs from meal-period violations, missed punches, and location-based timekeeping exceptions. Created reusable analysis templates and documented methodologies to streamline future reviews and support cost-control recommendations. Transformed payroll and timekeeping records into executive reports highlighting labor-cost exposure and compliance trends. ',
+    delay: .12,
+  },
+  {
     date: 'Oct 2024 - Current',
     title: 'Youth Afterschool Program Coordinator',
     subtitle: 'Professional Experience',
     company: 'Flawless Boxing and Fitness',
-    description: 'Manage group instruction, behavioral expectations, program procedures, safety requirements, and daily operations in youth environments. Lead structured programming that builds skill, discipline, and confidence while maintaining organization, accountability, and effective communication with multiple sites across 3 districts.',
-    delay: .12,
+    description: 'Managed group instruction, behavioral expectations, program procedures, safety requirements, and daily operations in youth environments. Led structured programming that builds skill, discipline, and confidence while maintaining organization, accountability, and effective communication with multiple sites across 3 districts.',
+    delay: .24,
   },
 ];
 

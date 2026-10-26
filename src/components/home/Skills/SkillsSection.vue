@@ -18,30 +18,28 @@ const categories: SkillCategory[] = [
       { name: 'Python', highlight: true },
       { name: 'SQL', highlight: true },
       { name: 'C', highlight: false },
-      { name: 'TypeScript', highlight: false },
       { name: 'Bash', highlight: false },
+      { name: 'TypeScript', highlight: false },
       { name: 'Java', highlight: false },
-      { name: 'JavaScript', highlight: false },
     ],
   },
   {
     icon: 'chart', title: 'Data Analysis & Visualization', delay: 0,
     pills: [
-      { name: 'Airflow', highlight: true },
       { name: 'Tableau',  highlight: true },
-      { name: 'ggplot2', highlight: true }, 
+      { name: 'Pandas', highlight: true },
+      { name: 'NumPy', highlight: true },
+      { name: 'ggplot2', highlight: false }, 
       { name: 'Matplotlib', highlight: false },
-      { name: 'Pandas', highlight: false },
-      { name: 'NumPy', highlight: false },
     ],
   },
   {
     icon: 'model', title: 'ML & Modeling', delay: .16,
     pills: [
       { name: 'TensorFlow', highlight: true },
-      { name: 'scikit-learn', highlight: true }, 
-      { name: 'statsmodels', highlight: true },
-      { name: 'RStudio', highlight: false },
+      { name: 'scikit-learn', highlight: true },
+      { name: 'RStudio', highlight: true }, 
+      { name: 'statsmodels', highlight: false },
       { name: 'Jupyter', highlight: false },
       { name: 'PyTorch', highlight: false },
       { name: 'NLTK', highlight: false }, 
@@ -62,12 +60,11 @@ const categories: SkillCategory[] = [
     {
     icon: 'database', title: 'Other Technologies', delay: .16,
     pills: [
+      { name: 'Jira', highlight: true }, 
       { name: 'Vue.js', highlight: true },
-      { name: 'Figma', highlight: true }, 
+      { name: 'Figma', highlight: false }, 
       { name: 'Canva', highlight: false }, 
-      { name: 'Jira', highlight: false }, 
       { name: 'MS Office', highlight: false },
-      { name: 'React.js', highlight: false },
     ],
   },
 ];
@@ -90,7 +87,7 @@ useScrollObserver('.anim-up,.skill-cat');
         </div>
         <p class="anim-up translate-y-[18px] text-[15px] font-light leading-[1.75] text-ink3 opacity-0 transition-all duration-[600ms] ease-out [&.vis]:translate-y-0 [&.vis]:opacity-100">
           I choose technologies that fit the problem, not the other way around. These are the tools that I work with
-          every day and constantly reach for when project complexity demands it.
+          and constantly reach for when project complexity demands it.
         </p>
       </div>
 
