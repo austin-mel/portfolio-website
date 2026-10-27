@@ -70,18 +70,18 @@ const diagnosticFigures = [
     title: 'Histograms of background noise across six measurement times',
     alt: 'Six histograms of positive log10 background current, one per dwell time. Distributions shift toward lower values and narrow at longer dwell times, with long left tails on this logarithmic scale.',
     body: 'Each bar counts readings within a range of values. Longer dwell times shift the cluster toward lower current and reduce its spread, but the shapes remain asymmetric even after taking logarithms.',
-    guide: 'The horizontal axis is log10 current in amperes: one step represents a tenfold change. Only positive readings can appear on this scale, so the three zeros are absent here but remain in the descriptive summaries above.',
+    guide: 'The horizontal axis is log10 current in amperes. One step represents a tenfold change. Only positive readings can appear on this scale, so the three zeros are absent here but remain in the descriptive summaries above.',
   },
   {
     image: qqFigure,
     title: 'Q-Q plots comparing log-transformed background noise with a normal distribution',
     alt: 'Normal Q-Q plots for positive log10 background current at six dwell times. Points curve away from the straight reference lines, especially at the ends.',
     body: 'A Q-Q plot compares ordered readings with the values expected from a bell-shaped normal distribution. A close match would follow the straight line. The curved ends show that even the log-transformed readings depart from that pattern.',
-    guide: 'Each panel compares one dwell time with a normal reference; it does not test the fitted log-skew-t model. These departures help explain the choice to explore a more flexible distribution, without establishing it as the best model.',
+    guide: 'Each panel compares one dwell time with a normal reference. It does not test the fitted log-skew-t model. These departures help explain the choice to explore a more flexible distribution, without establishing it as the best model.',
   },
   {
     image: cdfFigure,
-    title: 'Cumulative background distributions: observed readings versus model predictions',
+    title: 'Cumulative distributions compare observed readings with model predictions.',
     alt: 'Six panels comparing gray empirical cumulative curves with red fitted log-skew-t curves. The curves broadly track one another with visible gaps at some settings.',
     body: 'A cumulative distribution function (CDF) shows the share of readings at or below a given value. For example, a height of 0.5 marks the halfway point. The gray data curves and red model curves broadly agree, with visible differences at some settings.',
     guide: 'The horizontal axes use log10 current in amperes. The display trims the lowest and highest 0.1% of positive readings, and the gray curves are calculated within that displayed range. This is a fit check on the training data, not validation of extreme predictions or sample correction.',
@@ -91,7 +91,7 @@ const diagnosticFigures = [
     title: 'Background noise levels and variability by laboratory and measurement time',
     alt: 'Four panels showing median current, interquartile range, and 95th and 99th percentiles by dwell time for Glasgow, Salzburg, Wuhan, and the separate Nineamu Salzburg batch. Levels generally decline with longer readings but differ across sources.',
     body: 'The downward pattern appears across the laboratory and batch groups, but their noise levels and spreads differ. This supports checking a proposed correction separately for each instrument and laboratory.',
-    guide: 'IQR is the spread of the middle half of readings; the 95th and 99th percentiles describe the upper end. Current is in amperes on a logarithmic scale (10⁻¹⁴ A = 10 fA). The horizontal scale doubles at each step. Nineamu is a separate Salzburg batch, not a fourth laboratory.',
+    guide: 'IQR is the spread of the middle half of readings. The 95th and 99th percentiles describe the upper end. Current is in amperes on a logarithmic scale (10⁻¹⁴ A = 10 fA). The horizontal scale doubles at each step. Nineamu is a separate Salzburg batch, not a fourth laboratory.',
   },
 ];
 
@@ -233,7 +233,7 @@ const nextSteps = [
             image-class="transition-transform duration-200 group-hover:scale-[1.01]"
           />
           <figcaption class="mt-4 text-[13px] leading-[1.7] text-ink3">
-            Boxes contain the middle half of the readings; the dark lines mark the medians. Whiskers extend to the most extreme readings within 1.5 box heights of each box. Outlier points are hidden for readability but remain in the calculations. Current is measured in femtoamperes (fA), a tiny unit of electrical current: 1 fA = 10<sup>−15</sup> amperes. Select the chart to enlarge it.
+            Boxes contain the middle half of the readings. The dark lines mark the medians. Whiskers extend to the most extreme readings within 1.5 box heights of each box. Outlier points are hidden for readability but remain in the calculations. Current is measured in femtoamperes (fA), a tiny unit of electrical current. One femtoampere equals 10<sup>−15</sup> amperes. Select the chart to enlarge it.
           </figcaption>
         </figure>
 
@@ -307,7 +307,7 @@ const nextSteps = [
         </article>
         <article class="rounded-[12px] border border-border bg-white p-[22px]">
           <h3 class="text-[17px] font-bold text-ink">How to interpret the fit</h3>
-          <p class="mt-3 text-[14px] leading-[1.75] text-ink3">The best of six fitting starts reported convergence; several others stopped after one iteration at poorer fits. A global optimum has not been established.</p>
+          <p class="mt-3 text-[14px] leading-[1.75] text-ink3">The best of six fitting starts reported convergence. Several others stopped after one iteration at poorer fits. A global optimum has not been established.</p>
           <p class="mb-0 mt-3 text-[14px] leading-[1.75] text-ink3">The rerun reports AIC 1,351,186.11 and BIC 1,351,263.86. These are scores for comparing models fitted on comparable data and likelihood scales, rather than accuracy percentages or pass marks.</p>
         </article>
       </div>
@@ -322,13 +322,13 @@ const nextSteps = [
           image-class="transition-transform duration-200 group-hover:scale-[1.01]"
         />
         <figcaption class="mt-4 text-[13px] leading-[1.7] text-ink3">
-          Gray bars show the observed readings, blue curves smooth them, and red curves show the model. The horizontal axes use log10 current in amperes: one unit represents ten times the current. Each panel shows the 0.1st to 99.9th percentile range of positive readings, leaving the most extreme tails outside view. Density describes relative concentration, not a count of readings. These are the same data used to fit the model, so visual agreement does not establish better sample correction. Select the chart to enlarge it.
+          Gray bars show the observed readings, blue curves smooth them, and red curves show the model. The horizontal axes use log10 current in amperes. One unit represents ten times the current. Each panel shows the 0.1st to 99.9th percentile range of positive readings, leaving the most extreme tails outside view. Density describes relative concentration, not a count of readings. These are the same data used to fit the model, so visual agreement does not establish better sample correction. Select the chart to enlarge it.
         </figcaption>
       </figure>
 
       <section class="mt-10" aria-labelledby="diagnostics-title">
         <h3 id="diagnostics-title" class="font-display text-[26px] font-bold leading-tight text-ink md:text-[32px]">A closer look at the distributions</h3>
-        <p class="mt-3 text-[15px] leading-[1.75] text-ink3">These checks look beyond a single average: where readings cluster, how unusual values behave, and whether the patterns hold across laboratories.</p>
+        <p class="mt-3 text-[15px] leading-[1.75] text-ink3">These checks look beyond a single average. They examine where readings cluster, how unusual values behave, and whether the patterns hold across laboratories.</p>
         <div class="mt-6 grid gap-6">
           <figure v-for="figure in diagnosticFigures" :key="figure.title" class="m-0 rounded-[12px] border border-border bg-white p-5 md:p-7">
             <h4 class="text-[17px] font-bold text-ink">{{ figure.title }}</h4>
@@ -365,7 +365,7 @@ const nextSteps = [
 
       <article class="mt-8 rounded-[12px] border border-accent bg-accent p-6 text-white md:p-9" aria-labelledby="conclusions-title">
         <h3 id="conclusions-title" class="font-display text-[26px] font-bold leading-tight text-white md:text-[32px]">Final Conclusions</h3>
-        <p class="mb-0 mt-4 text-[15px] leading-[1.75] text-white/80">Background noise depended on measurement time: longer readings had lower typical noise and less variation, at the cost of more time per reading. Occasional large values and weak relationships between channels make one average or one live reading an incomplete basis for correction. The findings support testing a median correction matched to dwell time alongside the fitted model, with checks for laboratory and batch differences. The model describes much of the observed pattern, but improved sample accuracy or rock-age estimates has not yet been demonstrated.</p>
+        <p class="mb-0 mt-4 text-[15px] leading-[1.75] text-white/80">Background noise depended on measurement time. Longer readings had lower typical noise and less variation, at the cost of more time per reading. Occasional large values and weak relationships between channels make one average or one live reading an incomplete basis for correction. The findings support testing a median correction matched to dwell time alongside the fitted model, with checks for laboratory and batch differences. The model describes much of the observed pattern, but improved sample accuracy or rock-age estimates has not yet been demonstrated.</p>
       </article>
 
       <article class="mt-8 rounded-[14px] bg-ink p-6 text-white md:p-9" aria-labelledby="next-steps-title">

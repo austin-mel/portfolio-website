@@ -46,7 +46,7 @@ import bavariaReportFigure from '@/assets/projects/pharmatrial/bavaria-report.pn
         </div>
         <div class="grid gap-3 p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7 bg-accent text-white">
           <dt class="text-[15px] font-bold text-white">Product Value</dt>
-          <dd class="m-0 text-[15px] leading-[1.75] text-white/80">The prototype makes a multi-role process tangible: reviewers can <strong class="font-semibold text-white">follow a trial through its lifecycle and inspect how actions change shared state.</strong> It uses synthetic data and demo authentication; it is a proof of concept, not a production clinical system.</dd>
+          <dd class="m-0 text-[15px] leading-[1.75] text-white/80">The prototype makes a multi-role process tangible. Reviewers can <strong class="font-semibold text-white">follow a trial through its lifecycle and inspect how actions change shared state.</strong> It uses synthetic data and demo authentication. It is a proof of concept, not a production clinical system.</dd>
         </div>
       </dl>
       <div role="group" aria-label="Project resources" class="mt-8 grid gap-3 md:grid-cols-3">
@@ -212,7 +212,7 @@ import bavariaReportFigure from '@/assets/projects/pharmatrial/bavaria-report.pn
         <div class="grid gap-4 md:grid-cols-2">
           <article class="min-w-0 rounded-[12px] border border-border bg-white p-[22px]">
             <h3 class="text-[17px] font-bold text-ink">Frontend &amp; state</h3>
-            <p class="mb-0 mt-3 text-[14px] leading-[1.75] text-ink3">Vue and TypeScript provide the interface. Pinia stores hold role, trial, patient, and assignment state; the API client maps returned snapshots into those stores.</p>
+            <p class="mb-0 mt-3 text-[14px] leading-[1.75] text-ink3">Vue and TypeScript provide the interface. Pinia stores hold role, trial, patient, and assignment state. The API client maps returned snapshots into those stores.</p>
           </article>
           <article class="min-w-0 rounded-[12px] border border-border bg-white p-[22px]">
             <h3 class="text-[17px] font-bold text-ink">Backend &amp; persistence</h3>

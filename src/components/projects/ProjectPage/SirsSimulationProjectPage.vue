@@ -16,7 +16,7 @@ import infectionHeatmapFigure from '@/assets/projects/sirs/infection-heatmap.png
       <header class="mb-8">
         <div class="mb-4 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Executive Summary</div>
         <h1 id="project-title" class="max-w-[850px] font-display text-[34px] font-bold leading-[1.08] tracking-normal text-ink xs:text-[42px] md:text-[56px]">Exploring epidemic models with a <em class="text-accent">reusable R package.</em></h1>
-        <p class="mb-0 mt-4 text-[15px] leading-[1.7] text-ink3">SIRSsim: matrix-based SIR, SIS, and SIRS simulations with reproducible inputs and inspectable outputs.</p>
+        <p class="mb-0 mt-4 text-[15px] leading-[1.7] text-ink3">SIRSsim provides matrix-based SIR, SIS, and SIRS simulations with reproducible inputs and inspectable outputs.</p>
       </header>
       <dl class="m-0 overflow-hidden rounded-[14px] border border-border bg-white shadow-[0_8px_24px_rgb(13_17_23_/_4%)]">
         <div class="grid gap-3 p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7 border-b border-border">
@@ -43,7 +43,7 @@ import infectionHeatmapFigure from '@/assets/projects/sirs/infection-heatmap.png
         </div>
         <div class="grid gap-3 p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7 bg-accent text-white">
           <dt class="text-[15px] font-bold text-white">Product Value</dt>
-          <dd class="m-0 text-[15px] leading-[1.75] text-white/80">The package turns model mechanics into <strong class="font-semibold text-white">a repeatable workflow that users can configure, inspect, and extend.</strong> It is a stochastic grid simulator; it does not estimate disease parameters from observed data or forecast real populations.</dd>
+          <dd class="m-0 text-[15px] leading-[1.75] text-white/80">The package turns model mechanics into <strong class="font-semibold text-white">a repeatable workflow that users can configure, inspect, and extend.</strong> It is a stochastic grid simulator. It does not estimate disease parameters from observed data or forecast real populations.</dd>
         </div>
       </dl>
       <div role="group" aria-label="Project resources" class="mt-8 grid gap-3 md:grid-cols-3">
@@ -196,7 +196,7 @@ import infectionHeatmapFigure from '@/assets/projects/sirs/infection-heatmap.png
         <div class="grid gap-4 md:grid-cols-2">
           <article class="min-w-0 rounded-[12px] border border-border bg-white p-[22px]">
             <h3 class="text-[17px] font-bold text-ink">State representation</h3>
-            <p class="mb-0 mt-3 text-[14px] leading-[1.75] text-ink3">Cells use four values: <code class="font-mono text-[0.88em]">0</code> susceptible, <code class="font-mono text-[0.88em]">1</code> infected, <code class="font-mono text-[0.88em]">2</code> recovered, and <code class="font-mono text-[0.88em]">3</code> deceased. Optional full logs retain one row per cell per step, including step 0.</p>
+            <p class="mb-0 mt-3 text-[14px] leading-[1.75] text-ink3">Cells use four values. A value of <code class="font-mono text-[0.88em]">0</code> represents a susceptible cell, <code class="font-mono text-[0.88em]">1</code> represents an infected cell, <code class="font-mono text-[0.88em]">2</code> represents a recovered cell, and <code class="font-mono text-[0.88em]">3</code> represents a deceased cell. Optional full logs retain one row per cell per step, including step 0.</p>
           </article>
           <article class="min-w-0 rounded-[12px] border border-border bg-white p-[22px]">
             <h3 class="text-[17px] font-bold text-ink">Neighborhood exposure</h3>
@@ -219,7 +219,7 @@ import infectionHeatmapFigure from '@/assets/projects/sirs/infection-heatmap.png
               </tr>
               <tr>
                 <th scope="row" class="border-t border-border p-3 align-top text-ink font-semibold">Single simulation</th>
-                <td class="border-t border-border p-3 align-top text-ink3"><code class="font-mono text-[0.88em]">simulate_sir()</code> returns steps, infection proportion, final matrix, and history; <code class="font-mono text-[0.88em]">full_log = TRUE</code> also returns cell-level records.</td>
+                <td class="border-t border-border p-3 align-top text-ink3"><code class="font-mono text-[0.88em]">simulate_sir()</code> returns steps, infection proportion, final matrix, and history. Setting <code class="font-mono text-[0.88em]">full_log = TRUE</code> also returns cell-level records.</td>
               </tr>
               <tr>
                 <th scope="row" class="border-t border-border p-3 align-top text-ink font-semibold">Repeated runs</th>

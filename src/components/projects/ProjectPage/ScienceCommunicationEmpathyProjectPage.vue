@@ -14,7 +14,7 @@ import jeffersonQqFigure from '@/assets/projects/scicomm/model-jefferson-change-
 import torontoQqFigure from '@/assets/projects/scicomm/model-toronto-change-qq.png';
 
 const githubRepoUrl = 'https://github.com/austin-mel-edu/sacramento-state-university/tree/master/STAT192%20-%20Senior%20Capstone%20Project/Shelby%20C%20-%20CSUS%20Biological%20Sciences%20Dept';
-const technicalReportTitle = 'SciComm Empathy Technical Project Report — May 19, 2026';
+const technicalReportTitle = 'SciComm Empathy Technical Project Report (May 19, 2026)';
 
 const keyFindings = [
   {
@@ -62,7 +62,7 @@ const scoreSummaries = [
   { measure: 'Overall average change', jefferson: '+5.96', toronto: '+1.31', highlight: true },
   { measure: 'Average change in training', jefferson: '+6.52', toronto: '+1.08', highlight: false },
   { measure: 'Average change in the control group', jefferson: '+5.53', toronto: '+1.48', highlight: false },
-  { measure: 'Difference in change: training minus control', jefferson: '+0.99', toronto: '−0.39', highlight: true },
+  { measure: 'The difference in change is training minus control.', jefferson: '+0.99', toronto: '−0.39', highlight: true },
   { measure: '95% confidence interval for that difference', jefferson: '−0.92 to +2.90', toronto: '−1.51 to +0.72', highlight: false },
 ];
 
@@ -153,9 +153,9 @@ const analysisMethods = [
 // Client report pp. 5–6; retain the meaning of nonsignificant results as uncertainty, not equivalence.
 const statisticalChecks = [
   { comparison: 'Overall before-and-after change', jefferson: '< 0.001', toronto: '< 0.001' },
-  { comparison: 'Training versus control: average change', jefferson: '0.308', toronto: '0.489' },
-  { comparison: 'Major groups: starting scores', jefferson: '0.933', toronto: '0.907' },
-  { comparison: 'Major groups: average change', jefferson: '0.176', toronto: '0.697' },
+  { comparison: 'Average changes are compared between training and control groups.', jefferson: '0.308', toronto: '0.489' },
+  { comparison: 'Starting scores are compared between major groups.', jefferson: '0.933', toronto: '0.907' },
+  { comparison: 'Average changes are compared between major groups.', jefferson: '0.176', toronto: '0.697' },
   { comparison: 'Training difference varies by major', jefferson: '0.639', toronto: '0.670' },
   { comparison: 'Training difference varies by major, adjusted for starting scores', jefferson: '0.452', toronto: '0.501' },
 ];
@@ -163,7 +163,7 @@ const statisticalChecks = [
 const limitations = [
   {
     title: 'Participation differed across classes',
-    body: 'Some instructors required the program; others offered extra credit. Motivation, teaching, and course context could contribute to the changes, so the study does not establish that training alone caused them.',
+    body: 'Some instructors required the program. Others offered extra credit. Motivation, teaching, and course context could contribute to the changes, so the study does not establish that training alone caused them.',
   },
   {
     title: 'Survey scores do not directly measure communication',
@@ -211,7 +211,7 @@ const nextSteps = [
         <div class="grid gap-3 border-b border-border p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7">
           <dt class="text-[15px] font-bold text-ink">The Data &amp; Tools</dt>
           <dd class="m-0 text-[15px] leading-[1.75] text-ink3">
-            <strong class="font-semibold text-ink">Before-and-after surveys from 222 matched students: 96 in training and 126 in the control group.</strong> The dataset includes the Jefferson Scale of Empathy and a modified Toronto Empathy Questionnaire. R, tidyverse, and ggplot2 were used to prepare the data, analyze the two surveys separately, and visualize the results.
+            <strong class="font-semibold text-ink">The before-and-after surveys included 222 matched students. There were 96 students in training and 126 in the control group.</strong> The dataset includes the Jefferson Scale of Empathy and a modified Toronto Empathy Questionnaire. R, tidyverse, and ggplot2 were used to prepare the data, analyze the two surveys separately, and visualize the results.
           </dd>
         </div>
         <div class="grid gap-3 border-b border-border p-5 md:grid-cols-[170px_1fr] md:gap-8 md:p-7">
@@ -305,7 +305,7 @@ const nextSteps = [
           <div class="mb-3.5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[26px] before:bg-accent before:content-['']">Supporting Findings</div>
           <h2 id="findings-title" class="font-display text-[28px] font-bold leading-[1.06] text-ink xs:text-[34px] md:text-[48px]">Scores rose in both groups.</h2>
         </div>
-        <p class="m-0 text-[15px] leading-[1.76] text-ink3">Jefferson scores rose slightly more in the training group; modified Toronto scores rose slightly more in the control group. Neither difference was clear enough to establish an added training benefit.</p>
+        <p class="m-0 text-[15px] leading-[1.76] text-ink3">Jefferson scores rose slightly more in the training group. Modified Toronto scores rose slightly more in the control group. Neither difference was clear enough to establish an added training benefit.</p>
       </header>
         <article class="rounded-[12px] border border-border bg-white p-5 md:p-7" aria-labelledby="statistics-title">
           <h3 id="statistics-title" class="text-[17px] font-bold text-ink">The numbers behind the finding</h3>
