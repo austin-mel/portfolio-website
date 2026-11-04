@@ -94,7 +94,7 @@ useScrollObserver('.anim-up,.feat-card');
               'bg-[#eee8f2] text-[#61456d]': project.theme === 'empathy',
             }"
           >
-            <div class="mb-4 flex items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-[1.4px]">
+            <div class="mb-4 flex items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-[1.4px] ">
               <span>{{ project.category }}</span>
               <span class="opacity-60">0{{ index + 1 }}</span>
             </div>

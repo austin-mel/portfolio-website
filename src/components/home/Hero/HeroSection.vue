@@ -48,11 +48,11 @@ const heroShapes = [
 
       <!-- Subtext -->
       <p
-        class="mt-6 sm:mt-8 max-w-[520px] w-full text-[16px] sm:text-[18px] leading-[1.7] text-ink3"
+        class="mt-6 sm:mt-8 max-w-[520px] w-full text-[16px] sm:text-[18px] leading-[1.7] text-ink3 text-center"
       >
-        Recent graduate that double majored in Computer Science and Statistics with emphasis in Applied Statistics and interest in applications of Machine Learning.
+        Recent graduate that double majored in <b><i>Computer Science and Statistics</i></b> with emphasis in <i>Applied Statistics</i> and passion for applications of Machine Learning.
         <br /><br />
-        Comfortable transforming complex datasets into strategies that drive real business decisions, eager to gain hands-on experience through internships and other work opportunities.
+        Comfortable transforming complex datasets into strategies that drive real business decisions, eager to gain hands on industry experience through all new work opportunities.
       </p>
 
       <!-- Action Buttons -->
