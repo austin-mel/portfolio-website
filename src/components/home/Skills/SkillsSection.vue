@@ -80,7 +80,7 @@ useScrollObserver('.anim-up,.skill-cat');
       <!-- HEADER -->
       <div class="mb-16 grid items-end gap-16 lg:grid-cols-2">
         <div>
-          <div class="anim-up mb-5 flex translate-y-[18px] items-center gap-2.5 text-[10px] font-semibold uppercase tracking-[2px] text-accent opacity-0 transition-all duration-[600ms] ease-out before:block before:h-0.5 before:w-6 before:bg-accent [&.vis]:translate-y-0 [&.vis]:opacity-100">Toolkit</div>
+          <div class="anim-up mb-5 flex translate-y-[18px] items-center gap-2.5 text-[10px] font-semibold uppercase tracking-[2px] text-accent opacity-0 transition-all duration-[600ms] ease-out before:block before:h-0.5 before:w-6 before:bg-accent [&.vis]:translate-y-0 [&.vis]:opacity-100">My Toolkit</div>
           <h2 class="anim-up translate-y-[18px] font-display text-[44px] font-bold leading-[1.1] tracking-[-1.5px] text-ink opacity-0 transition-all duration-[600ms] ease-out [&.vis]:translate-y-0 [&.vis]:opacity-100">
             Built using the right<br><em class="italic text-accent">tools for the job.</em>
           </h2>

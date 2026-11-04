@@ -61,9 +61,11 @@ useScrollObserver('.anim-up,.feat-card');
 
 <template>
   <section class="relative overflow-hidden bg-cream px-4 py-20 xs:px-6 xs:py-24 md:px-12 md:py-32">
-
+    
     <div class="relative mx-auto max-w-[1100px]">
+      <div class="anim-up mb-5 flex translate-y-[18px] items-center gap-2.5 text-[10px] font-semibold uppercase tracking-[2px] text-accent opacity-0 transition-all duration-[600ms] ease-out before:block before:h-0.5 before:w-6 before:bg-accent [&.vis]:translate-y-0 [&.vis]:opacity-100">My Work</div>
       <div class="mb-8 flex flex-col gap-3 xs:mb-10 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
+        
         <h2 class="anim-up translate-y-[18px] font-display text-[34px] font-bold leading-tight text-ink opacity-0 transition-all duration-[600ms] ease-out xs:text-[40px] sm:text-[44px] [&.vis]:translate-y-0 [&.vis]:opacity-100">My
         <span class="ml-0 italic text-accent">Featured Work</span><br />
         </h2>

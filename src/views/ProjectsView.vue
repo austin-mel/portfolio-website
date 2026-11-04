@@ -29,7 +29,7 @@ const openProject = (slug: string) => {
 
       <div class="relative mx-auto w-[min(1100px,calc(100%_-_48px))]">
         <div class="mb-4 flex items-center gap-2.5 text-[10px] font-semibold uppercase tracking-[2px] text-accent before:h-0.5 before:w-[22px] before:bg-accent before:content-['']">
-          Selected Work
+          My Work
         </div>
 
         <h1 class="font-display text-[52px] font-black leading-none tracking-normal text-accent italic">
