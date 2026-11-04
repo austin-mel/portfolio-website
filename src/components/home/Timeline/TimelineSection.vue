@@ -63,8 +63,8 @@ const professionalExperience: TimelineItem[] = [
 ];
 
 const experienceSections = [
-  { title: 'Industry Project Experience', items: industryProjects },
   { title: 'Professional Experience', items: professionalExperience },
+  { title: 'Industry Project Experience', items: industryProjects },
 ];
 
 useScrollObserver('.anim-up,.tl-item');
@@ -74,15 +74,15 @@ useScrollObserver('.anim-up,.tl-item');
   <section
     v-for="section in experienceSections"
     :key="section.title"
-    class="relative overflow-hidden bg-cream3 px-12 py-32"
+    class="relative overflow-hidden bg-cream3 px-12 py-16" 
   >
     <GeoLayer :shapes="timelineShapes" />
 
     <div class="relative mx-auto max-w-[1100px]">
       <!-- HEADER -->
-      <div class="mb-16">
+      <div class="mb-8">
         <div class="anim-up mb-5 flex translate-y-[18px] items-center gap-2.5 text-[10px] font-semibold uppercase tracking-[2px] text-accent opacity-0 transition-all duration-[600ms] ease-out before:block before:h-0.5 before:w-6 before:bg-accent [&.vis]:translate-y-0 [&.vis]:opacity-100">Relevant Work</div>
-        <h2 class="anim-up translate-y-[18px] font-display text-[44px] font-bold tracking-[-1.5px] text-ink opacity-0 transition-all duration-[600ms] ease-out [&.vis]:translate-y-0 [&.vis]:opacity-100">{{ section.title }}</h2>
+        <h2 class="anim-up translate-y-[18px] font-display text-[44px] font-bold tracking-[-1.5px] ml-0 italic text-accent opacity-0 transition-all duration-[600ms] ease-out [&.vis]:translate-y-0 [&.vis]:opacity-100">{{ section.title }}</h2>
       </div>
 
       <!-- TIMELINE -->

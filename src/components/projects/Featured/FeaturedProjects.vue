@@ -64,7 +64,9 @@ useScrollObserver('.anim-up,.feat-card');
 
     <div class="relative mx-auto max-w-[1100px]">
       <div class="mb-8 flex flex-col gap-3 xs:mb-10 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
-        <h2 class="anim-up translate-y-[18px] font-display text-[34px] font-bold leading-tight text-ink opacity-0 transition-all duration-[600ms] ease-out xs:text-[40px] sm:text-[44px] [&.vis]:translate-y-0 [&.vis]:opacity-100">Featured work</h2>
+        <h2 class="anim-up translate-y-[18px] font-display text-[34px] font-bold leading-tight text-ink opacity-0 transition-all duration-[600ms] ease-out xs:text-[40px] sm:text-[44px] [&.vis]:translate-y-0 [&.vis]:opacity-100">My
+        <span class="ml-0 italic text-accent">Featured Work</span><br />
+        </h2>
         <button
           class="anim-up flex w-fit translate-y-[18px] items-center gap-1.5 border-none bg-transparent text-[13px] font-medium text-accent opacity-0 transition-all duration-[600ms] ease-out hover:gap-2.5 [&.vis]:translate-y-0 [&.vis]:opacity-100"
           type="button"

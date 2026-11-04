@@ -21,11 +21,11 @@ interface SkillGroup {
 }
 
 const contacts = [
-  { label: 'Email', value: 'austin.mel@mail.com' },
-  { label: 'Website', value: 'www.austinmelendez.com' },
-  { label: 'LinkedIn', value: 'austin-melendez' },
-  { label: 'Personal GitHub', value: 'austin-mel' },
-  { label: 'Educational GitHub', value: 'austin-mel-edu' },
+  { label: 'Email', value: 'austin.mel@mail.com', link: 'mailto:austin.mel@mail.com' },
+  { label: 'Website', value: 'www.austinmelendez.com', link: 'https://www.austinmelendez.com' },
+  { label: 'LinkedIn', value: 'austin-melendez', link: 'https://www.linkedin.com/in/austin-melendez' },
+  { label: 'Personal GitHub', value: 'austin-mel', link: 'https://github.com/austin-mel' },
+  { label: 'Educational GitHub', value: 'austin-mel-edu', link: 'https://github.com/austin-mel-edu' },
 ];
 
 const education = {
@@ -137,8 +137,8 @@ const professionalExperience: ResumeRole[] = [
 ];
 
 const experienceSections = [
-  { title: 'Industry Project Experience', roles: industryProjects },
   { title: 'Professional Experience', roles: professionalExperience },
+  { title: 'Industry Project Experience', roles: industryProjects },
 ];
 
 const leadership: LeadershipRole[] = [
@@ -168,7 +168,7 @@ const leadershipBullets = [
       <div class="mx-auto max-w-[860px]">
         <header class="mb-12 flex flex-col gap-5 border-b-2 border-ink pb-8 lg:flex-row lg:items-start lg:justify-between">
           <div>
-            <h1 class="font-display text-[42px] font-black leading-none tracking-normal text-ink">
+            <h1 class="font-display text-[42px] font-black leading-none tracking-normal text-accent italic">
               Austin Meléndez
             </h1>
             <p class="mt-2 text-[15px] font-light text-ink3">
@@ -278,13 +278,16 @@ const leadershipBullets = [
                 <div
                   v-for="contact in contacts"
                   :key="contact.label"
+                  :href="contact.link"
                 >
                   <dt class="font-mono text-[10px] uppercase tracking-[1px] text-ink4">
                     {{ contact.label }}
                   </dt>
-                  <dd class="break-words text-[12px] leading-6 text-ink3">
-                    {{ contact.value }}
-                  </dd>
+                      <dd class="break-words text-[12px] leading-6 text-ink3">
+                        <a target="_blank" :href="contact.link" class="hover:underline">
+                          {{ contact.value }}
+                        </a>
+                      </dd>
                 </div>
               </dl>
             </section>

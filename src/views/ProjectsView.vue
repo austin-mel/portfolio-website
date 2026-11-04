@@ -32,8 +32,8 @@ const openProject = (slug: string) => {
           Selected Work
         </div>
 
-        <h1 class="font-display text-[52px] font-black leading-none tracking-normal text-ink">
-          Projects
+        <h1 class="font-display text-[52px] font-black leading-none tracking-normal text-accent italic">
+          My Projects
         </h1>
 
         <p class="mt-2 text-[15px] font-light text-ink3">

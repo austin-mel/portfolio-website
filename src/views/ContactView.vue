@@ -90,12 +90,13 @@ const submitMailto = () => {
         <div class="grid gap-12 lg:grid-cols-2 lg:gap-20">
           <section>
             <h1 class="font-display text-[44px] font-black leading-[1.05] tracking-normal text-ink">
-              Let's build<br>something <em class="italic text-accent">great.</em>
+              Let's build
+              <br>
+              <em class="italic text-accent">something great.</em>
             </h1>
 
             <p class="mt-4 text-[14px] font-light leading-[1.8] text-ink3">
               Open to data analytics, engineering, and consulting roles where I can turn messy data into clear decisions.
-              I respond within 1-2 business days.
             </p>
 
             <div class="mt-8 flex flex-col">

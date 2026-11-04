@@ -23,12 +23,12 @@ const heroShapes = [
 
 <template>
   <section
-    class="relative min-h-[calc(100vh-62px)] flex flex-col lg:flex-row items-center px-4 sm:px-8 lg:px-12 py-16 sm:py-20 bg-cream overflow-hidden"
+    class="relative flex flex-col items-center px-4 sm:px-8 lg:px-12 py-16 sm:py-20 bg-cream overflow-hidden"
   >
     <GeoLayer :shapes="heroShapes" />
 
     <!-- Main content column -->
-    <div class="relative py-8 z-10 max-w-[1000px] w-full flex flex-col lg:items-start items-center">
+    <div class="relative py-8 z-10 max-w-[1000px] w-full flex flex-col items-center">
 
       <!-- Job Search Tag -->
       <div
@@ -42,9 +42,8 @@ const heroShapes = [
       <h1
         class="font-display font-black leading-[0.95] tracking-[-2px] sm:tracking-[-3px] text-ink max-w-[860px] text-[clamp(42px,10vw,96px)]"
       >
-        Data-driven<br />
-        <span class="italic text-accent">storytelling</span><br />
-        <span class="sm:ml-[clamp(40px,8vw,120px)] ml-0">at any scale.</span>
+        Austin Meléndez<br />
+        <span class="sm:ml-[clamp(40px,8vw,360px)] ml-0 italic text-accent">Data Analyst</span><br />
       </h1>
 
       <!-- Subtext -->
@@ -72,37 +71,6 @@ const heroShapes = [
         >
           Download resume
         </button>
-      </div>
-    </div>
-
-    <!-- Floating "At a glance" card -->
-    <div
-      class="
-        w-auto
-        bg-white border border-border rounded-[14px]
-        px-5 sm:px-6 py-4 sm:py-5
-        shadow-[0_8px_40px_rgba(13,17,23,0.08)]
-        z-10
-        lg:absolute lg:right-12 lg:bottom-16
-      "
-    >
-      <div class="text-[10px] text-ink4 uppercase tracking-[1px] mb-2">
-        At a glance
-      </div>
-
-      <div class="flex flex-row gap-6 text-center items-center sm:items-start">
-        <div>
-          <div class="font-display text-[26px] font-bold text-ink tracking-[-1px]">2026</div>
-          <div class="text-[10px] text-ink4">College Graduate</div>
-        </div>
-        <div>
-          <div class="font-display text-[26px] font-bold text-accent2 tracking-[-1px]">10+</div>
-          <div class="text-[10px] text-ink4">Years Coding</div>
-        </div>
-        <div>
-          <div class="font-display text-[26px] font-bold text-ink tracking-[-1px]">6</div>
-          <div class="text-[10px] text-ink4">Projects</div>
-        </div>
       </div>
     </div>
   </section>
