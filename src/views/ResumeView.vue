@@ -72,11 +72,11 @@ const industryProjects: ResumeRole[] = [
     title: 'Mass Spectrometer Baseline Noise Analysis',
     date: 'Feb 2026 - May 2026',
     bullets: [
-      'Modeled 492,000+ instrument measurements across 6 dwell-time settings and 3 independent lab locations.',
-      'Built cleaned long-format datasets from raw instrument files using Python.',
-      'Quantified dwell-time effects using summary statistics, log-scale diagnostics, and visual analysis.',
+      'Modeled 492,000+ instrument measurements across 6 dwell time settings and 3 independent lab locations.',
+      'Built cleaned long format datasets from raw instrument files using Python.',
+      'Quantified dwell time effects using summary statistics, log-scale diagnostics, and visual analysis.',
       'Evaluated noise distribution fit using KDE, Q-Q plots, and log-scale statistical modeling.',
-      'Delivered client-facing findings and conclusions to support baseline correction strategy.',
+      'Delivered client facing findings and conclusions to support baseline correction strategy.',
     ],
   },
     {
@@ -88,7 +88,7 @@ const industryProjects: ResumeRole[] = [
       'Analyzed matched pre/post survey data from 222 participants using R.',
       'Tested intervention effects using Welch\'s and paired t-tests, mixed ANOVA, and ANCOVA.',
       'Interpreted pre/post improvement results and identified no significant Intervention vs. Control effect.',
-      'Communicated statistical methods, assumptions, limitations, and findings using client-facing written reports.',
+      'Communicated statistical methods, assumptions, limitations, and findings using client facing written reports.',
     ],
   },
     {
@@ -97,8 +97,8 @@ const industryProjects: ResumeRole[] = [
     date: 'Aug 2024 - May 2025',
     bullets: [
       'Developed an internal web application for WCP Solutions\' sales teams to manage client relationships and streamline daily workflows.',
-      'Built searchable client tables, geographic mapping, route directions, contact integration, and customer note-tracking functionality.',
-      'Collaborated on an eight-person development team using Agile practices, biweekly sprints, Git, and Jira.',
+      'Built searchable client tables, geographic mapping, route directions, contact integration, and customer note tracking functionality.',
+      'Collaborated on an eight person development team using Agile practices, biweekly sprints, Git, and Jira.',
       'Tested and refined application functionality based on stakeholder requirements and user workflows by maintaining regular meetings with company stakeholders and faculty advisors.',
     ],
   },
@@ -108,8 +108,8 @@ const industryProjects: ResumeRole[] = [
     date: 'Jan 2023 - May 2023',
     bullets: [
       'Developed a clinical trial management platform with isolated portals for the FDA, physicians, and pharmaceutical manufacturers.',
-      'Implemented Vendia database ACLs to enforce role-based data access, protect patient information, and support double-blind trial requirements.',
-      'Collaborated on a six-person development team using Agile practices, biweekly sprints, Git, and Jira while implementing stakeholder feedback.',
+      'Implemented Vendia database ACLs to enforce role based data access, protect patient information, and support double blind trial requirements.',
+      'Collaborated on a six person development team using Agile practices, biweekly sprints, Git, and Jira while implementing stakeholder feedback.',
     ],
   },
 ];
@@ -120,9 +120,9 @@ const professionalExperience: ResumeRole[] = [
     title: 'Data Analysis Consultant',
     date: 'June 2026 - Current',
     bullets: [
-      'Developed Excel reporting tools with automated calculations, adjustable assumptions, and annual cost projections to quantify labor costs from meal-period violations, missed punches, and location-based timekeeping exceptions.',
-      'Created reusable analysis templates and documented methodologies to streamline future reviews and support cost-control recommendations.',
-      'Transformed payroll and timekeeping records into executive reports highlighting labor-cost exposure and compliance trends.',
+      'Developed Excel reporting tools with automated calculations, adjustable assumptions, and annual cost projections to quantify labor costs from meal period violations, missed punches, and location based timekeeping exceptions.',
+      'Created reusable analysis templates and documented methodologies to streamline future reviews and support cost control recommendations.',
+      'Transformed payroll and timekeeping records into executive reports highlighting labor cost exposure and compliance trends.',
     ],
   },
   {
@@ -130,8 +130,8 @@ const professionalExperience: ResumeRole[] = [
     title: 'Afterschool Program Coordinator',
     date: 'Oct 2024 - Current',
     bullets: [
-      'Managed program procedures, safety requirements, and day-to-day operational issues.',
-      'Led structured programming focused on skill-building, discipline, and confidence while maintaining organization, accountability, and effective communication with multiple sites across 3 districts.',
+      'Managed program procedures, safety requirements, and day to day operational issues.',
+      'Led structured programming focused on skill building, discipline, and confidence while maintaining organization, accountability, and effective communication with multiple sites across 3 districts.',
     ],
   },
 ];

@@ -19,7 +19,7 @@ const facts: FactRow[] = [
 ];
 
 const pillars: Pillar[] = [
-  { icon: 'chart',  title: 'Analytical rigor',        desc: 'I check assumptions, transparent methodologies, and keep analysis work reproducible with thorough documentation.' },
+  { icon: 'chart',  title: 'Analytical rigor',        desc: 'I check assumptions, use transparent methodologies, and keep analysis work reproducible with thorough documentation.' },
   { icon: 'database', title: 'Data systems', desc: 'I bridge the gap between raw data analysis and production. I build maintainable project structures, robust database integrations, and automated reporting workflows.' },
   { icon: 'communication',  title: 'Clear communication',     desc: 'I translate data into reports for technical and non-technical audiences alike delivering clear insights that simplify complex decision making.' },
   { icon: 'lightning',  title: 'Delivery habits',         desc: 'I deliver high quality project outcomes by managing iterative workflows, tracking continuous progression, and maintaining alignment with stakeholder expectations.' },
